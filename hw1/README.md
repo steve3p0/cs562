@@ -51,3 +51,12 @@ What to turn in:
     - Remembering how to do command line args in Python
     - Adjusting to Python 3
 	- Reacquainting myself with PyCharm
+	
+#### Part 2: Structuring the data ####
+
+What to turn in:
+  
+1. How many sentences are there in the CNA-GW corpus?
+    
+    585,065
+    
