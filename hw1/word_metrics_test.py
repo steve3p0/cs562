@@ -1,5 +1,6 @@
 import unittest
 import logging
+import os
 #from mock import patch, MagicMock
 import word_metrics
 
@@ -10,14 +11,6 @@ logging.basicConfig(level=logging.DEBUG,
                     filemode='w')
 
 class TestWordMetrics(unittest.TestCase):
-    def test_read(self):
-        wm = word_metrics.WordMetric()
-        wm._read("data\\news\\cna_eng_199710.xml.gz")
-        self.assertEqual(True, False)
-
-    def test_deserialize(self):
-        self.assertEqual(True, False)
-
     def test_normalize(self):
         self.assertEqual(True, False)
 
