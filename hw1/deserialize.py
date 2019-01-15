@@ -14,12 +14,20 @@ logging.basicConfig(#level=logging.DEBUG,  (NOTSET, DEBUG, INFO, WARNING, ERROR,
 
 #python your_deserialization_script.py cna_eng/*.xml.gz > deserialized.txt
 
+
 class Deserialization:
     def __init__(self):
         logging.debug("Deserialization.__init__(self)")
 
-    def _read(self, read_path, write_path):
-        logging.debug("Deserialization._read(self, read_path, write_path): " + read_path + ", " + write_path)
+    def _parse_args(self, args):
+        logging.debug("Deserialization._parse_args(self, read_path, write_path)")
+        arg_parser = argparse.ArgumentParser(description='description here')
+        arg_parser.add_argument('read_file')
+        arg_parser.add_argument('-o', '--outfile')
+        return arg_parser.parse_args(args)
+
+    def _process_file(self, read_path, outfile):
+        logging.debug("Deserialization._process_file(self, read_path, outfile): " + read_path)
 
         with gzip.open(read_path, 'r') as fin:
             file_content = fin.read()
@@ -28,29 +36,28 @@ class Deserialization:
         tree = etree.XML(file_content, parser=parser)
         text = tree.xpath('/GWENG/DOC[@type="story"]/TEXT/P/text()')
 
-        f = open(write_path, "a+")
-        for line in text:
-            f.write(line.replace('\n',' ') + "\n")
-        f.close()
+        if not outfile:
+            for line in text:
+                print(line.replace('\n', ' '))
+        else:
+            f = open(outfile, "a+")
+            for line in text:
+                f.write(line.replace('\n', ' ') + "\n")
+            f.close()
 
-    def parse_args(self, args):
-        logging.debug("Deserialization.parse_args(self, read_path, write_path)")
-        arg_parser = argparse.ArgumentParser(description='description here')
-        arg_parser.add_argument('read_file')
-        arg_parser.add_argument('write_file', type=argparse.FileType('a'))
-        return arg_parser.parse_args(args)
-
-    def deserialize(self, read_path, write_path):
-        logging.debug("Deserialization.deserialize(self, read_path, write_path): " + read_path + ", " + write_path)
+    def deserialize(self, read_path, outfile):
+        logging.debug("Deserialization.deserialize(self, read_path, outfile): " + read_path)
         files = glob.glob(read_path)
 
         for file in files:
-            self._read(file, write_path)
+            self._process_file(file, outfile)
+
 
 def main():
     ds = Deserialization()
-    arg_parser = ds.parse_args(sys.argv[1:])
-    ds.deserialize(arg_parser.read_file, arg_parser.write_file.name)
+    arg_parser = ds._parse_args(sys.argv[1:])
+    ds.deserialize(arg_parser.read_file, arg_parser.outfile)
+
 
 if __name__ == '__main__':
     logging.debug("__main__")
