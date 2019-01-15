@@ -37,20 +37,16 @@ What to turn in:
 		
 3. A sentence or two describing your approach and any bugs you encountered.
 
-    I created a Deserialization class and unit tests.  The unit tests include some integration tests.  I added an optional argument "-o" to write the output to a file.  
-            
-        python deserialize.py cna_eng/*.xml.gz -o deserialized.txt
-            
-    I did this because I wanted to be able to run integration tests and specify an outfile (in the test) so that I could easily count the number lines and add other tests against the output data.  You can still redirect output to a file exactly as specified in the instructions:
-            
-        python deserialize.py cna_eng/*.xml.gz > deserialized.txt
+    Two real challenges I had were the following:
+    
+    1. It took me forever to get the PyCharm 2018.3 (the latest update) to push to github. I cried when I realized hours later I was clicking on the shortcut to PyCharm 2017.3.  When I installed the update, I had no idea it didn't remove the previous version :(
+    2. I decided I would try to use my faster Windows machine rather than my Ubuntu VM.  Bad choice.
     
     Bugs that I encountered:
     
     - Getting the xpath query just right.
     - Remembering how to do command line args in Python
     - Adjusting to Python 3
-	- Reacquainting myself with PyCharm
 	
 #### Part 2: Structuring the data ####
 
