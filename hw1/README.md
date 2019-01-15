@@ -28,6 +28,7 @@ What to turn in:
 
 		[TERMINAL OUTPUT FROM PYCHARM]
 		C:\Users\steve\AppData\Local\Programs\Python\Python37-32\python.exe C:/workspace_courses/cs562/hw1/deserialize.py data\GW-cna_eng\*.xml.gz -o data\GW-cna_eng\testMAIN_deserialize_all.txt
+		Process finished with exit code 0
 		
 		[FIRST ONE HUNDRED LINES OF OUTPUT]
 		steve@vboxUbuntu18:~/workspace_courses/cs562/hw1/data/GW-cna_eng$ head -100 testMAIN_deserialize_all.txt > ../../test_results/deserialize_100.txt
