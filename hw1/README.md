@@ -39,13 +39,13 @@ What to turn in:
 
     Two real challenges I had were the following:
     
-    1. It took me forever to get the PyCharm 2018.3 (the latest update) to push to github. I cried when I realized hours later I was clicking on the shortcut to PyCharm 2017.3.  When I installed the update, I had no idea it didn't remove the previous version :(
+    1. It took me forever to get PyCharm 2018.3 (the latest update) to push to github. I cried when I realized hours later I was clicking on the shortcut to PyCharm 2017.3.  When I installed the update, I had no idea it didn't remove the previous version :(
     2. I decided I would try to use my faster Windows machine rather than my Ubuntu VM.  Bad choice.
     
     Bugs that I encountered:
     
     - Getting the xpath query just right.
-    - Remembering how to do command line args in Python
+    - Remembering how parse command line args in Python
     - Adjusting to Python 3
 	
 #### Part 2: Structuring the data ####

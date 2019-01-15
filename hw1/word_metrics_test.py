@@ -11,12 +11,6 @@ logging.basicConfig(level=logging.DEBUG,
                     filemode='w')
 
 class TestWordMetrics(unittest.TestCase):
-    def test_normalize(self):
-        self.assertEqual(True, False)
-
-    def test_tokenize(self):
-        self.assertEqual(True, False)
-
     def test_unique_types(self):
         self.assertEqual(True, False)
 

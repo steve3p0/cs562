@@ -8,6 +8,8 @@ from os.path import isfile, join
 import re
 import glob
 import logging
+import re
+from collections import Counter
 import sys
 import argparse
 from nltk.tokenize import TweetTokenizer, sent_tokenize
@@ -21,8 +23,6 @@ logging.basicConfig(#level=logging.DEBUG,  (NOTSET, DEBUG, INFO, WARNING, ERROR,
                     filename='word_metrics.log',
                     filemode='w')
 
-#python your_deserialization_script.py cna_eng/*.xml.gz > deserialized.txt
-
 class WordMetric:
     def __init__(self):
         logging.debug("WordMetric.__init__(self)")
@@ -34,47 +34,35 @@ class WordMetric:
         arg_parser.add_argument('-o', '--outfile')
         return arg_parser.parse_args(args)
 
-    def _read_deserialized(self, filename):
-        logging.debug("WordMetric._read_deserialized(self, filename): " + filename)
+    def _read_tokenized(self, filename):
+        logging.debug("WordMetric._read_tokenized(self, filename): " + filename)
 
         with open(filename, 'r') as f:
             text = f.read()
+        return text
 
-        ' '.join(text.split())
-        return text.upper()
-        #return text
+    def unique_types(self, word_set):
+        logging.debug("WordMetric.unique_types(self, word_set)")
+        return len(word_set)
 
-    def _tokenize(self, text):
-        logging.debug("WordMetric._tokenize(self, text)")
-        sentences = nltk.sent_tokenize(text)
-
-        import string
-        punct_set = set(string.punctuation)
-        # !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
-        punct_set.add("'s")
-        punct_set.add('``')
-        punct_set.add("''")
-        punct_set.add('--')
-        #print(punct_set)
-
-        for s in sentences:
-            tokens = nltk.word_tokenize(s)
-            no_punct_toks = [t for t in tokens if t not in punct_set]
-            print(no_punct_toks)
-
-        #return no_punct_toks
-
-    def _unique_types(self, text):
-        logging.debug("WordMetric._unique_types(self, text): text = " + text)
-
-    def _unigram_tokens(self, text):
-        logging.debug("WordMetric._unigram_tokens(self, text): text = " + text)
+    def unigram_tokens(self, word_list):
+        logging.debug("WordMetric.unigram_tokens(self, word_list)")
+        return len(word_list)
 
     def _rank_frequency_plot(self, text):
-        logging.debug("WordMetric._rank_frequency_plot(self, text): text = " + text)
+        logging.debug("WordMetric._rank_frequency_plot(self, text)")
 
-    def _most_common_words(self, text, stopwords):
-        logging.debug("WordMetric._most_common_words(self, text, stopwords): text, stopwords = " + text + ", " + stopwords)
+    def most_common_words(self, n, word_list, stopwords):
+        logging.debug("WordMetric._most_common_words(self, n, word_list, stopwords)")
+
+        from nltk import FreqDist
+        fdist = FreqDist(word_list)
+        nmc = fdist.most_common(n)
+        print(str(n) + " Most Common: ", end="")
+
+        for word in nmc:
+            #print(word[0] + ": " + str(word[1]))
+            print(word[0] + ", ", end='')
 
     def _pmi(self, word1, word2):
         logging.debug("WordMetric._pmi(self, word1, word2): word1, word2 = " + word1 + ", " + word2)
@@ -85,9 +73,22 @@ class WordMetric:
 def main():
     wm = WordMetric()
     arg_parser = wm._parse_args(sys.argv[1:])
-    text = wm._read_deserialized(arg_parser.read_file)
-    tokens = wm._tokenize(text)
-    print(tokens)
+    text = wm._read_tokenized(arg_parser.read_file)
+
+    word_list = re.sub("[^\w]", " ", text).split()
+    word_set = set(word_list)
+
+    # Unique Types
+    unique = wm.unique_types(word_set)
+    print("Unique Types: " + str(unique))
+
+    # Unigram Tokens
+    utokens = wm.unigram_tokens(word_list)
+    print("Unigram Tokens: " + str(utokens))
+
+    # Twenty most common words
+    wm.most_common_words(20, word_list, False)
+
 
 if __name__ == '__main__':
     logging.debug("__main__")

@@ -12,9 +12,6 @@ logging.basicConfig(#level=logging.DEBUG,  (NOTSET, DEBUG, INFO, WARNING, ERROR,
                     filename='deserialization.log',
                     filemode='w')
 
-#python your_deserialization_script.py cna_eng/*.xml.gz > deserialized.txt
-
-
 class Deserialization:
     def __init__(self):
         logging.debug("Deserialization.__init__(self)")
