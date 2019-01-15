@@ -42,7 +42,7 @@ What to turn in:
             
     I did this because I wanted to be able to run integration tests and specify an outfile (in the test) so that I could easily count the number lines and add other tests against the output data.  You can still redirect output to a file exactly as specified in the instructions:
             
-    python deserialize.py cna_eng/*.xml.gz > deserialized.txt
+        python deserialize.py cna_eng/*.xml.gz > deserialized.txt
     
     Bugs that I encountered:
     
