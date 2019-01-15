@@ -52,7 +52,6 @@ class Deserialization:
         for file in files:
             self._process_file(file, outfile)
 
-
 def main():
     ds = Deserialization()
     arg_parser = ds._parse_args(sys.argv[1:])
