@@ -98,23 +98,23 @@ def main():
     text = wm._read_tokenized(arg_parser.read_file)
 
     word_list = re.sub("[^\w]", " ", text).split()
-    # word_set = set(word_list)
-    #
-    # # Unique Types
-    # unique = wm.unique_types(word_set)
-    # print("Unique Types: " + str(unique))
-    #
-    # # Unigram Tokens
-    # utokens = wm.unigram_tokens(word_list)
-    # print("Unigram Tokens: " + str(utokens))
-    #
-    # # Twenty most common words (with stop words)
-    # wm.most_common_words(20, word_list, False, True)
-    #
-    # # Twenty most common words (without stop words)
-    # wm.most_common_words(20, word_list, True, False)
+    word_set = set(word_list)
 
-    # PMI: examine the 30 highest-PMI word pairs, along with their unigram and bigram frequencie
+    # Unique Types
+    unique = wm.unique_types(word_set)
+    print("Unique Types: " + str(unique))
+
+    # Unigram Tokens
+    utokens = wm.unigram_tokens(word_list)
+    print("Unigram Tokens: " + str(utokens))
+
+    # Twenty most common words (with stop words)
+    wm.most_common_words(20, word_list, False, True)
+
+    # Twenty most common words (without stop words)
+    wm.most_common_words(20, word_list, True, False)
+
+    #PMI: examine the 30 highest-PMI word pairs, along with their unigram and bigram frequencie
     wm.pmi("NEW YORK", 1, 0)
     wm.pmi(text, 30, 1000)
     wm.pmi(text, 10, 100)

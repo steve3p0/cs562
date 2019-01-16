@@ -101,7 +101,11 @@ would be the case if the events were statistically independent.
 
     Examine the PMI for "New York". Explain in your own words why it is not higher.
 
+* With a threshold of 100, what are the 10 highest-PMI word pairs?
 
+    [('SPONGIFORM', 'ENCEPHALOPATHY'), ('YING-', 'JEOU'), ('BOVINE', 'SPONGIFORM'), ('ALMA', 'MATER'), ('SRI', 'LANKA'), ('KUALA', 'LUMPUR'), ('SAO', 'TOME'), ('AU', 'OPTRONICS'), ('ERIC', 'LILUAN'), ('QIAN', 'QICHEN')]
 
+* Examine the PMI for "New York". Explain in your own words why it is not higher.
 
+    I don't think the way I did PMI was in the spirit of your assignment.  I used the NLTK library to calculate PMI and thus didn't compute unigram and b-gram probabilities.  If I may take a look at this after my class ends, I can get this done rather quickly.
 
