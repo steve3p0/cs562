@@ -36,7 +36,7 @@ class WordMetric:
         logging.debug("WordMetric.unique_types(self, word_set)")
         return len(word_set)
 
-    def unigram_tokens(self, word_list):
+    def unigram_tokens_count(self, word_list):
         logging.debug("WordMetric.unigram_tokens(self, word_list)")
         return len(word_list)
 
@@ -77,20 +77,52 @@ class WordMetric:
             print()
         else:
             for word in nmc:
-                #print(word[0] + ": " + str(word[1]))
                 print(word[0] + ", ", end='')
 
     def pmi(self, text, n, threshold):
         logging.debug("WordMetric._pmi(self, text)")
         f = nltk.BigramCollocationFinder.from_documents([nltk.word_tokenize(x) for x in text.split('\n')])
         f.apply_freq_filter(threshold)
-        print("return the 30 bigrams with the highest PMI")
+        print("The " + str(n) + " bigrams with the highest PMI with threshold " + str(threshold))
 
         bm = nltk.collocations.BigramAssocMeasures()
         print(f.nbest(bm.pmi, n))
 
-    def _compute_ngram(self, text, n, threshold):
-        logging.debug("WordMetric._compute_ngram(self, text, n, threshold): " + text + ", " + n +", " + threshold)
+        #for i in f.score_ngrams(bm.pmi):
+        #    print(i)
+
+    def _unigram_probability(self, word, word_list, wordcount):
+        fd = nltk.FreqDist(word_list)
+        probability = fd[word] / wordcount
+        return probability
+
+    def _bigram_probability(self, word1, word2, word_list, wordcount):
+        fd = nltk.FreqDist(word_list)
+        bigrams = nltk.bigrams(word_list)
+        cfd = nltk.ConditionalFreqDist(bigrams)
+
+        if not word2 in cfd[word1]:
+            #print('Backing Off to Unigram Probability for', second)
+            unigram_prob = self._unigram_probability(word2, word_list, wordcount)
+            return unigram_prob
+        else:
+            bigram_frequency = cfd[word1][word2]
+
+        unigram_frequency = fd[word1]
+        bigram_probability = bigram_frequency / unigram_frequency
+
+        return bigram_probability
+
+    def compute_unigram_probabilies(self, word_set, word_list, wordcount):
+        for word in word_set:
+            unigram_probs = self._unigram_probability(word, word_list, wordcount)
+            print(word + ": " + str(unigram_probs))
+
+    def compute_bigram_probabilies(self, word_set, word_list, wordcount):
+        for word1 in word_set:
+            for word2 in word_list:
+                bigram_probs = self._bigram_probability(word1, word2, word_list, wordcount)
+                print(word1 + " " + word2 + ": " + str(bigram_probs))
 
 def main():
     wm = WordMetric()
@@ -105,8 +137,8 @@ def main():
     print("Unique Types: " + str(unique))
 
     # Unigram Tokens
-    utokens = wm.unigram_tokens(word_list)
-    print("Unigram Tokens: " + str(utokens))
+    wordcount = wm.unigram_tokens_count(word_list)
+    print("Unigram Tokens: " + str(wordcount))
 
     # Twenty most common words (with stop words)
     wm.most_common_words(20, word_list, False, True)
@@ -119,8 +151,9 @@ def main():
     wm.pmi(text, 30, 1000)
     wm.pmi(text, 10, 100)
 
-    # Produce rank-frequency plot (Zipf's Law) for this corpus.
-    wm.rank_frequency_plot(word_list)
+    #compute unigram and bigram probabilities for all unigrams and bigrams in the corpus
+    #wm.compute_unigram_probabilies(word_set, word_list, wordcount)
+    #wm.compute_bigram_probabilies(word_set, word_list, wordcount)
 
 if __name__ == '__main__':
     logging.debug("__main__")

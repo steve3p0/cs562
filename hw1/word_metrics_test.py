@@ -20,6 +20,18 @@ class TestWordMetrics(unittest.TestCase):
         self.assertEqual(aparser.read_file, expected_read_file)
         self.assertEqual(expected_write_file, actual_writefile)
 
+    def test_read_deserialized(self):
+        expected_lc = 41261
+        wm = word_metrics.WordMetric()
+        read_file = "data\\GW-cna_eng_small\\test_deserialize_small.txt"
+        text = wm.(read_file)
+        lines = text.splitlines()
+
+        actual_lc = 0
+        for l in lines:
+            actual_lc += 1
+        self.assertEqual(expected_lc, actual_lc)
+
     def test_unique_types(self):
         self.assertEqual(True, False)
 
