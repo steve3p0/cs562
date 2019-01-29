@@ -17,6 +17,7 @@ def bag_of_words(text):
     """
 
     txt = text.strip()
+    txt = text.replace("Ì¢", '')
     empty_lyrics = ['instrumental', 'NA', '']
     if txt in empty_lyrics:
         return collections.Counter()

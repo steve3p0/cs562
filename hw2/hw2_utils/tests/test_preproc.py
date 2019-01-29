@@ -41,6 +41,16 @@ class TestPreproc(unittest.TestCase):
 
         eq_(len(train_lyrics[1144]), 124)
 
+    # 1: you were laughing laughing Ì¢cause youre doin it to me laughing
+    # 2; # you were laughing laughing Ì¢cause youre doin it to me laughing one two
+    # you were laughing youre doin it to me
+    # {'you': 1, 'were': laughing youre doin it to me
+    #@unittest.skip("does't use setup")
+    def test_d1_1_bow_steve_nonascii(self):
+        nonascii_txt = 'you were laughing laughing Ì¢cause youre doin it to me laughing'
+        nonascii_bag = preproc.bag_of_words(nonascii_txt)
+        print(nonascii_bag)
+
     def test_d1_2_agg(self):
         global x_dev
 
@@ -104,6 +114,33 @@ class TestPreproc(unittest.TestCase):
 
         eq_(len(oov_dev), 2677)
         eq_(len(oov_train), 30459) # ) 30442
+
+    #@unittest.skip("does't use setup")
+    def test_d1_3_oov_nonascii(self):
+        # 1: you were laughing laughing Ì¢cause youre doin it to me laughing
+        # 2; # you were laughing laughing Ì¢cause youre doin it to me laughing one two
+
+        nonascii_txt1 = 'you were laughing laughing Ì¢cause youre doin it to me laughing'
+        nonascii_txt2 = 'you were laughing laughing Ì¢cause youre doin it to me laughing one two'
+        nonascii_txt3 = 'you were laughing laughing Ì¢cause canÌ¢t youre doin it to me laughing one two three'
+        nonascii_txt4 = 'you were laughing laughing Ì¢cause youre doin it to me laughing one two three four'
+
+        nonascii_bag1 = preproc.bag_of_words(nonascii_txt1)
+        nonascii_bag2 = preproc.bag_of_words(nonascii_txt2)
+        nonascii_bag3 = preproc.bag_of_words(nonascii_txt3)
+        nonascii_bag4 = preproc.bag_of_words(nonascii_txt4)
+
+        nonascii_list1 = [nonascii_bag1, nonascii_bag2]
+        nonascii_list2 = [nonascii_bag3, nonascii_bag4]
+
+        counts1 = preproc.aggregate_counts(nonascii_list1)
+        counts2 = preproc.aggregate_counts(nonascii_list2)
+
+        oov1 = preproc.compute_oov(counts1, counts2)
+        oov2 = preproc.compute_oov(counts2, counts1)
+
+        print(oov1)
+        print(oov2)
 
     def test_d1_4_prune(self):
         global x_dev, counts_train
