@@ -6,8 +6,8 @@ import numpy as np
 LYRICS_DEV_CSV = 'lyrics-dev.csv'
 LYRICS_TRAIN_CSV = 'lyrics-train.csv'
 
-LYRICS_DEV_CSV = 'lyrics-mini.csv'
-LYRICS_TRAIN_CSV = 'lyrics-dev.csv'
+# LYRICS_DEV_CSV = 'lyrics-mini.csv'
+# LYRICS_TRAIN_CSV = 'lyrics-dev.csv'
 
 class TestClfBase(unittest.TestCase):
 
@@ -34,6 +34,7 @@ class TestClfBase(unittest.TestCase):
         eq_(fv[(label,'case')],2)
         eq_(fv[(label,constants.OFFSET)],1)
 
+    #@unittest.skip("does't use setup")
     def test_d2_1_featvec_steve(self):
         #############################
         # labels, bow_list = preproc.read_data(LYRICS_DEV_CSV,preprocessor=preproc.bag_of_words)
@@ -49,13 +50,39 @@ class TestClfBase(unittest.TestCase):
         counts = preproc.aggregate_counts(x_tr)
         x_tr_pruned, vocab = preproc.prune_vocabulary(counts, x_tr, 10)
 
-        fv = clf_base.make_feature_vector(features, labels)
+        fv = clf_base.make_feature_vector(x_tr_pruned, labels)
         eq_(len(fv), 3)
         # eq_(fv[(label, 'test')], 1)
         # eq_(fv[(label, 'case')], 2)
         # eq_(fv[(label, constants.OFFSET)], 1)
 
+    def test_d2_2_predict(self):
+        #global x_tr_pruned, x_dv_pruned, y_dv
 
+        # global x_tr, y_tr, x_dv, y_dv, counts_tr, x_dv_pruned, x_tr_pruned, x_bl_pruned
+        # global labels
+        # global vocab
+
+        y_tr,x_tr = preproc.read_data(LYRICS_TRAIN_CSV,preprocessor=preproc.bag_of_words)
+        labels = set(y_tr)
+
+        counts_tr = preproc.aggregate_counts(x_tr)
+
+        y_dv,x_dv = preproc.read_data(LYRICS_DEV_CSV,preprocessor=preproc.bag_of_words)
+
+        x_tr_pruned, vocab = preproc.prune_vocabulary(counts_tr, x_tr, 10)
+        x_dv_pruned, _ = preproc.prune_vocabulary(counts_tr, x_dv, 10)
+        ###################
+
+        print(x_tr_pruned[0])
+        y_hat,scores = clf_base.predict(x_tr_pruned[0],hand_weights.theta_hand,labels)
+        eq_(scores['pre-1980'],0.1)
+        assert_almost_equals(scores['2000s'],1.3,places=5)
+        eq_(y_hat,'2000s')
+        eq_(scores['1980s'],0.0)
+
+        y_hat = clf_base.predict_all(x_dv_pruned,hand_weights.theta_hand,labels)
+        assert_almost_equals(evaluation.acc(y_hat,y_dv),.3422222, places=5)
 
     def test_d2_2_predict(self):
         global x_tr_pruned, x_dv_pruned, y_dv

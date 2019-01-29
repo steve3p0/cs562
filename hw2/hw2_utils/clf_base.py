@@ -56,26 +56,23 @@ def predict(base_features, weights, labels):
     :returns: top-scoring label, plus the scores of all labels
     :rtype: string, dict
     """
-    # start michael nonsense
-    scores = dict()
-    feature_vect = make_feature_vector(base_features, labels)
-    for key, value in weights.items():
-        for key_1, values_1 in feature_vect:
-            if key == key_1:
-                scores[key] += value * values_1
-    return argmax(scores), scores
-
-    # end michael nonsense
-
     # scores = dict()
-    #
-    # for label in labels:
-    #     scores[label] = 0
-    #     for word in base_features:
-    #         scores[label] += base_features[word] * weights[label, word]
-    #
-    # print(scores)
+    # feature_vect = make_feature_vector(base_features, labels)
+    # for key, value in weights.items():
+    #     for key_1, values_1 in feature_vect:
+    #         if key == key_1:
+    #             scores[key] += value * values_1
     # return argmax(scores), scores
+
+    scores = dict()
+
+    for label in labels:
+        scores[label] = 0
+        for word in base_features:
+            scores[label] += base_features[word] * weights[label, word]
+
+    print(scores)
+    return argmax(scores), scores
 
 # # deliverable 2.2
 # def predict(base_features, weights, labels):
@@ -126,7 +123,6 @@ def predict(base_features, weights, labels):
     #     print(y)
     #     break
 
-    raise NotImplementedError
     
 def predict_all(x, weights, labels):
     """

@@ -54,12 +54,13 @@ def compute_oov(bow1, bow2):
             oov.add(key)
 
     return oov
-    
-# deliverable 1.4
+
+# deliverable 1.4 - DEEP COPY - DELETE VERSION
+# This one is suprisingly fast
 def prune_vocabulary(training_counts, target_data, min_counts):
     """
     Prune target_data to only include words that occur at least min_counts times in training_counts
-    
+
     :param training_counts: aggregated Counter for the training data
     :param target_data: list of Counters containing dev bow's
     :returns: new list of Counters, with pruned vocabulary
@@ -81,7 +82,31 @@ def prune_vocabulary(training_counts, target_data, min_counts):
                 del c[word]
 
     return pruned_cntr_list, pruned_word_list
-    
+
+# deliverable 1.4 - INSERT VERSION
+# This one is slow
+def prune_vocabulary_INSERT_Version(training_counts, target_data, min_counts):
+    """
+    Prune target_data to only include words that occur at least min_counts times in training_counts
+
+    :param training_counts: aggregated Counter for the training data
+    :param target_data: list of Counters containing dev bow's
+    :returns: new list of Counters, with pruned vocabulary
+    :returns: list of words in pruned vocabulary
+    :rtype list of Counters, set
+    """
+
+    pruned_vocab = set()
+    pruned_target_data = []
+
+    for word in training_counts:
+        if training_counts[word] >= min_counts:
+            pruned_vocab.add(word)
+        for counter in target_data:
+            if counter[word] >= min_counts:
+                del counter[word]
+                pruned_target_data.append(counter)
+    return pruned_target_data, pruned_vocab
 
 # Helper functions
 
