@@ -16,16 +16,12 @@ def bag_of_words(text):
     :rtype: Counter
     """
 
+    txt = text.strip()
+    empty_lyrics = ['instrumental', 'NA']
+    if txt in empty_lyrics:
+        return collections.Counter()
 
-    #re.findall(r'\w+', text)
-
-    # if text == ' NA ':
-    #     return
-    # else:
-    #tokens = nltk.word_tokenize(text)
-    bag = collections.Counter(re.findall(r'\w+', text))
-    #bag = collections.Counter(tokens)
-    #print (bag)
+    bag = collections.Counter(re.findall(r'\w+', txt))
     return bag
 
 # deliverable 1.2
@@ -37,7 +33,6 @@ def aggregate_counts(bags_of_words):
     :returns: an aggregated bag of words for the whole corpus
     :rtype: Counter
     """
-
     return sum(bags_of_words, Counter())
 
 # deliverable 1.3
@@ -90,24 +85,7 @@ def prune_vocabulary(training_counts, target_data, min_counts):
 
 def read_data(fname, label='Era', preprocessor=bag_of_words):
     df = pd.read_csv(fname)
-
-    # remove lines where the Lyrics are not applicable
-    df['Lyrics'] = df['Lyrics'].map(lambda x: x.strip())
-
-    #df['Lyrics'] = df['damage_description'].str.strip()
-    df = df[df.Lyrics != 'NA']
-    df = df[df.Lyrics != '']
-    df = df[df.Lyrics != '']
-
-    df['Lyrics'] = df['Lyrics'].str.strip()
-
-
-
-    return df[label].values, [preprocessor(string) for string in df['Lyrics'].values]
-
-# def read_data(fname, label='Era', preprocessor=bag_of_words):
-#     df = pd.read_csv(fname)
-#     return (df[label].values, [preprocessor(string) for string in df['Lyrics'].values])
+    return (df[label].values, [preprocessor(string) for string in df['Lyrics'].values])
     
 def oov_rate(bow1, bow2):
     return len(compute_oov(bow1, bow2)) / len(bow1.keys())
