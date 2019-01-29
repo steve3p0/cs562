@@ -5,13 +5,13 @@ import numpy
 from hw2_utils import preproc
 
 class TestPreproc(unittest.TestCase):
-    # def setUp(self):
-    #     global x_train, y_train, x_dev, y_dev, counts_dev, counts_train
-    #     y_train, x_train = preproc.read_data('lyrics-train.csv')
-    #     y_dev, x_dev = preproc.read_data('lyrics-dev.csv')
-    #
-    #     counts_train = preproc.aggregate_counts(x_train)
-    #     counts_dev = preproc.aggregate_counts(x_dev)
+    def setUp(self):
+        global x_train, y_train, x_dev, y_dev, counts_dev, counts_train
+        y_train, x_train = preproc.read_data('lyrics-train.csv')
+        y_dev, x_dev = preproc.read_data('lyrics-dev.csv')
+
+        counts_train = preproc.aggregate_counts(x_train)
+        counts_dev = preproc.aggregate_counts(x_dev)
 
     def test_d1_1_bow(self):
         global x_train, y_train
@@ -22,17 +22,24 @@ class TestPreproc(unittest.TestCase):
         eq_(x_train[4]['all'], 5)
         eq_(x_train[41]['angels'], 1)
         eq_(x_train[410]['angels'], 0)
-
-        train_at_1144 = x_train[1144]
-        len_train_at_1144 = len(x_train[1144])
-
-        for ind, bag in enumerate(x_train):
-            if len(bag) == 124:
-                print(ind, end="")
-                print(": ", end="")
-                print(bag)
-
         eq_(len(x_train[1144]), 124)
+
+    @unittest.skip("does't use setup")
+    def test_d1_1_bow_steve(self):
+        train_labels, train_lyrics = preproc.read_data('lyrics-train.csv')
+
+        # x (data) and y (label) vectors should be the same length
+        eq_(len(train_lyrics), len(train_labels))
+
+        # spot-check some counts:
+        eq_(train_lyrics[4]['all'], 5)
+        eq_(train_lyrics[41]['angels'], 1)
+        eq_(train_lyrics[410]['angels'], 0)
+
+        train_at_1144 = train_lyrics[1144]
+        len_train_at_1144 = len(train_lyrics[1144])
+
+        eq_(len(train_lyrics[1144]), 124)
 
     def test_d1_2_agg(self):
         global x_dev
@@ -53,6 +60,7 @@ class TestPreproc(unittest.TestCase):
         eq_(counts['money'], 92)
         eq_(len(counts), 9006)
 
+    @unittest.skip("test for prediction")
     def test_for_predict(self):
         global x_dev
 
@@ -67,13 +75,13 @@ class TestPreproc(unittest.TestCase):
         eq_(len(preproc.compute_oov(counts_dev, counts_train)), 2677)
         eq_(len(preproc.compute_oov(counts_train, counts_dev)), 30459) # ) 30442  17
 
+    @unittest.skip("does't use setup")
     def test_d1_3_oov_steve(self):
-        global x_train, y_train, x_dev, y_dev, counts_dev, counts_train
-        _, x_dev   = preproc.read_data('lyrics-dev.csv')
-        _, x_train = preproc.read_data('lyrics-train.csv')
+        _, lyrics_dev   = preproc.read_data('lyrics-dev.csv')
+        _, lyrics_train = preproc.read_data('lyrics-train.csv')
 
-        counts_dev   = preproc.aggregate_counts(x_dev)
-        counts_train = preproc.aggregate_counts(x_train)
+        counts_dev   = preproc.aggregate_counts(lyrics_dev)
+        counts_train = preproc.aggregate_counts(lyrics_train)
 
         oov_dev   = preproc.compute_oov(counts_dev,   counts_train)
         oov_train = preproc.compute_oov(counts_train, counts_dev)

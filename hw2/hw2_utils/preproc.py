@@ -17,11 +17,12 @@ def bag_of_words(text):
     """
 
     txt = text.strip()
-    empty_lyrics = ['instrumental', 'NA']
+    empty_lyrics = ['instrumental', 'NA', '']
     if txt in empty_lyrics:
         return collections.Counter()
-
     bag = collections.Counter(re.findall(r'\w+', txt))
+
+    #bag = collections.Counter(re.findall(r'\w+', text))
     return bag
 
 # deliverable 1.2
