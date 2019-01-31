@@ -56,77 +56,21 @@ def predict(base_features, weights, labels):
     :returns: top-scoring label, plus the scores of all labels
     :rtype: string, dict
     """
-    # start michael nonsense
+
     scores = dict()
-    feature_vect = make_feature_vector(base_features, labels)
-    for key, value in weights.items():
-        for key_1, values_1 in feature_vect:
-            if key == key_1:
-                scores[key] += value * values_1
-    return argmax(scores), scores
 
-    # end michael nonsense
+    for label in labels:
+        scores[label] = 0
 
-    # scores = dict()
-    #
-    # for label in labels:
-    #     scores[label] = 0
-    #     for word in base_features:
-    #         scores[label] += base_features[word] * weights[label, word]
-    #
-    # print(scores)
-    # return argmax(scores), scores
+        fv = make_feature_vector(base_features, label)
 
-# # deliverable 2.2
-# def predict(base_features, weights, labels):
-#
-#     bf_agg = preproc.aggregate_counts(base_features)
-#     #bf_agg = sum(base_features, Counter())
-#
-#     for l in labels:
-#         total = 0
-#         for x, y in weights.items():
-#             if x == l:
-#
-#
-#                 # x is era, y is word, weights[x, y] is weight
-#                 weight = weights[x,y]
-#                 count = bf_agg[y]
-#                 total += weight * y
-#
-#         print(l + ": " + str(total))
-#
-#         #     print(x)
-#         #     print(y)
-#         #     break
-#
-#         # important_words = dict()
-#         # for f in base_features:
-#         #     #asdf
-#         # for key in
-#         #     #counts_train = preproc.aggregate_counts(x_train)
-#
-#         fv = make_feature_vector(base_features, l)
-#
-#         #{('1980s', 'test'): 1, ('1980s', 'case'): 2, ('1980s', '**OFFSET**'): 1}
+        for _, word in fv:
+            scores[label] += weights[label, word] * fv[label, word]
 
+    print(scores)
+    max_score = argmax(scores)
 
-    # accum = dict()
-    # for
-    #         if key in accum +=1
-    #     else
-    #         accum[key] = value
-
-    # for x, y in weights.items():
-    #     print(x)
-    #     print(y)
-    #     break
-    # for x, y in base_features.items():
-    #     print(x)
-    #     print(y)
-    #     break
-
-    raise NotImplementedError
+    return max_score, scores
     
 def predict_all(x, weights, labels):
     """
