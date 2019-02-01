@@ -18,12 +18,12 @@ def bag_of_words(text):
 
     txt = text.strip()
     txt = text.replace("Ì¢", '')
+    #empty_lyrics = []
     empty_lyrics = ['instrumental', 'NA', '']
     if txt in empty_lyrics:
         return collections.Counter()
     bag = collections.Counter(re.findall(r'\w+', txt))
 
-    #bag = collections.Counter(re.findall(r'\w+', text))
     return bag
 
 # deliverable 1.2
@@ -54,12 +54,13 @@ def compute_oov(bow1, bow2):
             oov.add(key)
 
     return oov
-    
-# deliverable 1.4
+
+# deliverable 1.4 - BY REFERENCE VERSION
+# This one is suprisingly fast
 def prune_vocabulary(training_counts, target_data, min_counts):
     """
     Prune target_data to only include words that occur at least min_counts times in training_counts
-    
+
     :param training_counts: aggregated Counter for the training data
     :param target_data: list of Counters containing dev bow's
     :returns: new list of Counters, with pruned vocabulary
@@ -68,19 +69,49 @@ def prune_vocabulary(training_counts, target_data, min_counts):
     """
 
     import copy
-    pruned_word_list = []
-    pruned_cntr_list = copy.deepcopy(target_data)
 
-    for word in training_counts:
-        if training_counts[word] >= min_counts:
-            pruned_word_list.append(word)
+    pruned_counts = copy.deepcopy(training_counts)
+    pruned_data   = copy.deepcopy(target_data)
 
-    for c in pruned_cntr_list:
+    pruned_counts = {k: v for k, v in pruned_counts.items() if v >= (min_counts + 1)}
+
+    for c in pruned_data:
         for word in list(c):
-            if word not in pruned_word_list:
+            if word not in pruned_counts:
+                #print(c)
+                #print("deleting word: " + word)
                 del c[word]
+                #print(c)
+                #print()
 
-    return pruned_cntr_list, pruned_word_list
+    return pruned_data, pruned_counts
+
+# # deliverable 1.4
+# def prune_vocabulary(training_counts, target_data, min_counts):
+#     """
+#     Prune target_data to only include words that occur at least min_counts times in training_counts
+#
+#     :param training_counts: aggregated Counter for the training data
+#     :param target_data: list of Counters containing dev bow's
+#     :returns: new list of Counters, with pruned vocabulary
+#     :returns: list of words in pruned vocabulary
+#     :rtype list of Counters, set
+#     """
+#
+#     import copy
+#     pruned_word_list = []
+#     pruned_cntr_list = copy.deepcopy(target_data)
+#
+#     for word in training_counts:
+#         if training_counts[word] >= min_counts:
+#             pruned_word_list.append(word)
+#
+#     for c in pruned_cntr_list:
+#         for word in list(c):
+#             if word not in pruned_word_list:
+#                 del c[word]
+#
+#     return pruned_cntr_list, pruned_word_list
     
 
 # Helper functions

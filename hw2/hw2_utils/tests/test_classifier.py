@@ -64,61 +64,52 @@ class TestClfBase(unittest.TestCase):
         # y_hat = clf_base.predict_all(x_dv_pruned,hand_weights.theta_hand,labels)
         # assert_almost_equals(evaluation.acc(y_hat,y_dv),.3422222, places=5)
 
-    def test_for_predict(self):
-        global x_dv_pruned
+    def test_d3_1_corpus_counts(self):
+        # public
+        iama_counts = naive_bayes.get_corpus_counts(x_tr_pruned,y_tr,"1980s");
+        eq_(iama_counts['today'],50)
+        eq_(iama_counts['yesterday'],14)
+        eq_(iama_counts['internets'],0)
 
-        print('Count of money: ' + str(x_dv_pruned['money']))
-        print('Count of name: ' + str(x_dv_pruned['name']))
-        print('Count of tonight: ' + str(x_dv_pruned['tonight']))
-        print('Count of man: ' + str(x_dv_pruned['man']))
-        print('Count of fly: ' + str(x_dv_pruned['fly']))
+    def test_d3_2_pxy(self):
+        global vocab, x_tr_pruned, y_tr
 
-    # def test_d3_1_corpus_counts(self):
-    #     # public
-    #     iama_counts = naive_bayes.get_corpus_counts(x_tr_pruned,y_tr,"1980s");
-    #     eq_(iama_counts['today'],50)
-    #     eq_(iama_counts['yesterday'],14)
-    #     eq_(iama_counts['internets'],0)
-    #
-    # def test_d3_2_pxy(self):
-    #     global vocab, x_tr_pruned, y_tr
-    #
-    #     # check that distribution normalizes to one
-    #     log_pxy = naive_bayes.estimate_pxy(x_tr_pruned,y_tr,"1980s",0.1,vocab)
-    #     assert_almost_equals(np.exp(list(log_pxy.values())).sum(),1)
-    #
-    #     # check that values are correct
-    #     assert_almost_equals(log_pxy['money'],-7.6896,places=3)
-    #     assert_almost_equals(log_pxy['fly'],-8.6369,places=3)
-    #
-    #     log_pxy_more_smooth = naive_bayes.estimate_pxy(x_tr_pruned,y_tr,"1980s",10,vocab)
-    #     assert_almost_equals(log_pxy_more_smooth['money'],-7.8013635125541789,places=3)
-    #     assert_almost_equals(log_pxy_more_smooth['tonight'], -6.4054072405225515,places=3)
-    #
-    # def test_d3_3a_nb(self):
-    #     global x_tr_pruned, y_tr
-    #
-    #     theta_nb = naive_bayes.estimate_nb(x_tr_pruned,y_tr,0.1)
-    #
-    #     y_hat,scores = clf_base.predict(x_tr_pruned[55],theta_nb,labels)
-    #     assert_almost_equals(scores['2000s'],-1840.5064690929203,places=3)
-    #     eq_(y_hat,'1980s')
-    #
-    #     y_hat,scores = clf_base.predict(x_tr_pruned[155],theta_nb,labels)
-    #     assert_almost_equals(scores['1980s'], -2153.0199277981355, places=3)
-    #     eq_(y_hat,'2000s')
-    #
-    # def test_d3_3b_nb(self):
-    #     global y_dv
-    #     y_hat_dv = evaluation.read_predictions('nb-dev.preds')
-    #     assert_greater_equal(evaluation.acc(y_hat_dv,y_dv),.46)
-    #
-    # def test_d3_4a_nb_best(self):
-    #     global x_tr_pruned, y_tr, x_dv_pruned, y_dv
-    #     vals = np.logspace(-3,2,11)
-    #     best_smoother, scores = naive_bayes.find_best_smoother(x_tr_pruned,y_tr,x_dv_pruned,y_dv,[1e-3,1e-2,1e-1,1])
-    #     assert_greater_equal(scores[.1],.46)
-    #     assert_greater_equal(scores[.01],.45)
+        # check that distribution normalizes to one
+        log_pxy = naive_bayes.estimate_pxy(x_tr_pruned,y_tr,"1980s",0.1,vocab)
+        assert_almost_equals(np.exp(list(log_pxy.values())).sum(),1)
+
+        # check that values are correct
+        assert_almost_equals(log_pxy['money'],-7.6896,places=3)
+        assert_almost_equals(log_pxy['fly'],-8.6369,places=3)
+
+        log_pxy_more_smooth = naive_bayes.estimate_pxy(x_tr_pruned,y_tr,"1980s",10,vocab)
+        assert_almost_equals(log_pxy_more_smooth['money'],-7.8013635125541789,places=3)
+        assert_almost_equals(log_pxy_more_smooth['tonight'], -6.4054072405225515,places=3)
+
+    def test_d3_3a_nb(self):
+        global x_tr_pruned, y_tr
+
+        theta_nb = naive_bayes.estimate_nb(x_tr_pruned,y_tr,0.1)
+
+        y_hat,scores = clf_base.predict(x_tr_pruned[55],theta_nb,labels)
+        assert_almost_equals(scores['2000s'],-1840.5064690929203,places=3)
+        eq_(y_hat,'1980s')
+
+        y_hat,scores = clf_base.predict(x_tr_pruned[155],theta_nb,labels)
+        assert_almost_equals(scores['1980s'], -2153.0199277981355, places=3)
+        eq_(y_hat,'2000s')
+
+    def test_d3_3b_nb(self):
+        global y_dv
+        y_hat_dv = evaluation.read_predictions('nb-dev.preds')
+        assert_greater_equal(evaluation.acc(y_hat_dv,y_dv),.46)
+
+    def test_d3_4a_nb_best(self):
+        global x_tr_pruned, y_tr, x_dv_pruned, y_dv
+        vals = np.logspace(-3,2,11)
+        best_smoother, scores = naive_bayes.find_best_smoother(x_tr_pruned,y_tr,x_dv_pruned,y_dv,[1e-3,1e-2,1e-1,1])
+        assert_greater_equal(scores[.1],.46)
+        assert_greater_equal(scores[.01],.45)
 
 
 

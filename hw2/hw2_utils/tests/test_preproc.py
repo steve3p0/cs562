@@ -1,17 +1,18 @@
 import unittest
 from nose.tools import eq_
-import logging
-import numpy
+import collections
+# import logging
+# import numpy
 from hw2_utils import preproc
 
 class TestPreproc(unittest.TestCase):
-    def setUp(self):
-        global x_train, y_train, x_dev, y_dev, counts_dev, counts_train
-        y_train, x_train = preproc.read_data('lyrics-train.csv')
-        y_dev, x_dev = preproc.read_data('lyrics-dev.csv')
-
-        counts_train = preproc.aggregate_counts(x_train)
-        counts_dev = preproc.aggregate_counts(x_dev)
+    # def setUp(self):
+    #     global x_train, y_train, x_dev, y_dev, counts_dev, counts_train
+    #     y_train, x_train = preproc.read_data('lyrics-train.csv')
+    #     y_dev, x_dev = preproc.read_data('lyrics-dev.csv')
+    #
+    #     counts_train = preproc.aggregate_counts(x_train)
+    #     counts_dev = preproc.aggregate_counts(x_dev)
 
     def test_d1_1_bow(self):
         global x_train, y_train
@@ -152,23 +153,32 @@ class TestPreproc(unittest.TestCase):
         eq_(len(vocab), 11824)
         eq_(len(x_dev[95].keys()) - len(x_dev_pruned[95].keys()), 8)
 
-    @unittest.skip("does't use setup")
-    def test_d1_4_prune_steve(self):
-        _, x_train = preproc.read_data('lyrics-train.csv')
-        counts_train = preproc.aggregate_counts(x_train)
-        x_train_pruned, vocab = preproc.prune_vocabulary(counts_train, x_train, 3)
+    def test_d1_4_prune_steve_train(self):
+        _, train_lyrics = preproc.read_data('lyrics-train.csv')
+        counts_train = preproc.aggregate_counts(train_lyrics)
+        train_lyrics_pruned, vocab = preproc.prune_vocabulary(counts_train, train_lyrics, 3)
 
-        f = open("vocab.txt", "w")
-        f.write(str(vocab))
-        f.close()
+        eq_(len(vocab), 11820) # 11824 contains instrumental, NA and corrupted lyrics
 
-        # f = open("prune_3.txt", "w")
-        # f.write(str(x_train_pruned))
-        # f.close()
+    #@unittest.skip("comment out setup")
+    def test_d1_4_prune_steve_dev(self):
+        _, dev_lyrics = preproc.read_data('lyrics-dev.csv')
+        dev_counts = preproc.aggregate_counts(dev_lyrics)
+        dev_lyrics_pruned, vocab = preproc.prune_vocabulary(dev_counts, dev_lyrics, 3)
 
-        #eq_(len(vocab), len(vocab2))
-        eq_(len(vocab), 11824)
-        #eq_(len(x_dev[95].keys()) - len(x_dev_pruned[95].keys()), 8)
+        vocab_sorted = collections.OrderedDict(sorted(vocab.items(), key=lambda t: t[0]))
+
+        # On the 95th line in the dev file, we have the following words that were removed
+        # Because the total count for these words in the entire document was < 3
+        # heyyeah: 1, stands: 1, disco: 1, wasdancin: 1, diei: 1, diegonna: 1, electified: 1
+        # yeahhey: 1, changin: 1, shaky: 1, funking: 1, diethey: 1
+
+        # heyyeah: 1, stands: 1, disco: 2, wasdancin: 1, diei: 1, diegonna: 1, electified: 1
+        # yeahhey: 2, changin: 2, shaky: 1, funking: 1, diethey: 1
+        eq_(len(dev_lyrics[95].keys()) - len(dev_lyrics_pruned[95].keys()), 13)
+
+        # How did we get 13?
+        eq_(len(dev_lyrics[95].keys()) - len(dev_lyrics_pruned[95].keys()), 8)
 
 if __name__ == '__main__':
     unittest.main()

@@ -6,6 +6,7 @@ from collections import defaultdict, Counter
 from itertools import chain
 import math
 
+from hw2_utils import preproc
 
 # deliverable 3.1
 def get_corpus_counts(x,y,label):
@@ -19,8 +20,16 @@ def get_corpus_counts(x,y,label):
     :rtype: defaultdict
 
     """
-    raise NotImplementedError
 
+    label_docs = list(Counter())
+
+    for lyrics, lbl in zip(x, y):
+        if lbl == label:
+            label_docs.append(lyrics)
+
+    counts = sum(label_docs, Counter())
+
+    return counts
 
 # deliverable 3.2
 def estimate_pxy(x,y,label,smoothing,vocab):
