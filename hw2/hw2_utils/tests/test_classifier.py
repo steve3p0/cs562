@@ -75,6 +75,7 @@ class TestClfBase(unittest.TestCase):
         global vocab, x_tr_pruned, y_tr
 
         # check that distribution normalizes to one
+        #log_pxy = naive_bayes.estimate_pxy(x_tr_pruned, y_tr, "1980s", 0.1, vocab)
         log_pxy = naive_bayes.estimate_pxy(x_tr_pruned,y_tr,"1980s",0.1,vocab)
         assert_almost_equals(np.exp(list(log_pxy.values())).sum(),1)
 

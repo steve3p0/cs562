@@ -67,7 +67,7 @@ def predict(base_features, weights, labels):
         for _, word in fv:
             scores[label] += weights[label, word] * fv[label, word]
 
-    print(scores)
+    #print(scores)
     max_score = argmax(scores)
 
     return max_score, scores

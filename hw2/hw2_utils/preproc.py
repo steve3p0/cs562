@@ -35,7 +35,11 @@ def aggregate_counts(bags_of_words):
     :returns: an aggregated bag of words for the whole corpus
     :rtype: Counter
     """
-    return sum(bags_of_words, Counter())
+    to_ret = Counter()
+    for b in bags_of_words:
+        to_ret.update(b)
+    return to_ret
+    #return sum(bags_of_words, Counter())
 
 # deliverable 1.3
 def compute_oov(bow1, bow2):
@@ -55,7 +59,7 @@ def compute_oov(bow1, bow2):
 
     return oov
 
-# deliverable 1.4 - BY REFERENCE VERSION
+# deliverable 1.4
 # This one is suprisingly fast
 def prune_vocabulary(training_counts, target_data, min_counts):
     """
@@ -73,7 +77,7 @@ def prune_vocabulary(training_counts, target_data, min_counts):
     pruned_counts = copy.deepcopy(training_counts)
     pruned_data   = copy.deepcopy(target_data)
 
-    pruned_counts = {k: v for k, v in pruned_counts.items() if v >= (min_counts + 1)}
+    pruned_counts = {k: v for k, v in pruned_counts.items() if v >= (min_counts)}
 
     for c in pruned_data:
         for word in list(c):
