@@ -32,7 +32,6 @@ def get_corpus_counts(x,y,label):
 
     return counts
 
-# deliverable 3.2
 def estimate_pxy(x,y,label,smoothing,vocab):
     """
     Compute smoothed log-probability P(word | label) for a given label. (eq. 2.30 in Eisenstein, 4.14 in J&M)
@@ -53,16 +52,23 @@ def estimate_pxy(x,y,label,smoothing,vocab):
     C = y
     c = label
     V = vocab
+    V[OFFSET] = 0.0
     # |V| = size of vocabulary, that took a while to figure out,
     #       I vaguely remember now it being mentioned in class
     V_size = len(vocab)
 
     counts = get_corpus_counts(D, C, c)
+    counts[OFFSET] = 0.0
     sum_counts = sum(counts.values())
 
     loglikelihood = dict.fromkeys(list(V.keys()), 0.0)
+    #loglikelihood[OFFSET] = 0.0
+
     for w in V:
-        count_w = counts[w]
+        if w in counts:
+            count_w = counts[w]
+        else:
+            count_w = 0
 
         # THE ABOVE MENTIONED BOOKS DO NOT TELL YOU:
         # When using a smoothing parameter, multiply V_size or |V| by the smoothing parameter
@@ -71,6 +77,60 @@ def estimate_pxy(x,y,label,smoothing,vocab):
         log_p_wi = np.log(p_wi)
         loglikelihood[w] = log_p_wi
     return loglikelihood
+
+# # deliverable 3.2
+# def estimate_pxy(x,y,label,smoothing,vocab):
+#     """
+#     Compute smoothed log-probability P(word | label) for a given label. (eq. 2.30 in Eisenstein, 4.14 in J&M)
+#
+#     :param x: list of counts, one per instance
+#     :param y: list of labels, one per instance
+#     :param label: desired label
+#     :param smoothing: additive smoothing amount
+#     :param vocab: list of words in vocabulary
+#     :returns: defaultdict of log probabilities per word
+#     :rtype: defaultdict of log probabilities per word
+#
+#     """
+#
+#     # Create references to parameters that match formula and algorithm in 4.14 in J&M
+#     # Yes, it violates python naming conventions, but understanding Naive Bayes is more important
+#     D = x
+#     C = y
+#     c = label
+#     V = vocab
+#     # |V| = size of vocabulary, that took a while to figure out,
+#     #       I vaguely remember now it being mentioned in class
+#     V_size = len(vocab)
+#
+#     counts = get_corpus_counts(D, C, c)
+#     #counts[OFFSET] = 0
+#     sum_counts = sum(counts.values())
+#
+#     Ndoc = len(D)
+#     Nc = len(counts)
+#
+#     loglikelihood = dict.fromkeys(list(V.keys()), 0.0)
+#
+#     for w in V:
+#         if w in counts:
+#             count_w = counts[w]
+#         else:
+#             count_w = 0
+#         # THE ABOVE MENTIONED BOOKS DO NOT TELL YOU:
+#         # When using a smoothing parameter, multiply V_size or |V| by the smoothing parameter
+#         #p_wi = (count_w + smoothing) / (sum_counts + V_size)
+#         p_wi = (count_w + smoothing) / (sum_counts + (smoothing * V_size))
+#         #p_wi = (count_w + smoothing) / (sum_counts + (smoothing))
+#         log_p_wi = np.log(p_wi)
+#         #loglikelihood[w] = log_p_wi
+#
+#     #loglikelihood[OFFSET] = np.log(Nc / Ndoc)
+#     #loglikelihood[OFFSET] = 1
+#     #loglikelihood[OFFSET] = 0.0
+#     #loglikelihood[OFFSET] = smoothing
+#
+#     return loglikelihood
 
 # deliverable 3.3
 def estimate_nb(x,y,smoothing):
