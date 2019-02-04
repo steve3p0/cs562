@@ -15,7 +15,6 @@ def argmax(score_dict):
     items.sort()
     return items[np.argmax([i[1] for i in items])][0]
 
-
 # deliverable 2.1
 def make_feature_vector(base_features, label):
     """
@@ -26,15 +25,7 @@ def make_feature_vector(base_features, label):
     :returns dict of features, f(x,y)
     :rtype: dict
     """
-    #start michaels nonsense
-    # base_features[OFFSET] = 1
-    # fv = {}
-    # for f in base_features:
-    #     t = (label, f)
-    #     fv[t] = base_features[f]
-    #
-    # return fv
-    #end michaels nonsense
+
     fv = {}
     for f in base_features:
         t = (label, f)
@@ -65,7 +56,8 @@ def predict(base_features, weights, labels):
         fv = make_feature_vector(base_features, label)
 
         for _, word in fv:
-            scores[label] += weights[label, word] * fv[label, word]
+            if (label, word) in weights:
+                scores[label] += weights[label, word] * fv[label, word]
 
     #print(scores)
     max_score = argmax(scores)
