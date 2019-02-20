@@ -1,5 +1,6 @@
 from collections import defaultdict
 from itertools import count
+import numpy as np
 import torch
 
 BOS_SYM = '<BOS>'
@@ -31,58 +32,6 @@ def build_vocab(corpus):
 
     return c2i_dict, i2c_dict
 
-
-
-    # last, _ = list(i2c_dict.items())[-1]
-    # last += 1
-    # i2c_dict[last] = BOS_SYM
-    # last += 1
-    # i2c_dict[last] = EOS_SYM
-
-
-
-    # s = ''.join(corpus)
-    # c2i_dict = dict.fromkeys(s)
-    #
-    # #last, _ = c2i_dict.keys()[-1]
-    # _, last = list(c2i_dict.items())[-1]
-    # c2i_dict[BOS_SYM] = last
-    # last += 1
-    # c2i_dict[EOS_SYM] = last
-    #
-    # i2c_dict = dict((v, k) for k, v in c2i_dict.items())
-    #
-    # return c2i_dict, i2c_dict
-
-    # chr2int = map(lambda x: dict(enumerate(x)), corpus)
-    #
-    # print(chr2int)
-    #
-    # last, _ = chr2int[-1]
-    # last += 1
-    # chr2int[last] = "<BOS>"
-    # last += 1
-    # chr2int[last] = "<EOS>"
-    #
-    # int2chr = dict((value, key) for key, value in chr2int.iteritems())
-    #
-    # return chr2int, int2chr
-
-    # c2i_list = list()
-    # for s in corpus:
-    #     print("s: " + s)
-    #     s_list = list(s)
-    #     s_list.insert(0, BOS_SYM)
-    #     s_list.append(EOS_SYM)
-    #     c2i_list.extend(s_list)
-    #
-    # i2c_dict = dict(enumerate(c2i_list))
-    # c2i_dict = dict((v,k) for k,v in i2c_dict.items())
-    #
-    # return c2i_dict, i2c_dict
-
-
-    
 def sentence_to_vector(s, vocab, pad_with_bos=False):
     """
     Turn a string, s, into a list of indicies in from `vocab`. 
@@ -93,7 +42,17 @@ def sentence_to_vector(s, vocab, pad_with_bos=False):
     :returns: a list of the character indicies found in `s`
     :rtype: list
     """
-    raise NotImplementedError
+
+    chr_indices = list()
+
+    for c in s:
+        chr_indices.append(vocab[c])
+
+    if pad_with_bos:
+        chr_indices.insert(0, vocab[BOS_SYM])
+        chr_indices.append(vocab[EOS_SYM])
+
+    return chr_indices
     
 def sentence_to_tensor(s, vocab, pad_with_bos=False):
     """
@@ -103,7 +62,12 @@ def sentence_to_tensor(s, vocab, pad_with_bos=False):
     :returns: (1, n) tensor where n=len(s) and the values are character indicies
     :rtype: torch.Tensor
     """
-    raise NotImplementedError
+
+    list_indices = sentence_to_vector(s, vocab, pad_with_bos)
+
+    t = torch.Tensor(list_indices).unsqueeze(0)
+
+    return t
     
 def build_label_vocab(labels):
     """
@@ -115,4 +79,8 @@ def build_label_vocab(labels):
     :returns: two dictionaries, one mapping label to indicies and the other mapping indicies to label
     :rtype: dict-like object, dict-like object
     """
-    raise NotImplementedError
+
+    i2l_dict = dict(enumerate(set(labels)))
+    l2i_dict = dict((v,k) for k,v in i2l_dict.items())
+
+    return l2i_dict, i2l_dict
