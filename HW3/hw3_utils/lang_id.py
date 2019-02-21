@@ -6,15 +6,23 @@ import matplotlib.pyplot as plt
 import itertools
 from hw3_utils import vocab
 
+
+import torch.nn.functional as F
+
 class LangID(nn.Module):
     def __init__(self, input_vocab_n, embedding_dims, hidden_dims, lstm_layers, output_class_n):
         super(LangID, self).__init__()
-        
+
         # Saving this so that other parts of the class can re-use it
-        self.lstm_dims = hidden_dims
-        self.lstm_layers = lstm_layers
-        
+        # SBRAICH: subclass properties
+        self.lstm_dims = hidden_dims    # LSTM hidden dimensionality
+        self.lstm_layers = lstm_layers  # number of LSTM layers
+
+        # SBRAICH: Saving embedding_dims so that other parts of the class can re-use it
+        self.embed_dims = embedding_dims
+
         # Our input embedding layer:
+        # SBRAICH: subclass properties
         self.input_lookup = nn.Embedding(num_embeddings=input_vocab_n, embedding_dim=embedding_dims)
         
         # Note the use of batch_first in the LSTM initialization- this has to do with the layout of the
@@ -27,11 +35,44 @@ class LangID(nn.Module):
         # Then, the actual log-softmaxing:
         # Note that we are using LogSoftmax here, since we want to use negative log-likelihood as our loss function.
         self.softmax = nn.LogSoftmax(dim=2)
-        
+
+
+        self.hidden = self.init_hidden()
+
     # Expects a (1, n) tensor where n equals the length of the input sentence in characters
     # Will return a (output_class_n) tensor- one slot in the first dimension for each possible output class
+    # SBRAICH: Defines the computation performed at every call. Should be overridden by all subclasses.
+    #           https://pytorch.org/docs/stable/nn.html#torch.nn.Module.forward
     def forward(self, sentence_tensor):
-        raise NotImplementedError
+        e = self.input_lookup(sentence_tensor)
+        x = e.view(1, 18, 10)
+        h, self.hidden = self.lstm(x, self.hidden)
+        #o = self.output(h[-1])
+        #o = self.output(h[-1])
+        o = self.output(h[-1])
+        #y = self.softmax(o)
+        y = F.log_softmax(o, dim=1)
+        y = y.squeeze()[-1]
+
+        return y
+
+        #return nll(y_hat.squeeze(), y.squeeze().long()).item()
+
+        #raise NotImplementedError
+
+        # embeds = self.input_lookup(sentence_tensor)
+        # #x = embeds.view(sentence_tensor.size(0), self.embed_dims, -1)
+        # #x = embeds.view(self.embed_dims, 18, 10)
+        # x = embeds.view(1, 18, 10)
+        # lstm_out, self.hidden = self.lstm(x, self.hidden)
+        # output = self.output(lstm_out[-1])
+        # #lbl_space = self.output(lstm_out[-1])
+        # #lbl_score = F.log_softmax(lbl_space, dim=1)
+        # #lbl_score = nn.LogSoftmax(dim=2)
+        # lbl_score = self.softmax(output)
+        #
+        # return lbl_score
+
 
     # When we call the forward() method on a PyTorch RNN, we need to provide it with the previous
     # time-point's hidden state (or hidden and memory states, in the case of an LSTM).

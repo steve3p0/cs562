@@ -12,7 +12,7 @@ class TestLangID(unittest.TestCase):
     def setUp(self):
         global bi_text, bi_text_train, bi_text_test, bt_c2i, bt_i2c, bt_l2i, bt_i2l
 
-        bi_text = pd.read_csv("./data/sentences_bilingual.csv")
+        bi_text = pd.read_csv("../../data/sentences_bilingual.csv")
         bt_c2i, bt_i2c = vocab.build_vocab(bi_text.sentence.values)
         bt_l2i, bt_i2l = vocab.build_label_vocab(bi_text.lang.values)
         bi_text_train, bi_text_test = train_test_split(bi_text, test_size=0.2)
@@ -28,7 +28,10 @@ class TestLangID(unittest.TestCase):
             output_class_n=2
         )
 
-        out = li(vocab.sentence_to_tensor("this is a sentence", bt_c2i))
+        #out = li(vocab.sentence_to_tensor("this is a sentence", bt_c2i))
+
+        blah = vocab.sentence_to_tensor("this is a sentence", bt_c2i)
+        out = li(blah)
 
         eq_(out.shape[0], 2)
 
