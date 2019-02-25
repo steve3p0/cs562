@@ -67,6 +67,15 @@ class TestLangID(unittest.TestCase):
 
         eq_(len(y_hat_untrained), len(bi_text_test))
 
+    # Put all the lang_id model code here to test.
+    # Jupyter keeps producing the following error:
+    #   RuntimeError: Trying to backward through the graph a second time,
+    #   but the buffers have already been freed.
+    #   Specify retain_graph=True when calling backward the first time.
+    # This error is NOT reproduced here in the unittest.
+    # This error in not guaranteed to be raised, as per discussion here.
+    #   https://discuss.pytorch.org/t/understanding-graphs-and-state/224/2?u=kharshit
+    # I tried implementing some of the workarounds to no avail, but the same code works here
     def test_train_model(self):
 
         _bi_text = pd.read_csv("../../data/sentences_bilingual.csv")
@@ -107,3 +116,46 @@ class TestLangID(unittest.TestCase):
         print(f"Untrained Accuracy: {_acc_untrained}")
 
         assert_greater(_acc, 0.89)
+
+    def test_d2_3_train_model(self):
+
+        _bi_text = pd.read_csv("../../data/sentences_bilingual.csv")
+        _c2i, _i2c = vocab.build_vocab(bi_text.sentence.values)
+        _l2i, _i2l = vocab.build_label_vocab(bi_text.lang.values)
+
+        _li = lang_id.LangID(
+            input_vocab_n=len(_c2i),
+            embedding_dims=10,
+            hidden_dims=20,
+            lstm_layers=1,
+            output_class_n=2
+        )
+
+        trained_model = lang_id.train_model(
+            model=_li,
+            n_epochs=1,
+            training_data=bi_text_train,
+            c2i=_c2i, i2c=_i2c,
+            l2i=_l2i, i2l=_i2l
+        )
+
+        trained_model(vocab.sentence_to_tensor("this is a sentence", _c2i))
+        trained_model(vocab.sentence_to_tensor("quien estas", _c2i))
+
+        _acc, _y_hat = lang_id.eval_acc(trained_model, bi_text_test, _c2i, _i2c, _l2i, _i2l)
+        print(f"Trained Accuracy: {_acc}")
+
+        _untrained = lang_id.LangID(
+            input_vocab_n=len(_c2i),
+            embedding_dims=10,
+            hidden_dims=20,
+            lstm_layers=1,
+            output_class_n=2
+        )
+
+        _acc_untrained, _y_hat_untrained = lang_id.eval_acc(_untrained, bi_text_test, _c2i, _i2c, _l2i, _i2l)
+        print(f"Untrained Accuracy: {_acc_untrained}")
+
+        assert_greater(_acc, 0.89)
+
+
