@@ -45,10 +45,8 @@ class LangID(nn.Module):
     #           https://pytorch.org/docs/stable/nn.html#torch.nn.Module.forward
     def forward(self, sentence_tensor):
         e = self.input_lookup(sentence_tensor)
-        x = e.view(1, 18, 10)
+        x = e.view(e.shape[0], e.shape[1], e.shape[2])
         h, self.hidden = self.lstm(x, self.hidden)
-        #o = self.output(h[-1])
-        #o = self.output(h[-1])
         o = self.output(h[-1])
         #y = self.softmax(o)
         y = F.log_softmax(o, dim=1)
@@ -99,7 +97,24 @@ def predict_one(model, s, c2i, i2l):
     :returns: The predicted label for s
     :rtype: str
     """
-    raise NotImplementedError
+
+    with torch.no_grad():
+        sentence_tensor = vocab.sentence_to_tensor(s, c2i)
+
+        y_pred = model(sentence_tensor)
+        #data = y_pred.data.squeeze()[-1] # .squeeze()[-1]
+        #list = [element.item() for element in sentence_tensor.flatten()]
+        # predicted_value, predicted_index_tensor = torch.max(y_pred, -1)
+        # predicted_index = predicted_index_tensor.int()
+        # predicted_label = i2l[predicted_index]
+
+        list_predictions = y_pred.tolist()
+        max_value = max(list_predictions)
+        max_index = list_predictions.index(max_value)
+        predicted_label = i2l[max_index]
+
+        return predicted_label
+
     
 
 def eval_acc(model, test_data, c2i, i2c, l2i, i2l):
@@ -111,8 +126,25 @@ def eval_acc(model, test_data, c2i, i2c, l2i, i2l):
     :returns: The classification accuracy (n_correct / n_total), as well as the predictions
     :rtype: tuple(float, list(str))
     """
-    raise NotImplementedError
 
+    n_correct = 0
+    n_total = test_data.shape[0]
+    list_pred_lang = list()
+
+    for index, row in test_data.iterrows():
+        lang = row['lang']
+        sentence = row['sentence']
+
+        # def predict_one(model, s, c2i, i2l):
+        pred_lang = predict_one(model, sentence, c2i, i2l)
+        list_pred_lang.append(pred_lang)
+
+        if pred_lang == lang:
+            n_correct += 1
+
+    accuracy = n_correct / n_total
+
+    return (accuracy, list_pred_lang)
 
 #####################################
 # Provided utility function:

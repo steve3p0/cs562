@@ -63,6 +63,8 @@ class TestLangID(unittest.TestCase):
 
         # should be ≈50% accuracy
         acc_untrained, y_hat_untrained = lang_id.eval_acc(untrained, bi_text_test, bt_c2i, bt_i2c, bt_l2i, bt_i2l)
+
+        eq_(len(y_hat_untrained), len(bi_text_test))
         assert_greater(acc_untrained, 0.4)
         assert_less(acc_untrained, 0.6)
 
