@@ -278,49 +278,49 @@ class TestLangID(unittest.TestCase):
         #reload(lang_id);
         lang_id.pretty_conf_matrix(cm, ['deu', 'eng', 'fra', 'ita', 'spa'])
 
-        def test_train_model_multi_lstm5(self):
-            multi_text = pd.read_csv("../../data/sentences_multilingual.csv")
-            multi_text_train, multi_text_test = train_test_split(multi_text, test_size=0.2)
+    def test_train_model_multi_lstm5(self):
+        multi_text = pd.read_csv("../../data/sentences_multilingual.csv")
+        multi_text_train, multi_text_test = train_test_split(multi_text, test_size=0.2)
 
-            multi_text.groupby('lang').count()
-            multi_text_train.groupby('lang').count()
+        multi_text.groupby('lang').count()
+        multi_text_train.groupby('lang').count()
 
-            _c2i, _i2c = vocab.build_vocab(multi_text.sentence.values)
-            _l2i, _i2l = vocab.build_label_vocab(multi_text.lang.values)
+        _c2i, _i2c = vocab.build_vocab(multi_text.sentence.values)
+        _l2i, _i2l = vocab.build_label_vocab(multi_text.lang.values)
 
-            multi_class = lang_id.LangID(
-                input_vocab_n=len(_c2i),
-                embedding_dims=10,
-                hidden_dims=20,
-                lstm_layers=5,
-                output_class_n=5
-            )
+        multi_class = lang_id.LangID(
+            input_vocab_n=len(_c2i),
+            embedding_dims=10,
+            hidden_dims=20,
+            lstm_layers=5,
+            output_class_n=5
+        )
 
-            lang_id.train_model(
-                model=multi_class,
-                n_epochs=1,
-                training_data=multi_text_train,
-                c2i=_c2i, i2c=_i2c,
-                l2i=_l2i, i2l=_i2l
-            );
-            print("done")
+        lang_id.train_model(
+            model=multi_class,
+            n_epochs=1,
+            training_data=multi_text_train,
+            c2i=_c2i, i2c=_i2c,
+            l2i=_l2i, i2l=_i2l
+        );
+        print("done")
 
-            acc_multi, y_hat_multi = lang_id.eval_acc(multi_class, multi_text_test, _c2i, _i2c, _l2i, _i2l)
+        acc_multi, y_hat_multi = lang_id.eval_acc(multi_class, multi_text_test, _c2i, _i2c, _l2i, _i2l)
 
-            # Jupyter reported Accuracy: 0.6954
-            # Run 1: Accuracy: 0.6954
-            print(f"Accuracy: {acc_multi}")
-            assert_greater(acc_multi, 0.60)
+        # Jupyter reported Accuracy: 0.6954
+        # Run 1: Accuracy: 0.6954
+        print(f"Accuracy: {acc_multi}")
+        assert_greater(acc_multi, 0.60)
 
-            from sklearn.metrics import classification_report, confusion_matrix
-            y_multi = multi_text_test.lang.values
-            print(classification_report(y_multi, y_hat_multi))
+        from sklearn.metrics import classification_report, confusion_matrix
+        y_multi = multi_text_test.lang.values
+        print(classification_report(y_multi, y_hat_multi))
 
-            cm = confusion_matrix(y_multi, y_hat_multi)
-            cm
+        cm = confusion_matrix(y_multi, y_hat_multi)
+        cm
 
-            # reload(lang_id);
-            lang_id.pretty_conf_matrix(cm, ['deu', 'eng', 'fra', 'ita', 'spa'])
+        # reload(lang_id);
+        lang_id.pretty_conf_matrix(cm, ['deu', 'eng', 'fra', 'ita', 'spa'])
 
 
 
