@@ -64,15 +64,8 @@ def sentence_to_tensor(s, vocab, pad_with_bos=False):
     """
 
     list_indices = sentence_to_vector(s, vocab, pad_with_bos)
-
-    #arry_indices = np.asarray(list_indices, dtype=int)
-    #arry_indices = np.asarray(list_indices, dtype=np.long)
-    arry_indices = np.asarray(list_indices, dtype=np.int_)
     arry_indices = np.asarray(list_indices, dtype=np.longlong)
-
-    #t = torch.Tensor(list_indices, dbtype=int).unsqueeze(0)
     t = torch.from_numpy(arry_indices).unsqueeze(0)
-    #t.dbtype = torch.int64
 
     return t
     

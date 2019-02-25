@@ -14,15 +14,12 @@ class LangID(nn.Module):
         super(LangID, self).__init__()
 
         # Saving this so that other parts of the class can re-use it
-        # SBRAICH: subclass properties
         self.lstm_dims = hidden_dims    # LSTM hidden dimensionality
         self.lstm_layers = lstm_layers  # number of LSTM layers
 
-        # SBRAICH: Saving embedding_dims so that other parts of the class can re-use it
         self.embed_dims = embedding_dims
 
         # Our input embedding layer:
-        # SBRAICH: subclass properties
         self.input_lookup = nn.Embedding(num_embeddings=input_vocab_n, embedding_dim=embedding_dims)
         
         # Note the use of batch_first in the LSTM initialization- this has to do with the layout of the
@@ -35,9 +32,6 @@ class LangID(nn.Module):
         # Then, the actual log-softmaxing:
         # Note that we are using LogSoftmax here, since we want to use negative log-likelihood as our loss function.
         self.softmax = nn.LogSoftmax(dim=2)
-
-
-        #self.hidden = self.init_hidden()
 
     # Expects a (1, n) tensor where n equals the length of the input sentence in characters
     # Will return a (output_class_n) tensor- one slot in the first dimension for each possible output class
@@ -58,38 +52,7 @@ class LangID(nn.Module):
         y = F.log_softmax(o, dim=1)
         y = y.squeeze()[-1]
 
-        #detach_hidden = tuple()
-        #for t in self.hidden:
-        #    t.detach()
-
-        #self.hidden.detach_()
-        #self.hidden = self.hidden.detach()
-        #self.hidden.detach()
-
-        #torch.Tensor.detach()
-        # RuntimeError: Trying to backward through the graph a second time,
-        # but the buffers have already been freed.
-        # Specify retain_graph=True when calling backward the first time.
-
         return y
-
-        #return nll(y_hat.squeeze(), y.squeeze().long()).item()
-
-        #raise NotImplementedError
-
-        # embeds = self.input_lookup(sentence_tensor)
-        # #x = embeds.view(sentence_tensor.size(0), self.embed_dims, -1)
-        # #x = embeds.view(self.embed_dims, 18, 10)
-        # x = embeds.view(1, 18, 10)
-        # lstm_out, self.hidden = self.lstm(x, self.hidden)
-        # output = self.output(lstm_out[-1])
-        # #lbl_space = self.output(lstm_out[-1])
-        # #lbl_score = F.log_softmax(lbl_space, dim=1)
-        # #lbl_score = nn.LogSoftmax(dim=2)
-        # lbl_score = self.softmax(output)
-        #
-        # return lbl_score
-
 
     # When we call the forward() method on a PyTorch RNN, we need to provide it with the previous
     # time-point's hidden state (or hidden and memory states, in the case of an LSTM).
@@ -121,11 +84,6 @@ def predict_one(model, s, c2i, i2l):
         sentence_tensor = vocab.sentence_to_tensor(s, c2i)
 
         y_pred = model(sentence_tensor)
-        #data = y_pred.data.squeeze()[-1] # .squeeze()[-1]
-        #list = [element.item() for element in sentence_tensor.flatten()]
-        # predicted_value, predicted_index_tensor = torch.max(y_pred, -1)
-        # predicted_index = predicted_index_tensor.int()
-        # predicted_label = i2l[predicted_index]
 
         list_predictions = y_pred.tolist()
         max_value = max(list_predictions)
@@ -133,8 +91,6 @@ def predict_one(model, s, c2i, i2l):
         predicted_label = i2l[max_index]
 
         return predicted_label
-
-    
 
 def eval_acc(model, test_data, c2i, i2c, l2i, i2l):
     """

@@ -29,9 +29,8 @@ class TestLangID(unittest.TestCase):
         )
 
         #out = li(vocab.sentence_to_tensor("this is a sentence", bt_c2i))
-
-        blah = vocab.sentence_to_tensor("this is a sentence", bt_c2i)
-        out = li(blah)
+        t = vocab.sentence_to_tensor("this is a sentence", bt_c2i)
+        out = li(t)
 
         eq_(out.shape[0], 2)
 
@@ -63,22 +62,19 @@ class TestLangID(unittest.TestCase):
 
         # should be ≈50% accuracy
         acc_untrained, y_hat_untrained = lang_id.eval_acc(untrained, bi_text_test, bt_c2i, bt_i2c, bt_l2i, bt_i2l)
-
-        eq_(len(y_hat_untrained), len(bi_text_test))
         assert_greater(acc_untrained, 0.4)
         assert_less(acc_untrained, 0.6)
-
 
         eq_(len(y_hat_untrained), len(bi_text_test))
 
     def test_train_model(self):
 
-        bi_text = pd.read_csv("../../data/sentences_bilingual.csv")
-        c2i, i2c = vocab.build_vocab(bi_text.sentence.values)
-        l2i, i2l = vocab.build_label_vocab(bi_text.lang.values)
+        _bi_text = pd.read_csv("../../data/sentences_bilingual.csv")
+        _c2i, _i2c = vocab.build_vocab(bi_text.sentence.values)
+        _l2i, _i2l = vocab.build_label_vocab(bi_text.lang.values)
 
-        li = lang_id.LangID(
-            input_vocab_n=len(c2i),
+        _li = lang_id.LangID(
+            input_vocab_n=len(_c2i),
             embedding_dims=10,
             hidden_dims=20,
             lstm_layers=1,
@@ -86,28 +82,28 @@ class TestLangID(unittest.TestCase):
         )
 
         trained_model = lang_id.train_model(
-            model=li,
+            model=_li,
             n_epochs=1,
             training_data=bi_text_train,
-            c2i=c2i, i2c=i2c,
-            l2i=l2i, i2l=i2l
+            c2i=_c2i, i2c=_i2c,
+            l2i=_l2i, i2l=_i2l
         )
 
-        trained_model(vocab.sentence_to_tensor("this is a sentence", c2i))
-        trained_model(vocab.sentence_to_tensor("quien estas", c2i))
+        trained_model(vocab.sentence_to_tensor("this is a sentence", _c2i))
+        trained_model(vocab.sentence_to_tensor("quien estas", _c2i))
 
-        acc, y_hat = lang_id.eval_acc(trained_model, bi_text_test, c2i, i2c, l2i, i2l)
-        print(f"Trained Accuracy: {acc}")
+        _acc, _y_hat = lang_id.eval_acc(trained_model, bi_text_test, _c2i, _i2c, _l2i, _i2l)
+        print(f"Trained Accuracy: {_acc}")
 
-        untrained = lang_id.LangID(
-            input_vocab_n=len(c2i),
+        _untrained = lang_id.LangID(
+            input_vocab_n=len(_c2i),
             embedding_dims=10,
             hidden_dims=20,
             lstm_layers=1,
             output_class_n=2
         )
 
-        acc_untrained, y_hat_untrained = lang_id.eval_acc(untrained, bi_text_test, c2i, i2c, l2i, i2l)
+        _acc_untrained, _y_hat_untrained = lang_id.eval_acc(_untrained, bi_text_test, _c2i, _i2c, _l2i, _i2l)
+        print(f"Untrained Accuracy: {_acc_untrained}")
 
-        print(f"Untrained Accuracy: {acc_untrained}")
-
+        assert_greater(_acc, 0.89)
