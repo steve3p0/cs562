@@ -37,20 +37,39 @@ class LangID(nn.Module):
         self.softmax = nn.LogSoftmax(dim=2)
 
 
-        self.hidden = self.init_hidden()
+        #self.hidden = self.init_hidden()
 
     # Expects a (1, n) tensor where n equals the length of the input sentence in characters
     # Will return a (output_class_n) tensor- one slot in the first dimension for each possible output class
     # SBRAICH: Defines the computation performed at every call. Should be overridden by all subclasses.
     #           https://pytorch.org/docs/stable/nn.html#torch.nn.Module.forward
     def forward(self, sentence_tensor):
+        #sentence_tensor.retain
+
+        #with torch.no_grad():
         e = self.input_lookup(sentence_tensor)
         x = e.view(e.shape[0], e.shape[1], e.shape[2])
-        h, self.hidden = self.lstm(x, self.hidden)
+
+        #h, self.hidden = self.lstm(x, self.hidden)
+        h, _ = self.lstm(x, self.init_hidden())
+
         o = self.output(h[-1])
         #y = self.softmax(o)
         y = F.log_softmax(o, dim=1)
         y = y.squeeze()[-1]
+
+        #detach_hidden = tuple()
+        #for t in self.hidden:
+        #    t.detach()
+
+        #self.hidden.detach_()
+        #self.hidden = self.hidden.detach()
+        #self.hidden.detach()
+
+        #torch.Tensor.detach()
+        # RuntimeError: Trying to backward through the graph a second time,
+        # but the buffers have already been freed.
+        # Specify retain_graph=True when calling backward the first time.
 
         return y
 

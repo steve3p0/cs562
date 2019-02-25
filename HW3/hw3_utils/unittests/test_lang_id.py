@@ -70,6 +70,44 @@ class TestLangID(unittest.TestCase):
 
 
         eq_(len(y_hat_untrained), len(bi_text_test))
-    
-    
-    
+
+    def test_train_model(self):
+
+        bi_text = pd.read_csv("../../data/sentences_bilingual.csv")
+        c2i, i2c = vocab.build_vocab(bi_text.sentence.values)
+        l2i, i2l = vocab.build_label_vocab(bi_text.lang.values)
+
+        li = lang_id.LangID(
+            input_vocab_n=len(c2i),
+            embedding_dims=10,
+            hidden_dims=20,
+            lstm_layers=1,
+            output_class_n=2
+        )
+
+        trained_model = lang_id.train_model(
+            model=li,
+            n_epochs=1,
+            training_data=bi_text_train,
+            c2i=c2i, i2c=i2c,
+            l2i=l2i, i2l=i2l
+        )
+
+        trained_model(vocab.sentence_to_tensor("this is a sentence", c2i))
+        trained_model(vocab.sentence_to_tensor("quien estas", c2i))
+
+        acc, y_hat = lang_id.eval_acc(trained_model, bi_text_test, c2i, i2c, l2i, i2l)
+        print(f"Trained Accuracy: {acc}")
+
+        untrained = lang_id.LangID(
+            input_vocab_n=len(c2i),
+            embedding_dims=10,
+            hidden_dims=20,
+            lstm_layers=1,
+            output_class_n=2
+        )
+
+        acc_untrained, y_hat_untrained = lang_id.eval_acc(untrained, bi_text_test, c2i, i2c, l2i, i2l)
+
+        print(f"Untrained Accuracy: {acc_untrained}")
+
