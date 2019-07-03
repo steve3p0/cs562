@@ -9,7 +9,7 @@ from hw3_utils import lm
 class TestLm(unittest.TestCase):
     def setUp(self):
         global corpus, c2i, i2c
-        corpus = [l.strip() for l in open('data/towns_clean.txt')]
+        corpus = [l.strip() for l in open('../../data/towns_clean.txt')]
         c2i, i2c = vocab.build_vocab(corpus)
 
     def test_d3_1_setup(self):

@@ -38,13 +38,10 @@ class LangID(nn.Module):
     # SBRAICH: Defines the computation performed at every call. Should be overridden by all subclasses.
     #           https://pytorch.org/docs/stable/nn.html#torch.nn.Module.forward
     def forward(self, sentence_tensor):
-        #sentence_tensor.retain
 
-        #with torch.no_grad():
         e = self.input_lookup(sentence_tensor)
         x = e.view(e.shape[0], e.shape[1], e.shape[2])
 
-        #h, self.hidden = self.lstm(x, self.hidden)
         h, _ = self.lstm(x, self.init_hidden())
 
         o = self.output(h[-1])

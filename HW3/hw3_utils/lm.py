@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import itertools
 from hw3_utils import vocab
 
+import torch.nn.functional as F
+
 class NameGenerator(nn.Module):
     def __init__(self, input_vocab_size, n_embedding_dims, n_hidden_dims, n_lstm_layers, output_vocab_size):
         """
@@ -20,7 +22,13 @@ class NameGenerator(nn.Module):
         super(NameGenerator, self).__init__()
         self.lstm_dims = n_hidden_dims
         self.lstm_layers = n_lstm_layers
-        raise NotImplementedError
+
+        self.embed_dims = n_embedding_dims
+
+        self.input_lookup = nn.Embedding(num_embeddings=input_vocab_size, embedding_dim=n_embedding_dims)
+        self.lstm = nn.LSTM(input_size=n_embedding_dims, hidden_size=n_hidden_dims, num_layers=n_lstm_layers, batch_first=True)
+        self.output = nn.Linear(in_features=n_hidden_dims, out_features=output_vocab_size)
+        self.softmax = nn.LogSoftmax(dim=2)
         
     def forward(self, history_tensor, prev_hidden_state):
         """
@@ -29,8 +37,29 @@ class NameGenerator(nn.Module):
         Note: Make sure to return the LSTM hidden state, so that we can use this for
         sampling/generation in a one-character-at-a-time pattern, as in Goldberg 9.5!
         """        
-        raise NotImplementedError
+        e = self.input_lookup(history_tensor)
+        x = e.view(e.shape[0], e.shape[1], e.shape[2])
+
+        h, _ = self.lstm(x, self.init_hidden())
+
+        o = self.output(h[-1])
+        #y = self.softmax(o)
+        y = F.log_softmax(o, dim=1)
+        y = y.squeeze()[-1]
+
+        return y
+
+
+    def generate(self):
+        max_length = 10
+        last_character = ''
+        last_history = init_hidden()
+        for i in range(max_length)
+            # call forward(last_char, last_hist), save output and history into last_char and last_hist
+            # append output to the string that we're building up
+            # repeat
         
+
     def init_hidden(self):
         """
         Generate a blank initial history value, for use when we start predicting over a fresh sequence.
