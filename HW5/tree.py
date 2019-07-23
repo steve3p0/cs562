@@ -186,8 +186,6 @@ class Tree(object):
 
     @staticmethod
     def preterminal(obj):
-        #pre = False
-
         if obj.len() > 1:
             return False
 
@@ -267,7 +265,7 @@ class Tree(object):
 
         A mother is therefore collapsible into its daughter if it is not
         the root note, the daughter is an "only child", and the daughter
-        is neither terminal nor "pre-terminal" (the mother of a terminal).
+        is neither terminal nor "pre-terminal" (the motehr of a terminal).
 
         Algorithmically, this is as follows:
 
@@ -283,8 +281,6 @@ class Tree(object):
 
         Simple merge, with root and POS "distractors":
 
-        to play
-        >>> #s = '(TOP (S+VP (TO to) (VP (VB play))))'
         >>> s = '(TOP (S (VP (TO to) (VP (VB play)))))'
         >>> t = Tree.from_string(s)
         >>> t.collapse_unary()
@@ -297,8 +293,72 @@ class Tree(object):
             )
         )
 
+        Double merge, with both types of distractors:
+
+        >>> s = '(TOP (S (SBAR (VP (TO to) (VP (VB play))))))'
+        >>> t = Tree.from_string(s)
+        >>> t.collapse_unary()
+        (TOP
+            (S+SBAR+VP
+                (TO to)
+                (VP
+                    (VB play)
+                )
+            )
+        )
+
+        A long one:
+
+        >>> s = '''(TOP (S (S (VP (VBN Turned) (ADVP (RB loose)) (PP
+        ...        (IN in) (NP (NP (NNP Shane) (NNP Longman) (POS 's))
+        ...        (NN trading) (NN room))))) (, ,) (NP (DT the)
+        ...        (NN yuppie) (NNS dealers)) (VP (AUX do) (NP (NP
+        ...        (RB little)) (ADJP (RB right)))) (. .)))'''
+        >>> t = Tree.from_string(s)
+        >>> t.collapse_unary()
+        (TOP
+            (S
+                (S+VP
+                    (VBN Turned)
+                    (ADVP
+                        (RB loose)
+                    )
+                    (PP
+                        (IN in)
+                        (NP
+                            (NP
+                                (NNP Shane)
+                                (NNP Longman)
+                                (POS 's)
+                            )
+                            (NN trading)
+                            (NN room)
+                        )
+                    )
+                )
+                (, ,)
+                (NP
+                    (DT the)
+                    (NN yuppie)
+                    (NNS dealers)
+                )
+                (VP
+                    (AUX do)
+                    (NP
+                        (NP
+                            (RB little)
+                        )
+                        (ADJP
+                            (RB right)
+                        )
+                    )
+                )
+                (. .)
+            )
+        )
         """
 
+        #self = Tree.steal_grandchild(self)
         self = Tree.steal_grandchild(self)
         print(Tree.pretty(self))
 
@@ -313,6 +373,7 @@ class Tree(object):
                 continue
 
             label = Tree.label(mother)
+            #unary = Tree.unary(mother)
             unary = Tree.unary(grandma)
             slut = Tree.slut(mother)
 
@@ -320,6 +381,9 @@ class Tree(object):
             logging.debug('\tSlut: ' + str(slut))
             logging.debug('\tTerminal: ' + str(terminal))
 
+            #if unary and not slut and not terminal:
+            #if not slut and not terminal:
+            #if unary and not terminal:
             if unary and not slut and not terminal:
                 daughter = Tree.get_daughter(mother)
                 preterminal = Tree.terminal(daughter)
@@ -342,7 +406,8 @@ class Tree(object):
                     grandma.__setitem__(0, daughter)
                     #grandma = daughter
                     mother = None # DIE BITCH!!!!
-                    daughter.steal_grandchild()
+                    grandma.steal_grandchild()
+                    #daughter.steal_grandchild()
                 else:
                     mother.steal_grandchild()
             else:
