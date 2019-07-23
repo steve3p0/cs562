@@ -1,6 +1,8 @@
+#!/usr/bin/env python -O
 # tree.py: n-ary branching tree, reading trees from text, and transforms
 # Kyle Gorman <gormanky@ohsu.edu>
 
+import logging
 from re import escape, finditer
 from collections import namedtuple
 
@@ -194,18 +196,6 @@ class Tree(object):
 
         return False
 
-        # for daughter in obj:
-        #     return Tree.term
-        #     if not Tree.unary(daughter) or Tree.terminal(daughter):
-        #         break
-        #     for grand_d in daughter:
-        #         if not Tree.unary(grand_d):
-        #             break
-        #         if Tree.terminal(grand_d):
-        #             pre = True
-        #             break
-        # return pre
-
     @staticmethod
     def unary(obj):
         return len(obj) == 1
@@ -255,12 +245,8 @@ class Tree(object):
         return string
 
     def get_daughter(self):
-        print("\tget_daughter: " + Tree.label(self.daughters[0]))
+        logging.debug("\tget_daughter: " + Tree.label(self.daughters[0]))
         return self.daughters[0]
-        # for daughter in self:
-        #     print("\tget_daughter: " + daughter.label)
-        #     return daughter
-
 
     ###################################################
     # tree transform instance methods
@@ -313,46 +299,56 @@ class Tree(object):
 
         """
 
+        self = Tree.steal_grandchild(self)
+        print(Tree.pretty(self))
+
+    def steal_grandchild(self, join_char=CU_JOIN_CHAR):
         grandma = self
-        print("NODE: " + grandma.label)
+        logging.debug("NODE: " + grandma.label)
 
         for mother in grandma:
             terminal = Tree.terminal(mother)
             if terminal:
-                print('TERMINAL: ' + mother)
+                logging.debug('TERMINAL: ' + mother)
                 continue
 
             label = Tree.label(mother)
             unary = Tree.unary(grandma)
             slut = Tree.slut(mother)
 
-            print('\tUnary: ' + str(unary))
-            print('\tSlut: ' + str(slut))
-            print('\tTerminal: ' + str(terminal))
+            logging.debug('\tUnary: ' + str(unary))
+            logging.debug('\tSlut: ' + str(slut))
+            logging.debug('\tTerminal: ' + str(terminal))
 
             if unary and not slut and not terminal:
                 daughter = Tree.get_daughter(mother)
                 preterminal = Tree.terminal(daughter)
-                print('\tPreterminal: ' + str(preterminal))
+                logging.debug('\tPreterminal: ' + str(preterminal))
 
                 # COLLAPSE!!!!
                 # Collapse node onto its single child
                 if not preterminal:
-                    print('\tCOLLAPSE ' + label + ' on to ' + daughter.label)
+                    logging.debug('\tCOLLAPSE ' + label + ' on to ' + daughter.label)
 
                     # grandma  -->   grandma
                     # mother (dies)     |
                     # daughter -->  daughter
 
                     daughter.label = mother.label + '+' + daughter.label
-                    grandma.daughters = daughter
+                    #grandma.daughter = daughter
+                    #self = daughter
+                    #grandma.Tree(0, daughter)
+                    #grandma = self(0, daughter)
+                    grandma.__setitem__(0, daughter)
+                    #grandma = daughter
                     mother = None # DIE BITCH!!!!
-                    daughter.collapse_unary()
+                    daughter.steal_grandchild()
                 else:
-                    mother.collapse_unary()
+                    mother.steal_grandchild()
             else:
-                mother.collapse_unary()
+                mother.steal_grandchild()
 
+        return grandma
 
 if __name__ == '__main__':
     import doctest
