@@ -1,4 +1,3 @@
-#!/usr/bin/env python -O
 # tree.py: n-ary branching tree, reading trees from text, and transforms
 # Kyle Gorman <gormanky@ohsu.edu>
 
@@ -177,8 +176,43 @@ class Tree(object):
         return not hasattr(obj, 'label')
 
     @staticmethod
+    def label(obj):
+        terminal = Tree.terminal(obj)
+        if terminal:
+            return obj
+        return obj.label
+
+    @staticmethod
+    def preterminal(obj):
+        #pre = False
+
+        if obj.len() > 1:
+            return False
+
+        if Tree.terminal(obj.daughters[0]):
+            return True
+
+        return False
+
+        # for daughter in obj:
+        #     return Tree.term
+        #     if not Tree.unary(daughter) or Tree.terminal(daughter):
+        #         break
+        #     for grand_d in daughter:
+        #         if not Tree.unary(grand_d):
+        #             break
+        #         if Tree.terminal(grand_d):
+        #             pre = True
+        #             break
+        # return pre
+
+    @staticmethod
     def unary(obj):
         return len(obj) == 1
+
+    @staticmethod
+    def slut(obj):
+        return len(obj) > 1
 
     ###################################################
     # string representations
@@ -220,29 +254,37 @@ class Tree(object):
         string += RDEL
         return string
 
+    def get_daughter(self):
+        print("\tget_daughter: " + Tree.label(self.daughters[0]))
+        return self.daughters[0]
+        # for daughter in self:
+        #     print("\tget_daughter: " + daughter.label)
+        #     return daughter
+
+
     ###################################################
     # tree transform instance methods
 
     def collapse_unary(self, join_char=CU_JOIN_CHAR):
         """
         Return a copy of the tree in which unary productions (i.e.,
-        productions with one daughter) have been removed. 
+        productions with one daughter) have been removed.
 
         There are two classes of unary production that we do *not* want to collapse:
-        
+
         * In Penn Treebank style, the root is often a unary production,
           but it is not collapsed. This allows for a special root label
           (e.g., "TOP") to be used to indicate successful parsing.
-        * In Penn Treebank style, each POS tag node is an only child 
-          produced by a "syntactic" mother. We do not want to collapse these nodes either, 
+        * In Penn Treebank style, each POS tag node is an only child
+          produced by a "syntactic" mother. We do not want to collapse these nodes either,
           since we want to be able to use them as inputs for chart parsing.
 
-        A mother is therefore collapsible into its daughter if it is not 
+        A mother is therefore collapsible into its daughter if it is not
         the root note, the daughter is an "only child", and the daughter
         is neither terminal nor "pre-terminal" (the mother of a terminal).
 
         Algorithmically, this is as follows:
-        
+
         * For each head immediately below the root:
             - If head is terminal, continue
             - Recursively apply the function
@@ -271,39 +313,55 @@ class Tree(object):
 
         """
 
-        print(self.label)
+        #print(self.label)
 
-        #print(self.unary(self))
-        #print(self.unary(self.daughters))
-        #is_unary = self.unary(self)
-        #print(is_unary)
-        for daughter in self:
-            is_unary = self.unary(daughter)
-            if Tree.terminal(daughter):
-                print("terminal: "  + daughter)
-            elif daughter.label == 'POS':
-                print('POS: Piece of of SHIT')
-                daughter.collapse_unary()
-            else:
-                # Node is neither terminal nor POS
-                # Now check if it is preterminal
-                preterminal = False
-                #for grandaughter in daughter.daughters:
-                for grandaughter in daughter:
-                    if Tree.terminal(grandaughter):
-                        preterminal = True
-                        break
-                if preterminal:
-                    print("pre-terminal: " + daughter.label)
-                    daughter.collapse_unary()
-                elif Tree.unary(daughter) == True:
-                    print("UNARY collapse: " + daughter.label)
-                    daughter.collapse_unary()
+        # self_label = Tree.label(self)
+        # self_unary = Tree.unary(self)
+        # self_slut = not Tree.unary(node)
+        # self_terminal = Tree.terminal(node)
+        # self_preterminal = Tree.preterminal(node)
+
+
+        for node in self:
+
+            terminal = Tree.terminal(node)
+            if terminal:
+                print('TERMINAL: ' + node)
+                continue
+
+            label = Tree.label(node)
+            unary = Tree.unary(self)
+            slut = Tree.slut(node)
+
+            print('NODE: ' + label)
+            print('\tUnary: ' + str(unary))
+            print('\tSlut: ' + str(slut))
+            print('\tTerminal: ' + str(terminal))
+
+            # Collapse node onto its single child
+            if unary and not slut and not terminal:
+
+                daughter = Tree.get_daughter(node)
+                preterminal = Tree.terminal(daughter)
+                print('\tPreterminal: ' + str(preterminal))
+
+                if not preterminal:
+                    # if node's mother is not root
+                    # if node is UNARY
+                    # if node is NOT TERMINAL
+                    # if node is NOT PRE-TERMINAL
+                    # THEN COLLAPSE
+                    #daughter = Tree.get_daughter(node)
+                    #print('\tCOLLAPSE?')
+                    print('\tCOLLAPSE ' + label + ' on to ' + daughter.label)
+                    node.collapse_unary()
                 else:
-                    print("FUCKING ELSE: " + daughter.label)
-                    #print(self.unary(self))
-                    #print(self.unary(self.daughters))
-                    daughter.collapse_unary()
+                    print('\tFUCKING ELSE 1')
+                    node.collapse_unary()
+            else:
+                print('\tFUCKING ELSE 2')
+                node.collapse_unary()
+
 
 
 
