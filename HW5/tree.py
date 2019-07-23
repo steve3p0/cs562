@@ -313,58 +313,45 @@ class Tree(object):
 
         """
 
-        #print(self.label)
+        grandma = self
+        print("NODE: " + grandma.label)
 
-        # self_label = Tree.label(self)
-        # self_unary = Tree.unary(self)
-        # self_slut = not Tree.unary(node)
-        # self_terminal = Tree.terminal(node)
-        # self_preterminal = Tree.preterminal(node)
-
-
-        for node in self:
-
-            terminal = Tree.terminal(node)
+        for mother in grandma:
+            terminal = Tree.terminal(mother)
             if terminal:
-                print('TERMINAL: ' + node)
+                print('TERMINAL: ' + mother)
                 continue
 
-            label = Tree.label(node)
-            unary = Tree.unary(self)
-            slut = Tree.slut(node)
+            label = Tree.label(mother)
+            unary = Tree.unary(grandma)
+            slut = Tree.slut(mother)
 
-            print('NODE: ' + label)
             print('\tUnary: ' + str(unary))
             print('\tSlut: ' + str(slut))
             print('\tTerminal: ' + str(terminal))
 
-            # Collapse node onto its single child
             if unary and not slut and not terminal:
-
-                daughter = Tree.get_daughter(node)
+                daughter = Tree.get_daughter(mother)
                 preterminal = Tree.terminal(daughter)
                 print('\tPreterminal: ' + str(preterminal))
 
+                # COLLAPSE!!!!
+                # Collapse node onto its single child
                 if not preterminal:
-                    # if node's mother is not root
-                    # if node is UNARY
-                    # if node is NOT TERMINAL
-                    # if node is NOT PRE-TERMINAL
-                    # THEN COLLAPSE
-                    #daughter = Tree.get_daughter(node)
-                    #print('\tCOLLAPSE?')
                     print('\tCOLLAPSE ' + label + ' on to ' + daughter.label)
-                    node.collapse_unary()
+
+                    # grandma  -->   grandma
+                    # mother (dies)     |
+                    # daughter -->  daughter
+
+                    daughter.label = mother.label + '+' + daughter.label
+                    grandma.daughters = daughter
+                    mother = None # DIE BITCH!!!!
+                    daughter.collapse_unary()
                 else:
-                    print('\tFUCKING ELSE 1')
-                    node.collapse_unary()
+                    mother.collapse_unary()
             else:
-                print('\tFUCKING ELSE 2')
-                node.collapse_unary()
-
-
-
-
+                mother.collapse_unary()
 
 
 if __name__ == '__main__':
