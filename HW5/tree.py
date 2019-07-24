@@ -172,7 +172,7 @@ class Tree(object):
                 parent = None # You are a terrible parent.. DIE!!!
 
     def get_daughter(self):
-        #logging.debug("\tget_daughter: " + Tree.label(self.daughters[0]))
+        logging.debug("\tget_daughter: " + Tree.label(self.daughters[0]))
         return self.daughters[0]
 
     ############################################################################
@@ -183,24 +183,7 @@ class Tree(object):
         return not hasattr(obj, 'label')
 
     @staticmethod
-    def label(obj):
-        terminal = Tree.terminal(obj)
-        if terminal:
-            return obj
-        return obj.label
-
-    @staticmethod
     def preterminal(obj):
-        if obj.len() > 1:
-            return False
-
-        if Tree.terminal(obj.daughters[0]):
-            return True
-
-        return False
-
-    #@staticmethod
-    def terminal_children(obj):
         for child in obj:
             return not hasattr(child, 'label')
 
@@ -209,6 +192,13 @@ class Tree(object):
     @staticmethod
     def unary(obj):
         return len(obj) == 1
+
+    @staticmethod
+    def label(obj):
+        terminal = Tree.terminal(obj)
+        if terminal:
+            return obj
+        return obj.label
 
     ############################################################################
     # string representations
@@ -363,12 +353,12 @@ class Tree(object):
         """
 
         collapsed_tree = Tree.kidnap_grandchild(self)
-        return Tree(self.label, collapsed_tree)
+        return Tree(Tree.Label(self), collapsed_tree)
         #print(Tree.pretty(collapsed_tree))
 
     def kidnap_grandchild(self, join_char=CU_JOIN_CHAR):
         ggma = self
-        logging.debug("NODE: " + ggma.label)
+        logging.debug("NODE: " + Tree.label(ggma))
 
         for grandma in ggma:
             grandma_terminal = Tree.terminal(grandma)
@@ -387,21 +377,21 @@ class Tree(object):
                 mother = Tree.get_daughter(grandma)
                 mother_terminal = Tree.terminal(mother)
                 # everyone of the daughters must be non-terminal
-                children_terminal = Tree.terminal_children(mother)
+                children_terminal = Tree.preterminal(mother)
 
                 logging.debug('\tMother Terminal: ' + str(mother_terminal))
                 logging.debug('\tChilren Terminal: ' + str(children_terminal))
 
                 if not mother_terminal and not children_terminal:
                     # COLLAPSE!!!!
-                    logging.debug('\tCOLLAPSE ' + grandma_label + ' on to ' + mother.label)
+                    logging.debug('\tCOLLAPSE ' + grandma_label + ' on to ' + Tree.label(mother))
 
                     # great-grandma  -->   grandma
                     # grandma (dies)          |
                     # mother         -->   mother
 
                     # Collapse Labels
-                    mother.label = grandma.label + '+' + mother.label
+                    mother.label = grandma.label + '+' + Tree.label(mother)
 
                     # Great-grandma (ggma) kills grandma and adopts mother
                     ggma.kidnap_child_then_kill_parent(mother, grandma)
