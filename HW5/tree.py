@@ -60,7 +60,7 @@ class Tree(object):
         self.label = label
         self.daughters = daughters if daughters else []
 
-    ###################################################
+    ############################################################################
     # construct trees from string and file objects
 
     @classmethod
@@ -125,39 +125,6 @@ class Tree(object):
         return stack[0][1][0]
 
     @classmethod
-    def from_stream_original(cls, handle):
-        r"""
-        Given a treebank-style data *.psd file, yield all its Trees, using
-        `from_string` above
-
-        Mock up a real file using cStringIO
-
-        >>> from io import StringIO
-        >>> s = '(ADVP (ADV widely) (CONJ and) (ADV friendly))'
-        >>> source = StringIO(s.replace(' ', '\n\n\n') + s)
-        >>> (one, two) = Tree.from_stream(source)
-        >>> str(one) == str(two)
-        True
-        """
-        # TODO I am deeply unhappy with this solution. It would be nicer
-        # to use the cleverer logic found in Tree.from_string instead.
-        stack = 0
-        start = 0
-        string = handle.read()
-        for m in finditer(DELIMITERS, string):
-            # left bracket
-            if m.group(1):
-                stack += 1
-            # right bracket
-            else:
-                stack -= 1
-                # if brackets match, parse it
-                if stack == 0:
-                    end = m.end()
-                    yield Tree.from_string(string[start:end])
-                    start = end
-
-    @classmethod
     def from_stream(cls, handle):
         # TODO I am deeply unhappy with this solution. It would be nicer
         # to use the cleverer logic found in Tree.from_string instead.
@@ -177,9 +144,7 @@ class Tree(object):
                     yield Tree.from_string(string[start:end])
                     start = end
 
-
-
-    ###################################################
+    ############################################################################
     # magic methods for access, etc., all using self.daughters
 
     def __iter__(self):
@@ -191,12 +156,6 @@ class Tree(object):
     def __setitem__(self, i, value):
         self.daughters[i] = value
 
-    def kidnap_child_then_kill_parent(self, child, parent):
-        for i in range(len(self)):
-            if self.daughters[i] is parent:
-                self.daughters[i] = child
-                parent = None # You are a terrible parent.. DIE!!!
-
     def __len__(self):
         return len(self.daughters)
 
@@ -206,7 +165,17 @@ class Tree(object):
     def append(self, other):
         self.daughters.append(other)
 
-    ###################################################
+    def kidnap_child_then_kill_parent(self, child, parent):
+        for i in range(len(self)):
+            if self.daughters[i] is parent:
+                self.daughters[i] = child
+                parent = None # You are a terrible parent.. DIE!!!
+
+    def get_daughter(self):
+        #logging.debug("\tget_daughter: " + Tree.label(self.daughters[0]))
+        return self.daughters[0]
+
+    ############################################################################
     # static methods for traversal (etc.)
 
     @staticmethod
@@ -230,6 +199,7 @@ class Tree(object):
 
         return False
 
+    #@staticmethod
     def terminal_children(obj):
         for child in obj:
             return not hasattr(child, 'label')
@@ -240,11 +210,7 @@ class Tree(object):
     def unary(obj):
         return len(obj) == 1
 
-    @staticmethod
-    def slut(obj):
-        return len(obj) > 1
-
-    ###################################################
+    ############################################################################
     # string representations
 
     def __repr__(self):
@@ -284,11 +250,7 @@ class Tree(object):
         string += RDEL
         return string
 
-    def get_daughter(self):
-        #logging.debug("\tget_daughter: " + Tree.label(self.daughters[0]))
-        return self.daughters[0]
-
-    ###################################################
+    ############################################################################
     # tree transform instance methods
 
     def collapse_unary(self, join_char=CU_JOIN_CHAR):
@@ -432,25 +394,18 @@ class Tree(object):
 
                 if not mother_terminal and not children_terminal:
                     # COLLAPSE!!!!
-                    # Collapse node onto its single child
-                    #if '+' not in mother.label and '+' not in grandma_label:
-                    #if '+' not in grandma_label:
                     logging.debug('\tCOLLAPSE ' + grandma_label + ' on to ' + mother.label)
 
                     # great-grandma  -->   grandma
                     # grandma (dies)          |
                     # mother         -->   mother
 
-                    # Collapse Lables
+                    # Collapse Labels
                     mother.label = grandma.label + '+' + mother.label
 
                     # Great-grandma (ggma) kills grandma and adopts mother
                     ggma.kidnap_child_then_kill_parent(mother, grandma)
-                    #ggma.__setitem__(0, mother)
-                    #grandma = None # DIE BITCH!!!!
                     ggma.kidnap_grandchild()
-                    #else:
-                    #    grandma.kidnap_grandchild()
                 else:
                     grandma.kidnap_grandchild()
             else:

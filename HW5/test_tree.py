@@ -504,9 +504,3 @@ class TestCollapseUnary(unittest.TestCase):
         print(actual)
 
         eq_(actual, expect)
-
-    #@unittest.skip(("skip attribute")
-
-
-
-
