@@ -27,7 +27,7 @@ class TestHelperFunctions(unittest.TestCase):
             print('BEFORE *************************')
             print(before)
 
-            tree_collapsed = t.kidnap_grandchild()
+            tree_collapsed = t.kidnap_daughter()
             after = Tree.pretty(tree_collapsed)
             print('AFTER *************************')
             print(after)
@@ -55,7 +55,7 @@ class TestCollapseUnary(unittest.TestCase):
         # Simple merge, with root and POS "distractors":
         s = '(TOP (S (VP (TO to) (VP (VB play)))))'
         t = Tree.from_string(s)
-        col_tree = t.kidnap_grandchild()
+        col_tree = t.kidnap_daughter()
         actual = col_tree.pretty()
         expected = inspect.cleandoc("""
             (TOP
@@ -74,7 +74,7 @@ class TestCollapseUnary(unittest.TestCase):
         # Double merge, with both types of distractors:
         s = '(TOP (S (SBAR (VP (TO to) (VP (VB play))))))'
         t = Tree.from_string(s)
-        col_tree = t.kidnap_grandchild()
+        col_tree = t.kidnap_daughter()
         actual = col_tree.pretty()
         expected = inspect.cleandoc("""
             (TOP
@@ -99,7 +99,7 @@ class TestCollapseUnary(unittest.TestCase):
             (RB little)) (ADJP (RB right)))) (. .)))""")
 
         t = Tree.from_string(s)
-        col_tree = t.kidnap_grandchild()
+        col_tree = t.kidnap_daughter()
         actual = col_tree.pretty()
         expected = inspect.cleandoc("""
             (TOP
@@ -162,7 +162,7 @@ class TestCollapseUnary(unittest.TestCase):
             print('TEST: ' + str(index) + '  ************************************')
             print(before)
 
-            tree_collapsed = Tree.kidnap_grandchild(t)
+            tree_collapsed = Tree.kidnap_daughter(t)
             actual = Tree.pretty(tree_collapsed)
             print('AFTER *************************')
             print(actual)
@@ -346,7 +346,7 @@ class TestCollapseUnary(unittest.TestCase):
         print('EXPECTED: *************************')
         print(expect)
 
-        col_tree = t.kidnap_grandchild()
+        col_tree = t.kidnap_daughter()
         actual = col_tree.pretty()
         print('ACTUAL *************************')
         print(actual)
@@ -391,7 +391,7 @@ class TestCollapseUnary(unittest.TestCase):
         print(expect)
 
         # Actual Value
-        col_tree = t.kidnap_grandchild()
+        col_tree = t.kidnap_daughter()
         actual = Tree.pretty(col_tree)
         print('ACTUAL *************************')
         print(actual)
@@ -430,7 +430,7 @@ class TestCollapseUnary(unittest.TestCase):
         print(expect)
 
         # Actual Value
-        col_tree = t.kidnap_grandchild()
+        col_tree = t.kidnap_daughter()
         actual = Tree.pretty(col_tree)
         print('ACTUAL *************************')
         print(actual)
@@ -465,7 +465,7 @@ class TestCollapseUnary(unittest.TestCase):
         print(expect)
 
         # Actual Value
-        col_tree = t.kidnap_grandchild()
+        col_tree = t.kidnap_daughter()
         actual = Tree.pretty(col_tree)
         print('ACTUAL *************************')
         print(actual)
@@ -498,7 +498,7 @@ class TestCollapseUnary(unittest.TestCase):
         print(expect)
 
         # Actual Value
-        col_tree = t.kidnap_grandchild()
+        col_tree = t.kidnap_daughter()
         actual = Tree.pretty(col_tree)
         print('ACTUAL *************************')
         print(actual)

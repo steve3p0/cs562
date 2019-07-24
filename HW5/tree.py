@@ -352,56 +352,84 @@ class Tree(object):
         )
         """
 
-        collapsed_tree = Tree.kidnap_grandchild(self)
+        collapsed_tree = Tree.kidnap_daughter(self)
         return Tree(Tree.Label(self), collapsed_tree)
         #print(Tree.pretty(collapsed_tree))
 
-    def kidnap_grandchild(self, join_char=CU_JOIN_CHAR):
-        ggma = self
-        logging.debug("NODE: " + Tree.label(ggma))
+    def kidnap_daughter(self, join_char=CU_JOIN_CHAR):
+        """ Grandmother kidnaps the daughter, kills the mother and buries her in the daughter's house
+        NOTE: It's best not to take the point of view of any of these family members.  Look at it from the outside
+              looking at 5 generations of a family starting with grandma, mother, daughter, granddaughters
+              For example, don't think "check if the grandma's daughter node is terminal"
+              Instead: "check if the mother node is terminal.
+        To collapse a unary non-terminal mother onto a non-terminal (and non-preterminal) daughter, the following
+        conditions are noted for clarity:
+           - The 1st generation (grandma) can be root (Eve)
+           - The 2nd generation (mother) will die and be buried in the daughter's (3rd generation) front yard
+           - The 3rd generation (daughter) can't be terminal
+           - The 4th generation (granddaughter) can't be terminal
+           - The 5th generation (great-granddaughters) CAN be terminal
 
-        for grandma in ggma:
-            grandma_terminal = Tree.terminal(grandma)
-            if grandma_terminal:
-                logging.debug('TERMINAL: ' + grandma)
+        That leaves you with the 2nd generation (mother) and 3rd (daughter) generations.
+        The 2nd will collapse onto the 3rd IF....
+           - The 2nd Generation (mother) is not root, and not terminal
+           - The 3rd Generation (daughter) node is unary, and not terminal
+           - The 4th Generation (granddaughters) has children (known as great-granddaughters) that can be terminal
+        So, 1st generation (grandma) is the only that can be root (it doesn't have to be, but it can)
+        AND there must exist a 5th generation that may or may not be terminal.
+        Keyword arguments:
+            grandma  -- Grandmother node
+        Important local vars:
+            mother   -- mother node to collapse
+            daughter -- daughter node that mother collapse to
+        """
+
+        grandma = self
+        logging.debug("Grandma: " + Tree.label(grandma))
+
+        for mother in grandma:
+            mother_is_terminal = Tree.terminal(mother)
+            if mother_is_terminal:
+                logging.debug('TERMINAL: ' + Tree.label(mother))
                 continue
+                #break
 
-            grandma_label = Tree.label(grandma)
-            mother_unary = Tree.unary(grandma)
+            mother_label = Tree.label(mother)
+            daughter_is_unary = Tree.unary(mother)
 
-            logging.debug('\tMother Unary: ' + str(mother_unary))
-            logging.debug('\tGrandma Terminal: ' + str(grandma_terminal))
+            logging.debug('\tDaughter Unary: ' + str(daughter_is_unary))
+            logging.debug('\tMother Terminal: ' + str(mother_is_terminal))
 
-            if not grandma_terminal and mother_unary:
+            if daughter_is_unary:
                 # check if mother is terminal
-                mother = Tree.get_daughter(grandma)
-                mother_terminal = Tree.terminal(mother)
+                daughter = Tree.get_daughter(mother)
+                daughter_is_terminal = Tree.terminal(daughter)
                 # everyone of the daughters must be non-terminal
-                children_terminal = Tree.preterminal(mother)
+                granddaughters_are_terminal = Tree.preterminal(daughter)
 
-                logging.debug('\tMother Terminal: ' + str(mother_terminal))
-                logging.debug('\tChilren Terminal: ' + str(children_terminal))
+                logging.debug('\tDaughter Terminal: ' + str(daughter_is_terminal))
+                logging.debug('\tGranddaughters Terminal: ' + str(granddaughters_are_terminal))
 
-                if not mother_terminal and not children_terminal:
+                if not daughter_is_terminal and not granddaughters_are_terminal:
                     # COLLAPSE!!!!
-                    logging.debug('\tCOLLAPSE ' + grandma_label + ' on to ' + Tree.label(mother))
+                    logging.debug('\tCOLLAPSE ' + mother_label + ' on to ' + Tree.label(daughter))
 
-                    # great-grandma  -->   grandma
-                    # grandma (dies)          |
-                    # mother         -->   mother
+                    # grandma  -->       grandma
+                    # mother (homeless)     |
+                    # daughter -->   mother + daugther
 
                     # Collapse Labels
-                    mother.label = grandma.label + '+' + Tree.label(mother)
+                    daughter.label = mother.label + '+' + Tree.label(daughter)
 
-                    # Great-grandma (ggma) kills grandma and adopts mother
-                    ggma.kidnap_child_then_kill_parent(mother, grandma)
-                    ggma.kidnap_grandchild()
+                    # Grandma (grandma) kills mother, adopts daughter and buries mother in daughter's house
+                    grandma.kidnap_child_then_kill_parent(daughter, mother)
+                    grandma.kidnap_daughter(join_char)
                 else:
-                    grandma.kidnap_grandchild()
+                    mother.kidnap_daughter(join_char)
             else:
-                grandma.kidnap_grandchild()
+                mother.kidnap_daughter(join_char)
 
-        return ggma
+        return grandma
 
 if __name__ == '__main__':
     import doctest
