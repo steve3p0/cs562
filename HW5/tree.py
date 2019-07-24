@@ -172,7 +172,7 @@ class Tree(object):
                 parent = None # You are a terrible parent.. DIE!!!
 
     def get_daughter(self):
-        logging.debug("\tget_daughter: " + Tree.label(self.daughters[0]))
+        logging.debug("\tget_daughter: " + Tree.get_label(self.daughters[0]))
         return self.daughters[0]
 
     ############################################################################
@@ -194,7 +194,7 @@ class Tree(object):
         return len(obj) == 1
 
     @staticmethod
-    def label(obj):
+    def get_label(obj):
         terminal = Tree.terminal(obj)
         if terminal:
             return obj
@@ -353,8 +353,8 @@ class Tree(object):
         """
 
         collapsed_tree = Tree.kidnap_daughter(self)
-        return Tree(Tree.Label(self), collapsed_tree)
-        #print(Tree.pretty(collapsed_tree))
+        return Tree(Tree.get_label(self), collapsed_tree)
+
 
     def kidnap_daughter(self, join_char=CU_JOIN_CHAR):
         """ Grandmother kidnaps the daughter, kills the mother and buries her in the daughter's house
@@ -385,16 +385,17 @@ class Tree(object):
         """
 
         grandma = self
-        logging.debug("Grandma: " + Tree.label(grandma))
+
+        logging.debug("Grandma: " + Tree.get_label(grandma))
 
         for mother in grandma:
             mother_is_terminal = Tree.terminal(mother)
             if mother_is_terminal:
-                logging.debug('TERMINAL: ' + Tree.label(mother))
+                logging.debug('TERMINAL: ' + Tree.get_label(mother))
                 continue
                 #break
 
-            mother_label = Tree.label(mother)
+            mother_label = Tree.get_label(mother)
             daughter_is_unary = Tree.unary(mother)
 
             logging.debug('\tDaughter Unary: ' + str(daughter_is_unary))
@@ -412,14 +413,14 @@ class Tree(object):
 
                 if not daughter_is_terminal and not granddaughters_are_terminal:
                     # COLLAPSE!!!!
-                    logging.debug('\tCOLLAPSE ' + mother_label + ' on to ' + Tree.label(daughter))
+                    logging.debug('\tCOLLAPSE ' + mother_label + ' on to ' + Tree.get_label(daughter))
 
                     # grandma  -->       grandma
                     # mother (homeless)     |
                     # daughter -->   mother + daugther
 
                     # Collapse Labels
-                    daughter.label = mother.label + '+' + Tree.label(daughter)
+                    daughter.label = mother_label + join_char + Tree.get_label(daughter)
 
                     # Grandma (grandma) kills mother, adopts daughter and buries mother in daughter's house
                     grandma.kidnap_child_then_kill_parent(daughter, mother)
