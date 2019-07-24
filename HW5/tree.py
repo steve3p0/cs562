@@ -401,10 +401,10 @@ class Tree(object):
             logging.debug('\tMother Terminal: ' + str(mother_is_terminal))
 
             if daughter_is_unary:
-                # check if mother is terminal
+                # check if daughter is terminal
                 daughter = Tree.get_daughter(mother)
                 daughter_is_terminal = Tree.terminal(daughter)
-                # everyone of the daughters must be non-terminal
+                # everyone of the granddaughters must be non-terminal
                 granddaughters_are_terminal = Tree.preterminal(daughter)
 
                 logging.debug('\tDaughter Terminal: ' + str(daughter_is_terminal))
