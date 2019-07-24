@@ -2,6 +2,7 @@ import unittest
 from nose.tools import eq_, assert_almost_equals, assert_greater_equal
 import inspect
 from tree import Tree
+from io import StringIO
 
 import logging
 
@@ -10,7 +11,8 @@ class TestTree(unittest.TestCase):
 
     def setUp(self):
         # This is where you.. set up things...
-        logging.disable(logging.CRITICAL)
+        #logging.disable(logging.CRITICAL)
+        logging.disable(logging.DEBUG)
 
     def test_kidnap_grandchild_simple(self):
         # Simple merge, with root and POS "distractors":
@@ -103,6 +105,28 @@ class TestTree(unittest.TestCase):
             )""")
 
         eq_(actual, expected)
+
+    def test_from_stream(self):
+        s = '(ADVP (ADV widely) (CONJ and) (ADV friendly))'
+        source = StringIO(s.replace(' ', '\n\n\n') + s)
+        (one, two) = Tree.from_stream(source)
+        actual = str(one)
+        expected = str(two)
+        eq_(actual, expected)
+
+    def test_from_stream_file(self):
+        f = open("wsj-test.psd", "r", encoding="utf-8")
+        obj = Tree.from_stream(f)
+        for t in obj:
+            before = Tree.pretty(t)
+            print('////////////////////////////////////////////////////////////////////')
+            print('BEFORE *************************')
+            print(before)
+
+            col_tree = t.kidnap_grandchild()
+            after = Tree.pretty(col_tree)
+            print('AFTER *************************')
+            print(after)
 
 
     #@unittest.skip(("skip attribute")
