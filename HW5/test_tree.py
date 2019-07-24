@@ -14,7 +14,7 @@ class TestHelperFunctions(unittest.TestCase):
         #logging.disable(logging.CRITICAL)
         logging.disable(logging.DEBUG)
 
-    def print_kidnap_grandchild_collapse_WSJ_trees(self):
+    def print_before_and_after_collapse_WSJ_trees(self):
         # filename = "wsj-normalized.psd"
         filename = "wsj-test.psd"
         f = open(filename, "r", encoding="utf-8")
@@ -51,7 +51,7 @@ class TestCollapseUnary(unittest.TestCase):
         logging.disable(logging.DEBUG)
 
     # Collapse Unary - Inline test #1
-    def test_kidnap_grandchild_simple(self):
+    def test_kidnap_daughter_simple(self):
         # Simple merge, with root and POS "distractors":
         s = '(TOP (S (VP (TO to) (VP (VB play)))))'
         t = Tree.from_string(s)
@@ -70,7 +70,7 @@ class TestCollapseUnary(unittest.TestCase):
         eq_(actual, expected)
 
     # Collapse Unary - Inline test #1
-    def test_kidnap_grandchild_double(self):
+    def test_kkidnap_daughter_double(self):
         # Double merge, with both types of distractors:
         s = '(TOP (S (SBAR (VP (TO to) (VP (VB play))))))'
         t = Tree.from_string(s)
@@ -89,7 +89,7 @@ class TestCollapseUnary(unittest.TestCase):
         eq_(actual, expected)
 
     # Collapse Unary - Inline test #1
-    def test_kidnap_grandchild_long(self):
+    def test_kidnap_daughter_long(self):
         # A long one:
         s = inspect.cleandoc("""
             (TOP (S (S (VP (VBN Turned) (ADVP (RB loose)) (PP
@@ -147,7 +147,7 @@ class TestCollapseUnary(unittest.TestCase):
 
     ### Collapse Unary - Regression Tests ######################################################
 
-    def test_kidnap_grandchild_collapse_small_WSJ_trees(self):
+    def test_kidnap_daughter_collapse_small_WSJ_trees(self):
         # filename = "wsj-normalized.psd"
         filename = "wsj-test.psd" # small test file - only 2 trees
         f = open(filename, "r", encoding="utf-8")
@@ -251,8 +251,8 @@ class TestCollapseUnary(unittest.TestCase):
 
             eq_(expect, actual)
 
-    def test_kidnap_grandchild_109(self):
-        # A long one:
+    def test_kidnap_daughter_109(self):
+        # The 109th tree in the WSJ tree examples
         s = inspect.cleandoc("""
             (TOP
                 (PP
@@ -353,7 +353,7 @@ class TestCollapseUnary(unittest.TestCase):
 
         eq_(actual, expect)
 
-    def test_kidnap_grandchild_109a(self):
+    def test_kidnap_daughter_109a(self):
         # A long one:
         s = inspect.cleandoc("""
             (TOP
@@ -398,7 +398,7 @@ class TestCollapseUnary(unittest.TestCase):
 
         eq_(actual, expect)
 
-    def test_kidnap_grandchild_109b(self):
+    def test_kidnap_daughter_109b(self):
         # A long one:
         s = inspect.cleandoc("""
             (TOP
@@ -437,7 +437,7 @@ class TestCollapseUnary(unittest.TestCase):
 
         eq_(actual, expect)
 
-    def test_kidnap_grandchild_109c(self):
+    def test_kidnap_daughter_109c(self):
         # A long one:
         s = inspect.cleandoc("""
             (TOP
@@ -472,7 +472,7 @@ class TestCollapseUnary(unittest.TestCase):
 
         eq_(actual, expect)
 
-    def test_kidnap_grandchild_109d(self):
+    def test_kidnap_daughter_109d(self):
         # A long one:
         s = inspect.cleandoc("""
             (TOP
