@@ -3,6 +3,14 @@
 # Kyle Gorman <gormanky@ohsu.edu>
 
 import logging
+import sys
+#logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+logging.basicConfig(filename='./tree.log', level=logging.DEBUG,
+                   format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                   datefmt='%m-%d %H:%M')
+
+#sys.setrecursionlimit(10000)  # 10000 is an example, try with different values
+
 from re import escape, finditer
 from collections import namedtuple
 
@@ -117,7 +125,7 @@ class Tree(object):
         return stack[0][1][0]
 
     @classmethod
-    def from_stream(cls, handle):
+    def from_stream_original(cls, handle):
         r"""
         Given a treebank-style data *.psd file, yield all its Trees, using
         `from_string` above
@@ -149,6 +157,28 @@ class Tree(object):
                     yield Tree.from_string(string[start:end])
                     start = end
 
+    @classmethod
+    def from_stream(cls, handle):
+        # TODO I am deeply unhappy with this solution. It would be nicer
+        # to use the cleverer logic found in Tree.from_string instead.
+        stack = 0
+        start = 0
+        string = handle.read()
+        for m in finditer(DELIMITERS, string):
+            # left bracket
+            if m.group(1):
+                stack += 1
+            # right bracket
+            else:
+                stack -= 1
+                # if brackets match, parse it
+                if stack == 0:
+                    end = m.end()
+                    yield Tree.from_string(string[start:end])
+                    start = end
+
+
+
     ###################################################
     # magic methods for access, etc., all using self.daughters
 
@@ -160,6 +190,12 @@ class Tree(object):
 
     def __setitem__(self, i, value):
         self.daughters[i] = value
+
+    def kidnap_child_then_kill_parent(self, child, parent):
+        for i in range(len(self)):
+            if self.daughters[i] is parent:
+                self.daughters[i] = child
+                parent = None # You are a terrible parent.. DIE!!!
 
     def __len__(self):
         return len(self.daughters)
@@ -191,6 +227,12 @@ class Tree(object):
 
         if Tree.terminal(obj.daughters[0]):
             return True
+
+        return False
+
+    def terminal_children(obj):
+        for child in obj:
+            return not hasattr(child, 'label')
 
         return False
 
@@ -243,7 +285,7 @@ class Tree(object):
         return string
 
     def get_daughter(self):
-        logging.debug("\tget_daughter: " + Tree.label(self.daughters[0]))
+        #logging.debug("\tget_daughter: " + Tree.label(self.daughters[0]))
         return self.daughters[0]
 
     ###################################################
@@ -358,62 +400,63 @@ class Tree(object):
         )
         """
 
-        #self = Tree.steal_grandchild(self)
-        self = Tree.steal_grandchild(self)
-        print(Tree.pretty(self))
+        collapsed_tree = Tree.kidnap_grandchild(self)
+        return Tree(self.label, collapsed_tree)
+        #print(Tree.pretty(collapsed_tree))
 
-    def steal_grandchild(self, join_char=CU_JOIN_CHAR):
-        grandma = self
-        logging.debug("NODE: " + grandma.label)
+    def kidnap_grandchild(self, join_char=CU_JOIN_CHAR):
+        ggma = self
+        logging.debug("NODE: " + ggma.label)
 
-        for mother in grandma:
-            terminal = Tree.terminal(mother)
-            if terminal:
-                logging.debug('TERMINAL: ' + mother)
+        for grandma in ggma:
+            grandma_terminal = Tree.terminal(grandma)
+            if grandma_terminal:
+                logging.debug('TERMINAL: ' + grandma)
                 continue
 
-            label = Tree.label(mother)
-            #unary = Tree.unary(mother)
-            unary = Tree.unary(grandma)
-            slut = Tree.slut(mother)
+            grandma_label = Tree.label(grandma)
+            mother_unary = Tree.unary(grandma)
 
-            logging.debug('\tUnary: ' + str(unary))
-            logging.debug('\tSlut: ' + str(slut))
-            logging.debug('\tTerminal: ' + str(terminal))
+            logging.debug('\tMother Unary: ' + str(mother_unary))
+            logging.debug('\tGrandma Terminal: ' + str(grandma_terminal))
 
-            #if unary and not slut and not terminal:
-            #if not slut and not terminal:
-            #if unary and not terminal:
-            if unary and not slut and not terminal:
-                daughter = Tree.get_daughter(mother)
-                preterminal = Tree.terminal(daughter)
-                logging.debug('\tPreterminal: ' + str(preterminal))
+            if not grandma_terminal and mother_unary:
+                # check if mother is terminal
+                mother = Tree.get_daughter(grandma)
+                mother_terminal = Tree.terminal(mother)
+                # everyone of the daughters must be non-terminal
+                children_terminal = Tree.terminal_children(mother)
 
-                # COLLAPSE!!!!
-                # Collapse node onto its single child
-                if not preterminal:
-                    logging.debug('\tCOLLAPSE ' + label + ' on to ' + daughter.label)
+                logging.debug('\tMother Terminal: ' + str(mother_terminal))
+                logging.debug('\tChilren Terminal: ' + str(children_terminal))
 
-                    # grandma  -->   grandma
-                    # mother (dies)     |
-                    # daughter -->  daughter
+                if not mother_terminal and not children_terminal:
+                    # COLLAPSE!!!!
+                    # Collapse node onto its single child
+                    #if '+' not in mother.label and '+' not in grandma_label:
+                    #if '+' not in grandma_label:
+                    logging.debug('\tCOLLAPSE ' + grandma_label + ' on to ' + mother.label)
 
-                    daughter.label = mother.label + '+' + daughter.label
-                    #grandma.daughter = daughter
-                    #self = daughter
-                    #grandma.Tree(0, daughter)
-                    #grandma = self(0, daughter)
-                    grandma.__setitem__(0, daughter)
-                    #grandma = daughter
-                    mother = None # DIE BITCH!!!!
-                    grandma.steal_grandchild()
-                    #daughter.steal_grandchild()
+                    # great-grandma  -->   grandma
+                    # grandma (dies)          |
+                    # mother         -->   mother
+
+                    # Collapse Lables
+                    mother.label = grandma.label + '+' + mother.label
+
+                    # Great-grandma (ggma) kills grandma and adopts mother
+                    ggma.kidnap_child_then_kill_parent(mother, grandma)
+                    #ggma.__setitem__(0, mother)
+                    #grandma = None # DIE BITCH!!!!
+                    ggma.kidnap_grandchild()
+                    #else:
+                    #    grandma.kidnap_grandchild()
                 else:
-                    mother.steal_grandchild()
+                    grandma.kidnap_grandchild()
             else:
-                mother.steal_grandchild()
+                grandma.kidnap_grandchild()
 
-        return grandma
+        return ggma
 
 if __name__ == '__main__':
     import doctest
