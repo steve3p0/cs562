@@ -355,7 +355,6 @@ class Tree(object):
         collapsed_tree = Tree.kidnap_daughter(self)
         return Tree(Tree.get_label(self), collapsed_tree)
 
-
     def kidnap_daughter(self, join_char=CU_JOIN_CHAR):
         """ Grandmother kidnaps the daughter, kills the mother and buries her in the daughter's house
         NOTE: It's best not to take the point of view of any of these family members.  Look at it from the outside
@@ -393,15 +392,14 @@ class Tree(object):
             if mother_is_terminal:
                 logging.debug('TERMINAL: ' + Tree.get_label(mother))
                 continue
-                #break
 
             mother_label = Tree.get_label(mother)
-            daughter_is_unary = Tree.unary(mother)
+            mother_is_unary = Tree.unary(mother)
 
-            logging.debug('\tDaughter Unary: ' + str(daughter_is_unary))
             logging.debug('\tMother Terminal: ' + str(mother_is_terminal))
+            logging.debug('\tMother Unary: ' + str(mother_is_unary))
 
-            if daughter_is_unary:
+            if mother_is_unary:
                 # check if daughter is terminal
                 daughter = Tree.get_daughter(mother)
                 daughter_is_terminal = Tree.terminal(daughter)
@@ -415,14 +413,16 @@ class Tree(object):
                     # COLLAPSE!!!!
                     logging.debug('\tCOLLAPSE ' + mother_label + ' on to ' + Tree.get_label(daughter))
 
-                    # grandma  -->       grandma
-                    # mother (homeless)     |
-                    # daughter -->   mother + daugther
+                    # grandma  ---->      grandma
+                    #    |                   |
+                    # mother (dies)          |
+                    #    |                   |
+                    # daughter ---->  mother + daugther
 
                     # Collapse Labels
                     daughter.label = mother_label + join_char + Tree.get_label(daughter)
 
-                    # Grandma (grandma) kills mother, adopts daughter and buries mother in daughter's house
+                    # Grandma kills mother, adopts daughter, and buries mother in daughter's front yard
                     grandma.kidnap_child_then_kill_parent(daughter, mother)
                     grandma.kidnap_daughter(join_char)
                 else:
