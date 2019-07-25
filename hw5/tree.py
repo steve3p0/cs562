@@ -1,21 +1,18 @@
-#!/usr/bin/env python -O
 # tree.py: n-ary branching tree, reading trees from text, and transforms
-# Kyle Gorman <gormanky@ohsu.edu>
-
-# Steve Braich
-
+# Original Author: Kyle Gorman <gormanky@ohsu.edu>
+# Author: Steve Braich
+# Course: CS 562 at OHSU
+# Instructor: Dr. Steven Bedrick
 
 import logging
 import sys
+from re import escape, finditer
+from collections import namedtuple
+
 #logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 logging.basicConfig(filename='./tree.log', level=logging.DEBUG,
                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                    datefmt='%m-%d %H:%M')
-
-#sys.setrecursionlimit(10000)  # 10000 is an example, try with different values
-
-from re import escape, finditer
-from collections import namedtuple
 
 # left and delimiters on trees
 LDEL = '('

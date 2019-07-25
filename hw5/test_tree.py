@@ -1,3 +1,6 @@
+# test_tree.py: unit tests for tree.py
+# Author: Steve Braich
+
 import unittest
 from nose.tools import eq_, assert_almost_equals, assert_greater_equal
 import inspect
@@ -5,10 +8,6 @@ from io import StringIO
 import logging
 
 from tree import Tree
-
-# Steve Braich
-
-
 
 # Helper function Unit Tests
 class TestHelperFunctions(unittest.TestCase):
