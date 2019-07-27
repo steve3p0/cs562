@@ -583,51 +583,22 @@ class Tree(object):
             # Each non-terminal has either two non-terminal daughters or one terminal daughter
             mother_label = Tree.get_label(mother)
             daughter_count = len(mother)
-            #daughter_count = len(grandma)
-            mother_is_unary = Tree.unary(mother)
-            mother_is_binary = Tree.binary(mother)
-            mother_is_ternary = Tree.ternary(mother)
-            mother_is_slut = len(mother) > 3
 
             logging.debug('\tMother Terminal: ' + str(mother_is_terminal))
             logging.debug('\tDaughter Count: ' + str(daughter_count))
 
-
-            # if Tree.unary_daughter_is_terminal(mother):
-            #     continue
-            #
-            # elif Tree.binary_daughters_are_nonterminal(mother):
-            #     mother.daughters[0].convert_to_cnf()
-            #     mother.daughters[1].convert_to_cnf()
-            #
-            # else:
             if daughter_count > 2:
                 # Start introducing non-terminals
                 pop_right = mother.pop()
                 pop_left = mother.pop()
-
-                # new_last = mother.pop()
-                # mother.append(new_last)
 
                 dlabel_left = Tree.get_label(pop_left)
                 dlabel_right = Tree.get_label(pop_right)
 
                 # fix the right label
                 if dlabel_right.count('|') > 0:
-                    # match = r"\ < (.* ?)\ &"
-                    # newlabel = re.match(match, dlabel_right)
-                    # dlabel_right = newlabel
-
                     s = dlabel_right
                     dlabel_right = s[s.find("<") + 1:s.find("&")]
-
-                    # str1 = dlabel_right
-                    # #match = re.match(r"^.*\[(.*)\&.*$", str1)
-                    # #regex = "\<(.*?)\&"
-                    # match = re.match("\<(.*?)\&", str1)
-                    # print(match.group(1))
-                    #
-                    # dlabel_right = match.group(1)
 
                 inbred_label = mother_label + markovize_char + CNF_LEFT_DELIMITER \
                              + dlabel_left + CNF_JOIN_CHAR + dlabel_right + CNF_RIGHT_DELIMITER
@@ -638,41 +609,11 @@ class Tree(object):
                 mother.append(inbred_node)
 
                 grandma.convert_to_cnf()
-                #mother.convert_to_cnf()
-                #inbred_node.convert_to_cnf()
-                #new_last.convert_to_cnf()
 
             else:
                 mother.convert_to_cnf()
 
         return grandma
-
-        # # Determine size of 2nd generation: unary, binary, ternary...
-        # daughter_count = len(mother)
-        # print('Daughter Count: ' + daughter_count)
-        #
-        # if daughter_count == 1:
-        #     return mother.daughter
-        # elif daughter_count == 2:
-        #     return mother
-        # elif daughter_count == 3
-        #
-        # if Tree.unary(mother):
-        #     return mother
-        # elif Tree.binary(mother):
-        #     return mother
-        # elif Tree.binary(mother):
-        #     return mother
-        # elif Tree.ternary(mother):
-        #     # Deal with ternay !!!!
-        #     return 0
-        # else:
-        #
-        #
-        # # return the same shit for now
-        # return Tree(self.label, self)
-
-
 
 
 if __name__ == '__main__':
