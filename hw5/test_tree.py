@@ -527,6 +527,10 @@ class TestChomskyNormalForm(unittest.TestCase):
 
         t = Tree.from_string(s)
 
+        print('BEFORE: *************************')
+        before = t.pretty()
+        print(before)
+
         # Expected Value
         expect = inspect.cleandoc("""
             (TOP
@@ -587,7 +591,8 @@ class TestChomskyNormalForm(unittest.TestCase):
         print(expect)
 
         # Actual Value
-        cnf_tree = t.convert_to_cnf()
+        col_tree = t.collapse_unary()
+        cnf_tree = col_tree.convert_to_cnf()
         actual = cnf_tree.pretty()
         print('ACTUAL *************************')
         print(actual)

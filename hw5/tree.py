@@ -531,6 +531,7 @@ class Tree(object):
         """
 
         col_tree = Tree.collapse_unary(self)
+
         cnf_tree = Tree.convert_to_cnf(col_tree)
         return Tree(Tree.get_label(self), cnf_tree)
 
@@ -549,7 +550,7 @@ class Tree(object):
         if not Tree.binary(mother):
             return False
 
-        if Tree.terminal(mother.daughter[0]) or Tree.terminal(mother.daughter[0]):
+        if Tree.terminal(mother.daughters[0]) or Tree.terminal(mother.daughters[0]):
             return False
 
         return True
@@ -573,6 +574,7 @@ class Tree(object):
             # Each non-terminal has either two non-terminal daughters or one terminal daughter
             mother_label = Tree.get_label(mother)
             daughter_count = len(mother)
+            #daughter_count = len(grandma)
             mother_is_unary = Tree.unary(mother)
             mother_is_binary = Tree.binary(mother)
             mother_is_ternary = Tree.ternary(mother)
@@ -582,27 +584,39 @@ class Tree(object):
             logging.debug('\tDaughter Count: ' + str(daughter_count))
 
 
-            if Tree.unary_daughter_is_terminal(mother):
-                continue
-
-            elif Tree.binary_daughters_are_nonterminal(mother):
-                mother.daughter[0].convert_to_cnf()
-                mother.daughter[1].convert_to_cnf()
-
-            else:
+            # if Tree.unary_daughter_is_terminal(mother):
+            #     continue
+            #
+            # elif Tree.binary_daughters_are_nonterminal(mother):
+            #     mother.daughters[0].convert_to_cnf()
+            #     mother.daughters[1].convert_to_cnf()
+            #
+            # else:
+            if daughter_count > 2:
                 # Start introducing non-terminals
-                dlabel_left = Tree.get_label(mother.daughters[1])
-                dlabel_right = Tree.get_label(mother.daughters[2])
+                pop_right = mother.pop()
+                pop_left = mother.pop()
+
+                # new_last = mother.pop()
+                # mother.append(new_last)
+
+                dlabel_left = Tree.get_label(pop_left)
+                dlabel_right = Tree.get_label(pop_right)
 
                 inbred_label = mother_label + markovize_char + CNF_LEFT_DELIMITER \
                              + dlabel_left + CNF_JOIN_CHAR + dlabel_right + CNF_RIGHT_DELIMITER
 
                 inbred_node = Tree(inbred_label)
-                inbred_node.append(mother.daughters[1])
-                inbred_node.append(mother.daughters[2])
-                mother.daughters[1] = inbred_node
-                mother.pop()
-                inbred_node.convert_to_cnf()
+                inbred_node.append(pop_left)
+                inbred_node.append(pop_right)
+                mother.append(inbred_node)
+
+                mother.convert_to_cnf()
+                #inbred_node.convert_to_cnf()
+                #new_last.convert_to_cnf()
+
+            else:
+                mother.convert_to_cnf()
 
         return grandma
 
