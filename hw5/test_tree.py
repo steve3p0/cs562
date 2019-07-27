@@ -507,3 +507,127 @@ class TestCollapseUnary(unittest.TestCase):
         print(actual)
 
         eq_(actual, expect)
+
+# Chomsky Normal Form Unit Tests
+class TestChomskyNormalForm(unittest.TestCase):
+
+    def setUp(self):
+        # This is where you.. set up things...
+        #logging.disable(logging.CRITICAL)
+        logging.disable(logging.DEBUG)
+
+    # Convert to CNF - Inline test #1
+    def test_convert_to_cnf_long(self):
+        s = inspect.cleandoc("""
+            (TOP (S (S (VP (VBN Turned) (ADVP (RB loose)) (PP
+            (IN in) (NP (NP (NNP Shane) (NNP Longman) (POS 's))
+            (NN trading) (NN room))))) (, ,) (NP (DT the)
+            (NN yuppie) (NNS dealers)) (VP (AUX do) (NP (NP
+            (RB little)) (ADJP (RB right)))) (. .)))""")
+
+        t = Tree.from_string(s)
+
+        # Expected Value
+        expect = inspect.cleandoc("""
+            (TOP
+                (S
+                    (S+VP
+                        (VBN Turned)
+                        (S+VP|<ADVP&PP>
+                            (ADVP
+                                (RB loose)
+                            )
+                            (PP
+                                (IN in)
+                                (NP
+                                    (NP
+                                        (NNP Shane)
+                                        (NP|<NNP&POS>
+                                            (NNP Longman)
+                                            (POS 's)
+                                        )
+                                    )
+                                    (NP|<NN&NN>
+                                        (NN trading)
+                                        (NN room)
+                                    )
+                                )
+                            )
+                        )
+                    )
+                    (S|<,&NP>
+                        (, ,)
+                        (S|<NP&VP>
+                            (NP
+                                (DT the)
+                                (NP|<NN&NNS>
+                                    (NN yuppie)
+                                    (NNS dealers)
+                                )
+                            )
+                            (S|<VP&.>
+                                (VP
+                                    (AUX do)
+                                    (NP
+                                        (NP
+                                            (RB little)
+                                        )
+                                        (ADJP
+                                            (RB right)
+                                        )
+                                    )
+                                )
+                                (. .)
+                            )
+                        )
+                    )
+                )
+            )""")
+        print('EXPECTED: *************************')
+        print(expect)
+
+        # Actual Value
+        cnf_tree = t.convert_to_cnf()
+        actual = cnf_tree.pretty()
+        print('ACTUAL *************************')
+        print(actual)
+
+        eq_(actual, expect)
+
+    # Convert to CNF - Test from assignment description
+    def test_convert_to_cnf_short(self):
+        s = inspect.cleandoc("""
+            (TOP
+                (NP 
+                    (NNP Shane) 
+                    (NNP Longman) 
+                    (POS 's)
+                )
+            )""")
+
+        t = Tree.from_string(s)
+
+        # Expected Value
+        expect = inspect.cleandoc("""
+            (TOP
+                (NP
+                    (NNP Shane)
+                    (NP|<NNP&POS>
+                        (NNP Longman)
+                        (POS 's)
+                    )
+                )
+            )""")
+        print('EXPECTED: *************************')
+        print(expect)
+
+        # Actual Value
+        cnf_tree = t.convert_to_cnf()
+        actual = cnf_tree.pretty()
+        print('ACTUAL *************************')
+        print(actual)
+
+        eq_(actual, expect)
+
+    ### Collapse Unary - Regression Tests ######################################################
+
