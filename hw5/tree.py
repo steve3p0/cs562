@@ -6,6 +6,7 @@
 
 import logging
 import sys
+import re
 from re import escape, finditer
 from collections import namedtuple
 
@@ -602,6 +603,23 @@ class Tree(object):
 
                 dlabel_left = Tree.get_label(pop_left)
                 dlabel_right = Tree.get_label(pop_right)
+
+                # fix the right label
+                if dlabel_right.count('|') > 0:
+                    # match = r"\ < (.* ?)\ &"
+                    # newlabel = re.match(match, dlabel_right)
+                    # dlabel_right = newlabel
+
+                    s = dlabel_right
+                    dlabel_right = s[s.find("<") + 1:s.find("&")]
+
+                    # str1 = dlabel_right
+                    # #match = re.match(r"^.*\[(.*)\&.*$", str1)
+                    # #regex = "\<(.*?)\&"
+                    # match = re.match("\<(.*?)\&", str1)
+                    # print(match.group(1))
+                    #
+                    # dlabel_right = match.group(1)
 
                 inbred_label = mother_label + markovize_char + CNF_LEFT_DELIMITER \
                              + dlabel_left + CNF_JOIN_CHAR + dlabel_right + CNF_RIGHT_DELIMITER
