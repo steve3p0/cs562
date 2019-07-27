@@ -43,7 +43,7 @@ class TestHelperFunctions(unittest.TestCase):
         expected = str(two)
         eq_(actual, expected)
 
-    #@unittest.skip(("skip attribute")
+    #@unittest.skip("skip attribute")
 
 # Collapse Unary Unit Tests
 class TestCollapseUnary(unittest.TestCase):
@@ -636,3 +636,208 @@ class TestChomskyNormalForm(unittest.TestCase):
 
     ### Collapse Unary - Regression Tests ######################################################
 
+    @unittest.skip("Expected Value is wrong!")
+    def test_convert_to_cnf_94(self):
+        # The 94th tree in the WSJ tree examples
+        s = inspect.cleandoc("""
+            (TOP
+                (NP-SBJ
+                    (DT these)
+                    (NNS funds)
+                )
+                (ADVP-TMP
+                    (RB now)
+                )
+                (VP
+                    (VBP account)
+                    (PP-CLR
+                        (IN for)
+                        (NP
+                            (NP
+                                (NP
+                                    (QP
+                                        (JJ several)
+                                        (NNS billions)
+                                    )
+                                )
+                                (PP
+                                    (IN of)
+                                    (NP
+                                        (NNS dollars)
+                                    )
+                                )
+                            )
+                            (PP
+                                (IN in)
+                                (NP
+                                    (NNS assets)
+                                )
+                            )
+                        )
+                    )
+                )
+                (. .)
+            )""")
+
+        t = Tree.from_string(s)
+
+        # Expected Value
+        expect = inspect.cleandoc("""
+            (TOP
+                (NP-SBJ
+                    (DT these)
+                    (NNS funds)
+                )
+                (TOP|<ADVP-TMP&VP>
+                    (ADVP-TMP
+                        (RB now)
+                    )
+                    (TOP|<VP&.>
+                        (VP
+                            (VBP account)
+                            (PP-CLR
+                                (IN for)
+                                (NP
+                                    (NP
+                                        (NP
+                                            (QP
+                                                (JJ several)
+                                                (NNS billions)
+                                            )
+                                        )
+                                        (PP
+                                            (IN of)
+                                            (NP
+                                                (NNS dollars)
+                                            )
+                                        )
+                                    )
+                                    (PP
+                                        (IN in)
+                                        (NP
+                                            (NNS assets)
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                        (. .)
+                    )
+                )
+            )""")
+        print('EXPECTED: *************************')
+        print(expect)
+
+        col_tree = t.kidnap_daughter()
+        cnf_tree_expect = Tree.chomsky_normal_form(col_tree)
+
+        actual = col_tree.pretty()
+        print('ACTUAL *************************')
+        print(actual)
+
+        eq_(actual, expect)
+
+    @unittest.skip("Expected Value is wrong!")
+    def test_convert_to_cnf_109(self):
+        # The 109th tree in the WSJ tree examples
+        s = inspect.cleandoc("""
+            (TOP
+                (PP
+                    (IN by)
+                    (NP
+                        (JJS most)
+                        (NNS measures)
+                    )
+                )
+                (, ,)
+                (NP-SBJ
+                    (NP
+                        (DT the)
+                        (NN nation)
+                        (POS 's)
+                    )
+                    (JJ industrial)
+                    (NN sector)
+                )
+                (VP
+                    (VBZ is)
+                    (ADVP-TMP
+                        (RB now)
+                    )
+                    (VP
+                        (VBG growing)
+                        (ADVP-MNR
+                            (RB very)
+                            (RB slowly)
+                        )
+                        (: --)
+                        (SBAR-ADV
+                            (IN if)
+                            (FRAG
+                                (ADVP
+                                    (IN at)
+                                    (DT all)
+                                )
+                            )
+                        )
+                    )
+                )
+                (. .)
+            )""")
+
+        t = Tree.from_string(s)
+
+        # Expected Value
+        expect = inspect.cleandoc("""
+            (TOP
+                (PP
+                    (IN by)
+                    (NP
+                        (JJS most)
+                        (NNS measures)
+                    )
+                )
+                (, ,)
+                (NP-SBJ
+                    (NP
+                        (DT the)
+                        (NN nation)
+                        (POS 's)
+                    )
+                    (JJ industrial)
+                    (NN sector)
+                )
+                (VP
+                    (VBZ is)
+                    (ADVP-TMP
+                        (RB now)
+                    )
+                    (VP
+                        (VBG growing)
+                        (ADVP-MNR
+                            (RB very)
+                            (RB slowly)
+                        )
+                        (: --)
+                        (SBAR-ADV
+                            (IN if)
+                            (FRAG+ADVP
+                                (IN at)
+                                (DT all)
+                            )
+                        )
+                    )
+                )
+                (. .)
+            )""")
+        print('EXPECTED: *************************')
+        print(expect)
+
+        col_tree = t.kidnap_daughter()
+        cnf_tree_expect = Tree.chomsky_normal_form(col_tree)
+
+        actual = col_tree.pretty()
+        print('ACTUAL *************************')
+        print(actual)
+
+        eq_(actual, expect)
