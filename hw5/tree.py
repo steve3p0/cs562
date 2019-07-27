@@ -611,7 +611,8 @@ class Tree(object):
                 inbred_node.append(pop_right)
                 mother.append(inbred_node)
 
-                mother.convert_to_cnf()
+                grandma.convert_to_cnf()
+                #mother.convert_to_cnf()
                 #inbred_node.convert_to_cnf()
                 #new_last.convert_to_cnf()
 
