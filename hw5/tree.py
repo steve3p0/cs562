@@ -11,7 +11,7 @@ from re import escape, finditer
 from collections import namedtuple
 
 #logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-logging.basicConfig(filename='./tree.log', level=logging.DEBUG,
+logging.basicConfig(filename='./tree.log', level=logging.CRITICAL,
                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                    datefmt='%m-%d %H:%M')
 
@@ -533,7 +533,15 @@ class Tree(object):
 
         col_tree = Tree.collapse_unary(self)
 
-        cnf_tree = Tree.convert_to_cnf(col_tree)
+        # check if TOP is unary.  If not, we may have to add an extra layer
+        if not Tree.unary(self):
+            steve_tree = Tree("SteveTop")
+            steve_tree.append(col_tree)
+            cnf_tree = Tree.convert_to_cnf(steve_tree)
+            cnf_tree = cnf_tree.pop()
+        else:
+            cnf_tree = Tree.convert_to_cnf(col_tree)
+
         return Tree(Tree.get_label(self), cnf_tree)
 
     @staticmethod
