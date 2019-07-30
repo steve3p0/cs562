@@ -927,13 +927,10 @@ class TestProductions(unittest.TestCase):
         # Actual Value
         t_col = t_before.collapse_unary()
         t_cnf = t_col.chomsky_normal_form()
-        #t_prod = t_cnf.create_tree_productions()
         t_prod = t_cnf.productions()
-        #t_prod = os.linesep.join([st for st in t_prod.splitlines() if st])
 
         print('ACTUAL *************************')
         actual = Tree.pretty_productions(t_prod)
-        #actual = t_prod
         print(actual)
 
         eq_(actual, expect)
@@ -989,14 +986,9 @@ class TestProductions(unittest.TestCase):
 
         eq_(actual, expect)
 
-
     ### Generate Productions - Regression Tests ######################################################
 
-class TestOther(unittest.TestCase):
-
-    @unittest.skip("Expected Value is wrong!")
-    def test_convert_to_cnf_94(self):
-        # The 94th tree in the WSJ tree examples
+    def test_productions_wsj_94(self):
         s = inspect.cleandoc("""
             (TOP
                 (NP-SBJ
@@ -1037,67 +1029,57 @@ class TestOther(unittest.TestCase):
                 (. .)
             )""")
 
-        t = Tree.from_string(s)
+        t_before = Tree.from_string(s)
+
+        print('BEFORE: *************************')
+        before = t_before.pretty()
+        print(before)
 
         # Expected Value
         expect = inspect.cleandoc("""
-            (TOP
-                (NP-SBJ
-                    (DT these)
-                    (NNS funds)
-                )
-                (TOP|<ADVP-TMP&VP>
-                    (ADVP-TMP
-                        (RB now)
-                    )
-                    (TOP|<VP&.>
-                        (VP
-                            (VBP account)
-                            (PP-CLR
-                                (IN for)
-                                (NP
-                                    (NP
-                                        (NP
-                                            (QP
-                                                (JJ several)
-                                                (NNS billions)
-                                            )
-                                        )
-                                        (PP
-                                            (IN of)
-                                            (NP
-                                                (NNS dollars)
-                                            )
-                                        )
-                                    )
-                                    (PP
-                                        (IN in)
-                                        (NP
-                                            (NNS assets)
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                        (. .)
-                    )
-                )
-            )""")
+            TOP                  -> NP-SBJ TOP|<ADVP-TMP&VP>
+            NP-SBJ               -> DT NNS
+            DT                   -> these
+            NNS                  -> funds
+            TOP|<ADVP-TMP&VP>    -> ADVP-TMP TOP|<VP&.>
+            ADVP-TMP             -> RB
+            RB                   -> now
+            TOP|<VP&.>           -> VP .
+            VP                   -> VBP PP-CLR
+            VBP                  -> account
+            PP-CLR               -> IN NP
+            IN                   -> for
+            NP                   -> NP PP
+            NP                   -> NP+QP PP
+            NP+QP                -> JJ NNS
+            JJ                   -> several
+            NNS                  -> billions
+            PP                   -> IN NP
+            IN                   -> of
+            NP                   -> NNS
+            NNS                  -> dollars
+            PP                   -> IN NP
+            IN                   -> in
+            NP                   -> NNS
+            NNS                  -> assets
+            .                    -> .""")
+
         print('EXPECTED: *************************')
+        expect = os.linesep.join([st for st in expect.splitlines() if st])
         print(expect)
 
-        col_tree = t.kidnap_daughter()
-        cnf_tree_expect = Tree.chomsky_normal_form(col_tree)
+        # Actual Value
+        t_col = t_before.collapse_unary()
+        t_cnf = t_col.chomsky_normal_form()
+        t_prod = t_cnf.productions()
 
-        actual = col_tree.pretty()
         print('ACTUAL *************************')
+        actual = Tree.pretty_productions(t_prod)
         print(actual)
 
         eq_(actual, expect)
 
-    @unittest.skip("Expected Value is wrong!")
-    def test_convert_to_cnf_109(self):
-        # The 109th tree in the WSJ tree examples
+    def test_productions_wsj_109(self):
         s = inspect.cleandoc("""
             (TOP
                 (PP
@@ -1143,59 +1125,64 @@ class TestOther(unittest.TestCase):
                 (. .)
             )""")
 
-        t = Tree.from_string(s)
+        t_before = Tree.from_string(s)
+
+        print('BEFORE: *************************')
+        before = t_before.pretty()
+        print(before)
 
         # Expected Value
         expect = inspect.cleandoc("""
-            (TOP
-                (PP
-                    (IN by)
-                    (NP
-                        (JJS most)
-                        (NNS measures)
-                    )
-                )
-                (, ,)
-                (NP-SBJ
-                    (NP
-                        (DT the)
-                        (NN nation)
-                        (POS 's)
-                    )
-                    (JJ industrial)
-                    (NN sector)
-                )
-                (VP
-                    (VBZ is)
-                    (ADVP-TMP
-                        (RB now)
-                    )
-                    (VP
-                        (VBG growing)
-                        (ADVP-MNR
-                            (RB very)
-                            (RB slowly)
-                        )
-                        (: --)
-                        (SBAR-ADV
-                            (IN if)
-                            (FRAG+ADVP
-                                (IN at)
-                                (DT all)
-                            )
-                        )
-                    )
-                )
-                (. .)
-            )""")
+            TOP                  -> PP TOP|<,&NP-SBJ>
+            PP                   -> IN NP
+            IN                   -> by
+            NP                   -> JJS NNS
+            JJS                  -> most
+            NNS                  -> measures
+            TOP|<,&NP-SBJ>       -> , TOP|<NP-SBJ&VP>
+            ,                    -> ,
+            TOP|<NP-SBJ&VP>      -> NP-SBJ TOP|<VP&.>
+            NP-SBJ               -> NP NP-SBJ|<JJ&NN>
+            NP                   -> DT NP|<NN&POS>
+            DT                   -> the
+            NP|<NN&POS>          -> NN POS
+            NN                   -> nation
+            POS                  -> 's
+            NP-SBJ|<JJ&NN>       -> JJ NN
+            JJ                   -> industrial
+            NN                   -> sector
+            TOP|<VP&.>           -> VP .
+            VP                   -> VBZ VP|<ADVP-TMP&VP>
+            VBZ                  -> is
+            VP|<ADVP-TMP&VP>     -> ADVP-TMP VP
+            ADVP-TMP             -> RB
+            RB                   -> now
+            VP                   -> VBG VP|<ADVP-MNR&:>
+            VBG                  -> growing
+            VP|<ADVP-MNR&:>      -> ADVP-MNR VP|<:&SBAR-ADV>
+            ADVP-MNR             -> RB RB
+            RB                   -> very
+            RB                   -> slowly
+            VP|<:&SBAR-ADV>      -> : SBAR-ADV
+            :                    -> --
+            SBAR-ADV             -> IN FRAG+ADVP
+            IN                   -> if
+            FRAG+ADVP            -> IN DT
+            IN                   -> at
+            DT                   -> all
+            .                    -> .""")
+
         print('EXPECTED: *************************')
+        expect = os.linesep.join([st for st in expect.splitlines() if st])
         print(expect)
 
-        col_tree = t.kidnap_daughter()
-        cnf_tree_expect = Tree.chomsky_normal_form(col_tree)
+        # Actual Value
+        t_col = t_before.collapse_unary()
+        t_cnf = t_col.chomsky_normal_form()
+        t_prod = t_cnf.productions()
 
-        actual = col_tree.pretty()
         print('ACTUAL *************************')
+        actual = Tree.pretty_productions(t_prod)
         print(actual)
 
         eq_(actual, expect)
