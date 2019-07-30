@@ -927,12 +927,13 @@ class TestProductions(unittest.TestCase):
         # Actual Value
         t_col = t_before.collapse_unary()
         t_cnf = t_col.chomsky_normal_form()
-        t_prod = t_cnf.create_tree_productions()
-        t_prod = os.linesep.join([st for st in t_prod.splitlines() if st])
+        #t_prod = t_cnf.create_tree_productions()
+        t_prod = t_cnf.productions()
+        #t_prod = os.linesep.join([st for st in t_prod.splitlines() if st])
 
         print('ACTUAL *************************')
-        #actual = t_prod.pretty_productions()
-        actual = t_prod
+        actual = Tree.pretty_productions(t_prod)
+        #actual = t_prod
         print(actual)
 
         eq_(actual, expect)
@@ -975,14 +976,15 @@ class TestProductions(unittest.TestCase):
         cnf = t_cnf.pretty()
         print(cnf)
 
-        t_prod = t_cnf.create_tree_productions()
-        t_prod = os.linesep.join([st for st in t_prod.splitlines() if st])
+        #t_prod = t_cnf.create_tree_productions()
+        t_prod = t_cnf.productions()
+        #t_prod = os.linesep.join([st for st in t_prod.splitlines() if st])
         #t_prod = t_cnf.productions()
 
         print('ACTUAL *************************')
         #actual = self.pretty_productions(t_prod)
-        #actual = Tree.pretty_productions(t_prod)
-        actual = t_prod
+        actual = Tree.pretty_productions(t_prod)
+        #actual = t_prod
         print(actual)
 
         eq_(actual, expect)

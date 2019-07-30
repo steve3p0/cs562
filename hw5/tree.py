@@ -44,7 +44,6 @@ CNF_JOIN_CHAR = '&'
 CNF_LEFT_DELIMITER = '<'
 CNF_RIGHT_DELIMITER = '>'
 
-
 class Tree(object):
     """
     A n-ary branching tree with string(-like) objects as labels both on
@@ -665,9 +664,7 @@ class Tree(object):
         .                    -> .
         """
 
-        col_tree = Tree.collapse_unary(self)
-        cnf_tree = Tree.chomsky_normal_form(col_tree)
-        p = Tree.create_tree_productions(cnf_tree)
+        p = self.create_tree_productions(self)
 
         return p
 
@@ -680,20 +677,21 @@ class Tree(object):
         rules = os.linesep.join([st for st in rules.splitlines() if st])
         return rules
 
-    def create_tree_productions(self):
+    def create_tree_productions(self, rules):
 
-        right = ''
+        right = []
         for daughter in self:
-            right += ' ' + Tree.get_label(daughter)
+            right.append(Tree.get_label(daughter))
 
-        rule = '{: <20} ->{}'.format(self.label, ''.join(right)) + '\n'
+        rules = []
+        rules.append((self.label, right))
 
         for daughter in self:
             is_terminal = Tree.terminal(daughter)
             if not is_terminal:
-                rule += daughter.create_tree_productions()
+                rules += daughter.create_tree_productions(rules)
 
-        return rule
+        return rules
 
 if __name__ == '__main__':
     import doctest
