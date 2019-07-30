@@ -127,6 +127,19 @@ class Tree(object):
 
     @classmethod
     def from_stream(cls, handle):
+        r"""
+        Given a treebank-style data *.psd file, yield all its Trees, using
+        `from_string` above
+
+        Mock up a real file using cStringIO
+
+        >>> from io import StringIO
+        >>> s = '(ADVP (ADV widely) (CONJ and) (ADV friendly))'
+        >>> source = StringIO(s.replace(' ', '\n\n\n') + s)
+        >>> (one, two) = Tree.from_stream(source)
+        >>> str(one) == str(two)
+        True
+        """
         # TODO I am deeply unhappy with this solution. It would be nicer
         # to use the cleverer logic found in Tree.from_string instead.
         stack = 0
