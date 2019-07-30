@@ -4,6 +4,7 @@
 import unittest
 from nose.tools import eq_, assert_almost_equals, assert_greater_equal
 import inspect
+import os
 from io import StringIO
 import logging
 
@@ -634,7 +635,362 @@ class TestChomskyNormalForm(unittest.TestCase):
 
         eq_(actual, expect)
 
-    ### Collapse Unary - Regression Tests ######################################################
+    ### onvert to CNF - Regression Tests ######################################################
+
+    def test_convert_to_cnf_94(self):
+        # The 94th tree in the WSJ tree examples
+        s = inspect.cleandoc("""
+            (TOP
+                (NP-SBJ
+                    (DT these)
+                    (NNS funds)
+                )
+                (ADVP-TMP
+                    (RB now)
+                )
+                (VP
+                    (VBP account)
+                    (PP-CLR
+                        (IN for)
+                        (NP
+                            (NP
+                                (NP
+                                    (QP
+                                        (JJ several)
+                                        (NNS billions)
+                                    )
+                                )
+                                (PP
+                                    (IN of)
+                                    (NP
+                                        (NNS dollars)
+                                    )
+                                )
+                            )
+                            (PP
+                                (IN in)
+                                (NP
+                                    (NNS assets)
+                                )
+                            )
+                        )
+                    )
+                )
+                (. .)
+            )""")
+
+        t = Tree.from_string(s)
+        before = Tree.pretty(t)
+        print('BEFORE: *************************')
+        print(before)
+
+        expect = inspect.cleandoc("""
+            (TOP
+                (NP-SBJ
+                    (DT these)
+                    (NNS funds)
+                )
+                (TOP|<ADVP-TMP&VP>
+                    (ADVP-TMP
+                        (RB now)
+                    )
+                    (TOP|<VP&.>
+                        (VP
+                            (VBP account)
+                            (PP-CLR
+                                (IN for)
+                                (NP
+                                    (NP
+                                        (NP+QP
+                                            (JJ several)
+                                            (NNS billions)
+                                        )
+                                        (PP
+                                            (IN of)
+                                            (NP
+                                                (NNS dollars)
+                                            )
+                                        )
+                                    )
+                                    (PP
+                                        (IN in)
+                                        (NP
+                                            (NNS assets)
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                        (. .)
+                    )
+                )
+            )""")
+        print('EXPECTED: *************************')
+        print(expect)
+
+        col_tree = t.kidnap_daughter()
+        cnf_tree_actual = Tree.chomsky_normal_form(col_tree)
+
+        actual = cnf_tree_actual.pretty()
+        print('ACTUAL *************************')
+        print(actual)
+
+        eq_(actual, expect)
+
+    def test_convert_to_cnf_109(self):
+        # The 94th tree in the WSJ tree examples
+        s = inspect.cleandoc("""
+            (TOP
+                (PP
+                    (IN by)
+                    (NP
+                        (JJS most)
+                        (NNS measures)
+                    )
+                )
+                (, ,)
+                (NP-SBJ
+                    (NP
+                        (DT the)
+                        (NN nation)
+                        (POS 's)
+                    )
+                    (JJ industrial)
+                    (NN sector)
+                )
+                (VP
+                    (VBZ is)
+                    (ADVP-TMP
+                        (RB now)
+                    )
+                    (VP
+                        (VBG growing)
+                        (ADVP-MNR
+                            (RB very)
+                            (RB slowly)
+                        )
+                        (: --)
+                        (SBAR-ADV
+                            (IN if)
+                            (FRAG
+                                (ADVP
+                                    (IN at)
+                                    (DT all)
+                                )
+                            )
+                        )
+                    )
+                )
+                (. .)
+            )""")
+
+        t = Tree.from_string(s)
+        before = Tree.pretty(t)
+        print('BEFORE: *************************')
+        print(before)
+
+        expect = inspect.cleandoc("""
+            (TOP
+                (PP
+                    (IN by)
+                    (NP
+                        (JJS most)
+                        (NNS measures)
+                    )
+                )
+                (TOP|<,&NP-SBJ>
+                    (, ,)
+                    (TOP|<NP-SBJ&VP>
+                        (NP-SBJ
+                            (NP
+                                (DT the)
+                                (NP|<NN&POS>
+                                    (NN nation)
+                                    (POS 's)
+                                )
+                            )
+                            (NP-SBJ|<JJ&NN>
+                                (JJ industrial)
+                                (NN sector)
+                            )
+                        )
+                        (TOP|<VP&.>
+                            (VP
+                                (VBZ is)
+                                (VP|<ADVP-TMP&VP>
+                                    (ADVP-TMP
+                                        (RB now)
+                                    )
+                                    (VP
+                                        (VBG growing)
+                                        (VP|<ADVP-MNR&:>
+                                            (ADVP-MNR
+                                                (RB very)
+                                                (RB slowly)
+                                            )
+                                            (VP|<:&SBAR-ADV>
+                                                (: --)
+                                                (SBAR-ADV
+                                                    (IN if)
+                                                    (FRAG+ADVP
+                                                        (IN at)
+                                                        (DT all)
+                                                    )
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                            (. .)
+                        )
+                    )
+                )
+            )""")
+        print('EXPECTED: *************************')
+        print(expect)
+
+        col_tree = t.kidnap_daughter()
+        cnf_tree_actual = Tree.chomsky_normal_form(col_tree)
+
+        actual = cnf_tree_actual.pretty()
+        print('ACTUAL *************************')
+        print(actual)
+
+        eq_(actual, expect)
+
+# Chomsky Normal Form Unit Tests
+class TestProductions(unittest.TestCase):
+
+    def setUp(self):
+        # This is where you.. set up things...
+        #logging.disable(logging.CRITICAL)
+        logging.disable(logging.DEBUG)
+
+    # Generate Productions - Inline test #1
+    def test_productions_inline1(self):
+        s = inspect.cleandoc("""
+            (TOP (S (S (VP (VBN Turned) (ADVP (RB loose)) (PP
+            (IN in) (NP (NP (NNP Shane) (NNP Longman) (POS 's))
+            (NN trading) (NN room))))) (, ,) (NP (DT the)
+            (NN yuppie) (NNS dealers)) (VP (AUX do) (NP (NP
+            (RB little)) (ADJP (RB right)))) (. .)))""")
+
+        t_before = Tree.from_string(s)
+
+        print('BEFORE: *************************')
+        before = t_before.pretty()
+        print(before)
+
+        # Expected Value
+        expect = inspect.cleandoc("""
+            TOP                  -> S
+            S                    -> S+VP S|<,&NP>
+            S+VP                 -> VBN S+VP|<ADVP&PP>
+            VBN                  -> Turned
+            S+VP|<ADVP&PP>       -> ADVP PP
+            ADVP                 -> RB
+            RB                   -> loose
+            PP                   -> IN NP
+            IN                   -> in
+            NP                   -> NP NP|<NN&NN>
+            NP                   -> NNP NP|<NNP&POS>
+            NNP                  -> Shane
+            NP|<NNP&POS>         -> NNP POS
+            NNP                  -> Longman
+            POS                  -> 's
+            NP|<NN&NN>           -> NN NN
+            NN                   -> trading
+            NN                   -> room
+            S|<,&NP>             -> , S|<NP&VP>
+            ,                    -> ,
+            S|<NP&VP>            -> NP S|<VP&.>
+            NP                   -> DT NP|<NN&NNS>
+            DT                   -> the
+            NP|<NN&NNS>          -> NN NNS
+            NN                   -> yuppie
+            NNS                  -> dealers
+            S|<VP&.>             -> VP .
+            VP                   -> AUX NP
+            AUX                  -> do
+            NP                   -> NP ADJP
+            NP                   -> RB
+            RB                   -> little
+            ADJP                 -> RB
+            RB                   -> right
+            .                    -> .""")
+
+        print('EXPECTED: *************************')
+        expect = os.linesep.join([st for st in expect.splitlines() if st])
+        print(expect)
+
+        # Actual Value
+        t_col = t_before.collapse_unary()
+        t_cnf = t_col.chomsky_normal_form()
+        t_prod = t_cnf.create_tree_productions()
+        t_prod = os.linesep.join([st for st in t_prod.splitlines() if st])
+
+        print('ACTUAL *************************')
+        #actual = t_prod.pretty_productions()
+        actual = t_prod
+        print(actual)
+
+        eq_(actual, expect)
+
+    def test_productions_fromAssignment(self):
+        s = inspect.cleandoc("""
+            (TOP
+                (S
+                    (VP
+                        (TO to)
+                        (VP
+                            (VB play)
+                        )
+                    )
+                )
+            )""")
+
+        t_before = Tree.from_string(s)
+
+        print('BEFORE: *************************')
+        before = t_before.pretty()
+        print(before)
+
+        expect = inspect.cleandoc("""
+            TOP                  -> S+VP
+            S+VP                 -> TO VP
+            TO                   -> to
+            VP                   -> VB
+            VB                   -> play""")
+        expect = os.linesep.join([st for st in expect.splitlines() if st])
+
+        print('EXPECTED: *************************')
+        print(expect)
+
+        # Actual Value
+        t_col = t_before.collapse_unary()
+        t_cnf = t_col.chomsky_normal_form()
+
+        print('CNF: *************************')
+        cnf = t_cnf.pretty()
+        print(cnf)
+
+        t_prod = t_cnf.create_tree_productions()
+        t_prod = os.linesep.join([st for st in t_prod.splitlines() if st])
+        #t_prod = t_cnf.productions()
+
+        print('ACTUAL *************************')
+        #actual = self.pretty_productions(t_prod)
+        #actual = Tree.pretty_productions(t_prod)
+        actual = t_prod
+        print(actual)
+
+        eq_(actual, expect)
+
+
+    ### Generate Productions - Regression Tests ######################################################
+
+class TestOther(unittest.TestCase):
 
     @unittest.skip("Expected Value is wrong!")
     def test_convert_to_cnf_94(self):

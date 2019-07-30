@@ -7,6 +7,7 @@
 import logging
 import sys
 import re
+import os
 from re import escape, finditer
 from collections import namedtuple
 
@@ -212,6 +213,26 @@ class Tree(object):
         if terminal:
             return obj
         return obj.label
+
+    @staticmethod
+    def unary_daughter_is_terminal(mother):
+        if not Tree.unary(mother):
+            return False
+
+        if not Tree.terminal(mother.daughters[0]):
+            return False
+
+        return True
+
+    @staticmethod
+    def binary_daughters_are_nonterminal(mother):
+        if not Tree.binary(mother):
+            return False
+
+        if Tree.terminal(mother.daughters[0]) or Tree.terminal(mother.daughters[0]):
+            return False
+
+        return True
 
     ############################################################################
     # string representations
@@ -544,26 +565,6 @@ class Tree(object):
 
         return Tree(Tree.get_label(self), cnf_tree)
 
-    @staticmethod
-    def unary_daughter_is_terminal(mother):
-        if not Tree.unary(mother):
-            return False
-
-        if not Tree.terminal(mother.daughters[0]):
-            return False
-
-        return True
-
-    @staticmethod
-    def binary_daughters_are_nonterminal(mother):
-        if not Tree.binary(mother):
-            return False
-
-        if Tree.terminal(mother.daughters[0]) or Tree.terminal(mother.daughters[0]):
-            return False
-
-        return True
-
     def convert_to_cnf(self, markovize_char=MARKOVIZE_CHAR,
                             join_char=CNF_JOIN_CHAR,
                             left_delimiter=CNF_LEFT_DELIMITER,
@@ -615,6 +616,84 @@ class Tree(object):
 
         return grandma
 
+    def productions(self):
+        """
+        Generate all productions in this tree
+
+        >>> s = '''(TOP (S (S (VP (VBN Turned) (ADVP (RB loose)) (PP
+        ...        (IN in) (NP (NP (NNP Shane) (NNP Longman) (POS 's))
+        ...        (NN trading) (NN room))))) (, ,) (NP (DT the)
+        ...        (NN yuppie) (NNS dealers)) (VP (AUX do) (NP (NP
+        ...        (RB little)) (ADJP (RB right)))) (. .)))'''
+        >>> t = Tree.from_string(s).collapse_unary().chomsky_normal_form()
+        >>> for (mother, daughters) in t.productions():
+        ...     print('{: <20} -> {}'.format(mother, ' '.join(daughters)))
+        TOP                  -> S
+        S                    -> S+VP S|<,&NP>
+        S+VP                 -> VBN S+VP|<ADVP&PP>
+        VBN                  -> Turned
+        S+VP|<ADVP&PP>       -> ADVP PP
+        ADVP                 -> RB
+        RB                   -> loose
+        PP                   -> IN NP
+        IN                   -> in
+        NP                   -> NP NP|<NN&NN>
+        NP                   -> NNP NP|<NNP&POS>
+        NNP                  -> Shane
+        NP|<NNP&POS>         -> NNP POS
+        NNP                  -> Longman
+        POS                  -> 's
+        NP|<NN&NN>           -> NN NN
+        NN                   -> trading
+        NN                   -> room
+        S|<,&NP>             -> , S|<NP&VP>
+        ,                    -> ,
+        S|<NP&VP>            -> NP S|<VP&.>
+        NP                   -> DT NP|<NN&NNS>
+        DT                   -> the
+        NP|<NN&NNS>          -> NN NNS
+        NN                   -> yuppie
+        NNS                  -> dealers
+        S|<VP&.>             -> VP .
+        VP                   -> AUX NP
+        AUX                  -> do
+        NP                   -> NP ADJP
+        NP                   -> RB
+        RB                   -> little
+        ADJP                 -> RB
+        RB                   -> right
+        .                    -> .
+        """
+
+        col_tree = Tree.collapse_unary(self)
+        cnf_tree = Tree.chomsky_normal_form(col_tree)
+        p = Tree.create_tree_productions(cnf_tree)
+
+        return p
+
+    @staticmethod
+    def pretty_productions(t_prod):
+        rules = ''
+        for (mother, daughters) in t_prod:
+            rules += format('{: <20} -> {}\n'.format(mother, ' '.join(daughters)))
+
+        rules = os.linesep.join([st for st in rules.splitlines() if st])
+        return rules
+
+    def create_tree_productions(self):
+
+        right = ''
+        for daughter in self:
+            right += ' ' + Tree.get_label(daughter)
+
+        rule = '{: <20} ->{}'.format(self.label, ''.join(right)) + '\n'
+
+        for daughter in self:
+            is_terminal = Tree.terminal(daughter)
+            if not is_terminal:
+                rule += daughter.create_tree_productions()
+
+        return rule
 
 if __name__ == '__main__':
     import doctest
