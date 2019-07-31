@@ -7,7 +7,7 @@ Student: Steve Braich
 
 #### Part 1: Reading some data ####
 
-What to turn in:
+What to turn in: 
 
 1. Your Program:
 
