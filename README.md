@@ -1,6 +1,5 @@
 # CS 562: Natural  Language Processing #
 Instructor: Dr. Steven Bedrick, OHSU
-https://cslu.ohsu.edu/~bedricks/courses/cs662/
 
 Student: Steve Braich 
 
