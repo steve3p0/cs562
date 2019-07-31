@@ -3,6 +3,7 @@ from nose.tools import eq_, assert_almost_equals, assert_greater_equal
 from hw2_utils import preproc, clf_base, constants, hand_weights, evaluation, naive_bayes
 import numpy as np
 
+
 LYRICS_DEV_CSV = 'lyrics-mini.csv'
 LYRICS_TRAIN_CSV = 'lyrics-dev.csv'
 
