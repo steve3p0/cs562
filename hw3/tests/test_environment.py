@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import scipy as sp
 import matplotlib
+import torch
 
 def setup_module():
     pass
@@ -17,6 +18,7 @@ def test_library_versions():
     min_pandas = '0.23'
     min_scipy = '1.2'
     min_matplotlib = '3.0'
+    min_torch = '1.0'
     
     
     ok_(LooseVersion(sys.version) > LooseVersion(min_python))
@@ -24,3 +26,4 @@ def test_library_versions():
     ok_(LooseVersion(pd.__version__) > LooseVersion(min_pandas))
     ok_(LooseVersion(sp.__version__) > LooseVersion(min_scipy))
     ok_(LooseVersion(matplotlib.__version__) > LooseVersion(min_matplotlib))
+    ok_(LooseVersion(torch.__version__) > LooseVersion(min_torch))

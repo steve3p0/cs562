@@ -1,0 +1,10 @@
+Deliverable 2.4: Turn both the embedding dimensions and the hidden dimensions waaaaay down, to 2 each, and retrain/re-evaluate the model. Save your evaluation results to a CSV file named "deliverable_2.4.csv" with three columns: the sentence itself, the true label, and the predicted label. Also produce a text file named "deliverable_2.4.txt" containing the observed evaluation accuracy and an explanation of what you observe. Why is the number what it is?
+
+
+Trained Accuracy: 0.525
+
+Why is the number what it is?
+By shrinking the embedding dimensions down to 2, you have basically constrained the training to working with only 2 words at a time.  By shrinking the hidden dimensions down to 2, you have limited the network to two levels of abstraction that it can learn from.  So if you are only looking at 2 words and have two layers of abstraction, your accuracy is going to not much better than if it were trying to predict with an untrained model.  Further evidence of this can be found by looking at the average per-item loss, which remains stagnate at .69-.70 throughout the training.
+
+
+It has something to do with the average per-item loss.  I don't see this going down.  It stays around 69-70%.

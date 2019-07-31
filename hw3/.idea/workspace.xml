@@ -1,0 +1,1227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1ed1446a-0c6d-49a1-8012-8ac778d197b7" name="Default Changelist" comment="settling on embed200_hidden200_epoch5.  Will run with lstm 2 and 4 to see if that gives us any boost.">
+      <change beforePath="$PROJECT_DIR$/../hw1/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/.idea/hw1.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/.idea/libraries/R_User_Library.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/deserialize.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/deserialize_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/test_results/Test_Results_deserialize_test_py.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/test_results/deserialize_100.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/test_results/zipfs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/word_metrics.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw1/word_metrics_test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/._hw2.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/._hw2_utils" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/._lyrics-dev.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/._lyrics-test-hidden.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/._lyrics-train.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/._make_submission.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/._manifest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/._tests" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/._hw2.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/._hw2_utils" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/._lyrics-dev.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/._lyrics-test-hidden.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/._lyrics-train.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/._make_submission.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/._manifest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/._tests" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/hw2.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/hw2_utils" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/lyrics-dev.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/lyrics-test-hidden.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/lyrics-train.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/make_submission.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/manifest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/PaxHeader/tests" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/.___init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/._clf_base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/._clf_sklearn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/._constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/._evaluation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/._features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/._hand_weights.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/._naive_bayes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/._preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/.___init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/._clf_base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/._clf_sklearn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/._constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/._evaluation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/._features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/._hand_weights.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/._naive_bayes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/._preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/clf_base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/clf_sklearn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/evaluation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/hand_weights.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/naive_bayes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/PaxHeader/preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/clf_base.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/clf_sklearn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/constants.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/evaluation.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/hand_weights.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/naive_bayes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/tests/lyrics-dev.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/tests/lyrics-dev_steve.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/tests/lyrics-mini.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/tests/lyrics-test-hidden.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/tests/lyrics-train.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/tests/test_classifier.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/tests/test_classifier_mini.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/hw2_utils/tests/test_preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/lyrics-dev.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/lyrics-test-hidden.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/lyrics-train.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/make_submission.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/manifest.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/._test_classifier.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/._test_clf_sklearn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/._test_environment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/._test_features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/._test_preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/._test_classifier.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/._test_clf_sklearn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/._test_environment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/._test_features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/._test_preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/test_classifier.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/test_clf_sklearn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/test_environment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/test_features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/PaxHeader/test_preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/test_classifier.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/test_clf_sklearn.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/test_environment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/test_features.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw2/tests/test_preproc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hw4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../hw4/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/HW3$Unittests_in_test_environment_py.coverage" NAME="Unittests in test_environment.py Coverage Results" MODIFIED="1550617991709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$test_lang_id.coverage" NAME="test_lang_id Coverage Results" MODIFIED="1550618459026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_in_test_lm_py.coverage" NAME="Unittests in test_lm.py Coverage Results" MODIFIED="1550618721693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_environment_TestEnvironment_test_library_versions.coverage" NAME="Unittests for test_environment.TestEnvironment.test_library_versions Coverage Results" MODIFIED="1551074446081" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_embed200_hidden200_lstm2_epoch5.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_lstm2_epoch5 Coverage Results" MODIFIED="1551413926927" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_reverse_lang_order.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_reverse_lang_order Coverage Results" MODIFIED="1551345288155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_vocab_TestVocab_test_d1_1_char_vocab.coverage" NAME="Unittests for test_vocab.TestVocab.test_d1_1_char_vocab Coverage Results" MODIFIED="1550644767128" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_vocab_TestVocab_test_d1_3_sentence_tensor.coverage" NAME="Unittests for test_vocab.TestVocab.test_d1_3_sentence_tensor Coverage Results" MODIFIED="1550775789557" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_lstm5.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_lstm5 Coverage Results" MODIFIED="1551337539938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_embed2_hidden2.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_embed2_hidden2 Coverage Results" MODIFIED="1551274841259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$test_vocab.coverage" NAME="test_vocab Coverage Results" MODIFIED="1550613615010" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_vocab_TestVocab_test_d1_4_label_vocab.coverage" NAME="Unittests for test_vocab.TestVocab.test_d1_4_label_vocab Coverage Results" MODIFIED="1550656037873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_embed20_hidden40.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_embed20_hidden40 Coverage Results" MODIFIED="1551334805339" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_embed20_hidden20_lstm5_epoch5.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_embed20_hidden20_lstm5_epoch5 Coverage Results" MODIFIED="1551347597256" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_lstm2.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_lstm2 Coverage Results" MODIFIED="1551336002039" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_d2_2_predict_one.coverage" NAME="Unittests for test_lang_id.TestLangID.test_d2_2_predict_one Coverage Results" MODIFIED="1551066937427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model Coverage Results" MODIFIED="1551076253855" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_untrained_model.coverage" NAME="Unittests for test_lang_id.TestLangID.test_untrained_model Coverage Results" MODIFIED="1551269384893" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Nosetests_in_test_environment_py.coverage" NAME="Nosetests in test_environment.py Coverage Results" MODIFIED="1550185127207" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_embed200_hidden200_epoch5.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_epoch5 Coverage Results" MODIFIED="1551398831297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_in_test_vocab_py.coverage" NAME="Unittests in test_vocab.py Coverage Results" MODIFIED="1551076617379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_lstm5_epoch5.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_lstm5_epoch5 Coverage Results" MODIFIED="1551280686423" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Nosetests_in_test_vocab_py.coverage" NAME="Nosetests in test_vocab.py Coverage Results" MODIFIED="1550614678259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_in_test_lang_id_py.coverage" NAME="Unittests in test_lang_id.py Coverage Results" MODIFIED="1551075875213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Nosetests_in_test_lm_py.coverage" NAME="Nosetests in test_lm.py Coverage Results" MODIFIED="1550185160357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi Coverage Results" MODIFIED="1551217496293" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_untrained_multi.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_untrained_multi Coverage Results" MODIFIED="1551217749134" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_vocab_TestVocab_test_d1_2_sentence_vector.coverage" NAME="Unittests for test_vocab.TestVocab.test_d1_2_sentence_vector Coverage Results" MODIFIED="1550645512050" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_train_model_multi_epoch5.coverage" NAME="Unittests for test_lang_id.TestLangID.test_train_model_multi_epoch5 Coverage Results" MODIFIED="1551340801004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1550181710299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/HW3$Nosetests_in_test_lang_id_py.coverage" NAME="Nosetests in test_lang_id.py Coverage Results" MODIFIED="1550618512279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_d2_3_train_model.coverage" NAME="Unittests for test_lang_id.TestLangID.test_d2_3_train_model Coverage Results" MODIFIED="1551078211639" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Jupyter.coverage" NAME="Jupyter Coverage Results" MODIFIED="1551347350384" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_d2_1_forward.coverage" NAME="Unittests for test_lang_id.TestLangID.test_d2_1_forward Coverage Results" MODIFIED="1551072078758" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lm_TestLm_test_d3_1_setup.coverage" NAME="Unittests for test_lm.TestLm.test_d3_1_setup Coverage Results" MODIFIED="1551433728859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_lang_id_TestLangID_test_d2_3_eval_acc.coverage" NAME="Unittests for test_lang_id.TestLangID.test_d2_3_eval_acc Coverage Results" MODIFIED="1551073957002" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+  </component>
+  <component name="FileEditorManager">
+    <splitter split-orientation="horizontal" split-proportion="0.76603776">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/hw3_utils/vocab.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1139">
+                  <caret line="70" column="4" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
+                  <folding>
+                    <element signature="e#0#35#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/hw3.ipynb">
+              <provider selected="true" editor-type-id="jupyter-editor" />
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/hw3_utils/lm.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="425">
+                  <caret line="55" column="31" lean-forward="true" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
+                  <folding>
+                    <element signature="e#0#12#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/tests/test_lm.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="85">
+                  <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/hw3_utils/unittests/test_lm.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="425">
+                  <caret line="31" selection-start-line="31" selection-end-line="31" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/hw3_utils/unittests/test_vocab.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1088">
+                  <caret line="68" column="23" selection-start-line="68" selection-start-column="23" selection-end-line="68" selection-end-column="23" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/hw3_utils/unittests/test_environment.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="68">
+                  <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+                  <folding>
+                    <element signature="e#0#15#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/hw3_utils/lang_id.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="155">
+                  <caret line="45" selection-start-line="45" selection-end-line="45" />
+                  <folding>
+                    <element signature="e#0#12#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>forward</find>
+      <find>backw</find>
+      <find>predict</find>
+      <find>retain</find>
+      <find>backward</find>
+      <find>train</find>
+      <find>model</find>
+      <find>multi</find>
+      <find>average per-item loss</find>
+      <find>nn</find>
+      <find>lstm</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/tests/test_lm.py" />
+        <option value="$PROJECT_DIR$/tests/test_vocab.py" />
+        <option value="$PROJECT_DIR$/hw3_utils/unittests/test_environment.py" />
+        <option value="$PROJECT_DIR$/hw3_utils/unittests/test_vocab.py" />
+        <option value="$PROJECT_DIR$/hw3_utils/vocab.py" />
+        <option value="$PROJECT_DIR$/data/deliverable_2.5.txt" />
+        <option value="$PROJECT_DIR$/data/deliverable_2.4.txt" />
+        <option value="$PROJECT_DIR$/data/deliverable_2.6.txt" />
+        <option value="$PROJECT_DIR$/hw3_utils/unittests/test_lang_id.py" />
+        <option value="$PROJECT_DIR$/hw3_utils/unittests/test_lm.py" />
+        <option value="$PROJECT_DIR$/hw3_utils/lang_id.py" />
+        <option value="$PROJECT_DIR$/hw3_utils/lm.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1015" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="Scope" currentSubView="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="hw3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\workspace_courses\cs562\hw3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="hw3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="C:\workspace_courses\cs562\hw3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="hw3_utils" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="HW3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HW3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HW3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HW3" type="462c0819:PsiDirectoryNode" />
+              <item name=".ipynb_checkpoints" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HW3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HW3" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HW3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HW3" type="462c0819:PsiDirectoryNode" />
+              <item name="hw3_utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="HW3" type="b2602c69:ProjectViewProjectNode" />
+              <item name="HW3" type="462c0819:PsiDirectoryNode" />
+              <item name="hw3_utils" type="462c0819:PsiDirectoryNode" />
+              <item name="unittests" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="HW3" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="HW3" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\workspace_courses\cs562\HW3\hw3_utils\unittests" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.test_lm">
+    <configuration name="Jupyter" type="JupiterNotebook" factoryName="Jupyter Notebook">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="additionalOptions" value="" />
+      <option name="ipnbHost" value="127.0.0.1" />
+      <option name="ipnbPort" value="8888" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_lm" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_lm.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_environment.TestEnvironment" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hw3_utils/unittests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_environment.TestEnvironment&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_epoch5" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hw3_utils/unittests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_epoch5&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_lstm2_epoch5" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hw3_utils/unittests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_lstm2_epoch5&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for test_lm.TestLm.test_d3_1_setup" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hw3_utils/unittests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_lm.TestLm.test_d3_1_setup&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in test_environment.py" type="tests" factoryName="Unittests" nameIsGenerated="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hw3_utils/unittests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/hw3_utils/unittests/test_environment.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in test_lang_id.py" type="tests" factoryName="Unittests" nameIsGenerated="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hw3_utils/unittests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/hw3_utils/unittests/test_lang_id.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in test_lm.py" type="tests" factoryName="Unittests" nameIsGenerated="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hw3_utils/unittests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/hw3_utils/unittests/test_lm.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in test_vocab.py" type="tests" factoryName="Unittests" nameIsGenerated="true">
+      <module name="HW3" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/hw3_utils/unittests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/hw3_utils/unittests/test_vocab.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.test_lm" />
+      <item itemvalue="Python tests.Unittests in test_environment.py" />
+      <item itemvalue="Python tests.Unittests in test_vocab.py" />
+      <item itemvalue="Python tests.Unittests in test_lang_id.py" />
+      <item itemvalue="Python tests.Unittests in test_lm.py" />
+      <item itemvalue="Python tests.Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_epoch5" />
+      <item itemvalue="Python tests.Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_lstm2_epoch5" />
+      <item itemvalue="Python tests.Unittests for test_lm.TestLm.test_d3_1_setup" />
+      <item itemvalue="Python tests.Unittests for test_environment.TestEnvironment" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.test_lm" />
+        <item itemvalue="Python tests.Unittests for test_environment.TestEnvironment" />
+        <item itemvalue="Python tests.Unittests for test_lm.TestLm.test_d3_1_setup" />
+        <item itemvalue="Python tests.Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_lstm2_epoch5" />
+        <item itemvalue="Python tests.Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_epoch5" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1ed1446a-0c6d-49a1-8012-8ac778d197b7" name="Default Changelist" comment="" />
+      <created>1549582703025</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1549582703025</updated>
+      <workItem from="1549582704573" duration="217000" />
+      <workItem from="1549607466703" duration="94000" />
+      <workItem from="1549656027063" duration="1376000" />
+      <workItem from="1550011675738" duration="3351000" />
+      <workItem from="1550017500467" duration="2896000" />
+      <workItem from="1550107886434" duration="1356000" />
+      <workItem from="1550137524010" duration="2996000" />
+      <workItem from="1550171875671" duration="1536000" />
+      <workItem from="1550175951303" duration="50000" />
+      <workItem from="1550176145237" duration="62000" />
+      <workItem from="1550176228797" duration="744000" />
+      <workItem from="1550177017101" duration="4662000" />
+      <workItem from="1550183383384" duration="643000" />
+      <workItem from="1550184519990" duration="1485000" />
+      <workItem from="1550287087038" duration="149000" />
+      <workItem from="1550289780296" duration="693000" />
+      <workItem from="1550612822047" duration="23022000" />
+      <workItem from="1550729269854" duration="1203000" />
+      <workItem from="1550738301953" duration="24176000" />
+      <workItem from="1550816061628" duration="607000" />
+      <workItem from="1550822572375" duration="600000" />
+      <workItem from="1550977099642" duration="1196000" />
+      <workItem from="1551006512100" duration="38166000" />
+      <workItem from="1551205648470" duration="7742000" />
+      <workItem from="1551273427834" duration="9621000" />
+      <workItem from="1551325639057" duration="36710000" />
+      <workItem from="1551601006560" duration="1199000" />
+      <workItem from="1552086986644" duration="281000" />
+      <workItem from="1552104764858" duration="34000" />
+      <workItem from="1552716871925" duration="38000" />
+      <workItem from="1553603837514" duration="56000" />
+      <workItem from="1556820896385" duration="5825000" />
+      <workItem from="1556871107053" duration="1023000" />
+      <workItem from="1557168462513" duration="6401000" />
+      <workItem from="1557953414955" duration="123000" />
+      <workItem from="1557954734415" duration="2343000" />
+      <workItem from="1562195692803" duration="1367000" />
+      <workItem from="1564608733755" duration="46000" />
+    </task>
+    <task id="LOCAL-00001" summary="123">
+      <created>1550644864589</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1550644864590</updated>
+    </task>
+    <task id="LOCAL-00002" summary="all tests pass">
+      <created>1550655976540</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1550655976540</updated>
+    </task>
+    <task id="LOCAL-00003" summary="d2_2_1_forward passes. with a hack.">
+      <created>1550787206658</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1550787206658</updated>
+    </task>
+    <task id="LOCAL-00004" summary="eval passes">
+      <created>1551066595853</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1551066595853</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added test_train_model unittest.  It's the same code in the Jupyter notebook but it passes with 90% accuracy.  Jupyter reports this: &#10;RuntimeError: Trying to backward through the graph a second time, but the buffers have already been freed. Specify retain_graph=True when calling backward the first time.">
+      <created>1551075020485</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1551075020485</updated>
+    </task>
+    <task id="LOCAL-00006" summary="eng and spa pass lang_id tests.">
+      <created>1551076660838</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1551076660838</updated>
+    </task>
+    <task id="LOCAL-00007" summary="added test_d2_3_train_model">
+      <created>1551077238755</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1551077238755</updated>
+    </task>
+    <task id="LOCAL-00008" summary="test_train_model_multi">
+      <created>1551078359988</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1551078359988</updated>
+    </task>
+    <task id="LOCAL-00009" summary="added test_train_model_embed2_hidden2">
+      <created>1551098200099</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1551098200099</updated>
+    </task>
+    <task id="LOCAL-00010" summary="added analysis, multi_lstm5">
+      <created>1551103859975</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1551103859975</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fixed tab spacing.">
+      <created>1551104135037</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1551104135037</updated>
+    </task>
+    <task id="LOCAL-00012" summary="2.2 works in the browser now.">
+      <created>1551274122613</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1551274122613</updated>
+    </task>
+    <task id="LOCAL-00013" summary="settling on embed200_hidden200_epoch5.  Will run with lstm 2 and 4 to see if that gives us any boost.">
+      <created>1551352045323</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1551352045323</updated>
+    </task>
+    <task id="LOCAL-00014" summary="including tests from GPU.">
+      <created>1551352222106</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1551352222106</updated>
+    </task>
+    <task id="LOCAL-00015" summary="settling on embed200_hidden200_epoch5.  Will run with lstm 2 and 4 to see if that gives us any boost.">
+      <created>1562195798573</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1562195798573</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="Unittests_for_test_lang_id_TestLangID_test_train_model_multi_embed200_hidden200_epoch5 - 2019.02.28 at 18h 03m 44s.xml">
+      <configuration name="Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_epoch5" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_lang_id_TestLangID_test_train_model_multi_embed200_hidden200_lstm2_epoch5 - 2019.03.01 at 00h 16m 22s.xml">
+      <configuration name="Unittests for test_lang_id.TestLangID.test_train_model_multi_embed200_hidden200_lstm2_epoch5" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_lm_TestLm_test_d3_1_setup - 2019.03.01 at 01h 48m 05s.xml">
+      <configuration name="Unittests for test_lm.TestLm.test_d3_1_setup" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_lm_TestLm_test_d3_1_setup - 2019.03.01 at 01h 48m 23s.xml">
+      <configuration name="Unittests for test_lm.TestLm.test_d3_1_setup" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_lm_TestLm_test_d3_1_setup - 2019.03.01 at 01h 48m 49s.xml">
+      <configuration name="Unittests for test_lm.TestLm.test_d3_1_setup" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_environment_py - 2019.05.02 at 11h 29m 05s.xml">
+      <configuration name="Unittests in test_environment.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_vocab_py - 2019.05.02 at 11h 29m 18s.xml">
+      <configuration name="Unittests in test_vocab.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_lang_id_py - 2019.05.02 at 12h 24m 33s.xml">
+      <configuration name="Unittests in test_lang_id.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_test_lm_py - 2019.05.02 at 12h 25m 09s.xml">
+      <configuration name="Unittests in test_lm.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_for_test_environment_TestEnvironment - 2019.05.02 at 13h 06m 45s.xml">
+      <configuration name="Unittests for test_environment.TestEnvironment" configurationId="tests" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="184089000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1015" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20682302" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49946696" weight="0.3422222" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4377778" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50053304" side_tool="true" weight="0.36" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.62333333" />
+      <window_info anchor="bottom" id="Python Console" order="12" weight="0.45333335" />
+      <window_info anchor="bottom" id="Jupyter" order="13" weight="0.42444444" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.32995737" />
+      <window_info anchor="right" id="R Graphics" order="4" />
+      <window_info anchor="right" id="R Packages" order="5" />
+      <window_info anchor="right" x="0" y="0" width="295" height="644" id="Documentation" order="6" side_tool="true" weight="0.16364606" />
+      <window_info anchor="right" id="Database" order="7" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.141258" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Jupyter" order="0" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" />
+      <window_info anchor="bottom" id="Run" order="3" sideWeight="0.49946696" weight="0.3422222" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4377778" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Database Changes" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50053304" side_tool="true" weight="0.36" />
+      <window_info anchor="bottom" id="Terminal" order="12" weight="0.62333333" />
+      <window_info anchor="bottom" id="Python Console" order="13" weight="0.2522222" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.32995737" />
+      <window_info anchor="right" id="R Graphics" order="4" />
+      <window_info anchor="right" id="R Packages" order="5" />
+      <window_info anchor="right" x="0" y="0" width="295" height="644" id="Documentation" order="6" side_tool="true" weight="0.16364606" />
+      <window_info anchor="right" id="Database" order="7" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="123" />
+    <MESSAGE value="all tests pass" />
+    <MESSAGE value="d2_2_1_forward passes. with a hack." />
+    <MESSAGE value="eval passes" />
+    <MESSAGE value="added test_train_model unittest.  It's the same code in the Jupyter notebook but it passes with 90% accuracy.  Jupyter reports this: &#10;RuntimeError: Trying to backward through the graph a second time, but the buffers have already been freed. Specify retain_graph=True when calling backward the first time." />
+    <MESSAGE value="eng and spa pass lang_id tests." />
+    <MESSAGE value="added test_d2_3_train_model" />
+    <MESSAGE value="test_train_model_multi" />
+    <MESSAGE value="added test_train_model_embed2_hidden2" />
+    <MESSAGE value="added analysis, multi_lstm5" />
+    <MESSAGE value="fixed tab spacing." />
+    <MESSAGE value="2.2 works in the browser now." />
+    <MESSAGE value="including tests from GPU." />
+    <MESSAGE value="settling on embed200_hidden200_epoch5.  Will run with lstm 2 and 4 to see if that gives us any boost." />
+    <option name="LAST_COMMIT_MESSAGE" value="settling on embed200_hidden200_epoch5.  Will run with lstm 2 and 4 to see if that gives us any boost." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/tests/test_lang_id.py</url>
+          <line>28</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/tests/test_lang_id.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/tests/test_vocab.py</url>
+          <line>11</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_vocab.py</url>
+          <line>21</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_vocab.py</url>
+          <line>22</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_vocab.py</url>
+          <line>81</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_lang_id.py</url>
+          <line>33</line>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_vocab.py</url>
+          <line>64</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_lang_id.py</url>
+          <line>50</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_lang_id.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_environment.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_lang_id.py</url>
+          <line>155</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/hw3_utils/unittests/test_lang_id.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="tests">
+        <watch expression="bi_text.lang.values" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/HW3$Unittests_in_test_environment_py.coverage" NAME="Unittests in test_environment.py Coverage Results" MODIFIED="1556821744063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_in_test_lang_id_py.coverage" NAME="Unittests in test_lang_id.py Coverage Results" MODIFIED="1556821776745" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_in_test_vocab_py.coverage" NAME="Unittests in test_vocab.py Coverage Results" MODIFIED="1556821757901" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_in_test_lm_py.coverage" NAME="Unittests in test_lm.py Coverage Results" MODIFIED="1556825108254" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+    <SUITE FILE_PATH="coverage/HW3$Unittests_for_test_environment_TestEnvironment.coverage" NAME="Unittests for test_environment.TestEnvironment Coverage Results" MODIFIED="1556827604764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hw3_utils/unittests" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>_bi_text_test.to_csv(&quot;../../data/deliverable_2.4_untrained.csv&quot;, sep='\t', index=False)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>_bi_text_test.to_csv(&quot;../../data/deliverable_2.4_untrained.csv&quot;,index=False)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>_bi_text_test.to_csv(&quot;../../data/deliverable_2.4_untrained.csv&quot;, sep=',', index=False)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>pred_label_list.size</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(pred_label_list)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>LooseVersion(torch.__version__)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.lstm</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>self.hidden</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>len(test_data.columns)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="watch">
+      <expression>
+        <expression-string>y_pred.data</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>sentence_tensor.size(0)</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$USER_HOME$/AppData/Roaming/jupyter/runtime/nbserver-14104-open.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_vocab.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_environment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_lang_id.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/unittest/suite.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="121" selection-start-line="121" selection-end-line="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sentences_bilingual.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/torch/nn/modules/module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="488" selection-start-line="488" selection-end-line="488" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/unittest/case.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="615" selection-start-line="615" selection-end-line="615" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/deliverable_2.4_untrained.csv">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="26" column="14" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+        </state>
+      </provider>
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="6" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/deliverable_2.4.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/deliverable_2.5.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="59" selection-start-line="7" selection-start-column="59" selection-end-line="7" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/towns_clean.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/sentences_multilingual.csv">
+      <provider selected="true" editor-type-id="csv-text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw3_utils/unittests/test_lang_id.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="592" selection-start-line="592" selection-end-line="592" />
+          <folding>
+            <element signature="e#362#723#0" />
+            <element signature="e#766#1165#0" />
+            <element signature="e#1212#1545#0" />
+            <element signature="e#1589#2128#0" />
+            <element signature="e#2134#2180#0" />
+            <element signature="e#2890#4448#0" />
+            <element signature="e#2890#2926#0" />
+            <element signature="e#4494#5734#0" />
+            <element signature="e#4494#4530#0" />
+            <element signature="e#5792#7028#0" />
+            <element signature="e#8599#10022#0" />
+            <element signature="e#9523#9558#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/deliverable_2.6.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1683">
+          <caret line="99" selection-start-line="99" selection-end-line="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/deliverable_2.4.csv">
+      <provider editor-type-id="csv-table-editor">
+        <state showInfoPanel="true" fixedHeaders="false" rowLines="3" />
+      </provider>
+      <provider selected="true" editor-type-id="csv-text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/site-packages/torch/nn/functional.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Character-Level LSTM with PyTorch.ipynb" />
+    <entry file="file://$PROJECT_DIR$/char_rnn_generation_tutorial.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="161" column="45" selection-start-line="161" selection-start-column="39" selection-end-line="161" selection-end-column="45" />
+          <folding>
+            <element signature="e#2404#2469#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw3_utils/vocab.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1139">
+          <caret line="70" column="4" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw3.ipynb">
+      <provider selected="true" editor-type-id="jupyter-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_lm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw3_utils/unittests/test_lm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw3_utils/unittests/test_vocab.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="68" column="23" selection-start-line="68" selection-start-column="23" selection-end-line="68" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw3_utils/unittests/test_environment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw3_utils/lang_id.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hw3_utils/lm.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="55" column="31" lean-forward="true" selection-start-line="55" selection-start-column="31" selection-end-line="55" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

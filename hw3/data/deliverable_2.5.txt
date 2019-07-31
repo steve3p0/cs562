@@ -1,0 +1,20 @@
+Deliverable 2.5: Interpret these results. Why is our classifier performing better on some languages than on others? Put your analysis in a file named deliverable_2.5.txt.
+
+
+Why is our classifier performing better on some languages than on others? 
+
+Lexical Similarity.  
+
+One might interpret the results in the confusion matrix to mean that Italian and Spanish are very similar.
+
+The errors made misidentifying Spanish for Italian and vice versa are very high.  They exceed errors between other languages by large margins.
+NOTE: This does contradict what I have heard about these two languages.  My understanding is that they have a high degree (89%) of lexical similarity.
+
+Spanish has a high degree of similarity to both French and Italian. So when a language has more than one similar language, the accuracy of that language degrades more.
+
+German and English have higher accuracy rates because they are only similar with  each other.  They are similar just enough to each other to allow French to have the highest accuracy rates.
+
+The errors cluster around language groups like Germanic and Romance languages.
+
+
+

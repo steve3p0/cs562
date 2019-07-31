@@ -1,0 +1,100 @@
+From here, the rest of this section is up to you. Experiment with different numbers of embedding & hidden dimensions, hidden LSTM layers, etc., and see how high you can get your classification accuracy. Also try training for additional epochs. Does that help?
+
+Deliverable 2.6: Describe at least two additional models that you trained and evaluated, along with their overall and per-class accuracies. What seemed to help the most? Put your discussion in a file named deliverable_2.6.txt.
+
+Best Result:
+It depends what hardware resources you have.  On a CPU, stacking LSTMs takes a very long time to train, unless you turn the other hyperparameters way down.  The most important parameter is the epochs, then embedding and hidden layers.  When I started increasing the embedded and hidden layers, I noticed that the language accuracy was disproportionately spread favoring German (highest) and English over the other languages.  Increasing the number of LSTM layers had the effect of smoothing the accuracy rate.  However, if you ratchet up the hidden and embedded layers to 200 and train with 5 epochs, the cost of LSTM stacking is redundant (all 5 output classes > 98% accuracy).  I kept 4 LSTM layers on my last training on my GPU computer because I wanted to get as close to 100% accuracy as I could get.  More than 4 LSTM layers and you have diminishing returns according to this article:
+https://machinelearningmastery.com/stacked-long-short-term-memory-networks/
+
+If I had more time I would experiment more with the LSTM parameter and lowering the other parameters to see if there is an optimal setting for a CPU.  One hour and 54 minutes with an accuracy of 98% is the best I got on a CPU.  
+
+GPU 
+Hardware:      GTX 1070 8 GB, Intel i5 3.5 Ghz Quad Core, 16 RAM, Ubuntu 18.04
+Training Time: 2 hours 46 minutes
+Ave. Accuracy: 0.9915
+
+ - Embedding Layers: 200
+ - Hidden Layers 200
+ - LSTM Layers: 4
+ - Epochs: 5
+
+CPU
+Hardware:      Surface Pro Intel Core i7 2.20 Ghz, 16 GB RAM, Windows 10
+Training Time: 1 hours 46 minutes
+Ave. Accuracy: 0.9818
+
+ - Embedding Layers: 200
+ - Hidden Layers 200
+ - LSTM Layers: 1   <--- Only one LSTM layer but still 98%
+ - Epochs: 5
+
+CPU
+
+Setting the embedded and hidden layers to 200, the number of epochs to 5, and stacking 4 LSTM layers acheived a 99% average accuracy.  The question is, am I overfitting?  According to the assigned reading (CS231n CNN for Visual Recognition) we are to use as big a NN as our "... computational budget allows and use other regularization techniques to control overfitting" So I hope the loss function "torch.nn.NLLLoss()" minimizing any overfitting.
+
+
+
+NOTE: Take a look at the first two runs listed below.  I was already at a 98 average accuracy with a training time of 46 minutes.  Stacking 4 LSTMs instead of just 2 bumped it up 1 percentage point to 99% but the training time was quadrupled.  I'm not sure that this justifies the bump in LSTM stacks.  Increasing the LSTM stacks seems to have the effect of smoothing the accuracy among language classes.
+
+def test_train_model_multi_embed200_hidden200_epoch5_lstm4
+
+ - Embedding Layers: 200
+ - Hidden Layers 200
+ - LSTM Layers: 4
+ - Epochs: 5
+
+GPU: 2 hours 46 minutes:  166 minutes
+Accuracy: 0.9915
+              precision    recall  f1-score   support
+
+         deu       0.99      1.00      0.99      2027
+         eng       1.00      0.99      0.99      2016
+         fra       0.99      0.99      0.99      1993
+         ita       0.99      0.99      0.99      1984
+         spa       0.98      0.99      0.99      1980
+
+
+Other notable results:
+
+def test_train_model_multi_embed200_hidden200_epoch5
+
+ - Embedding Layers: 200
+ - Hidden Layers 200
+ - LSTM Layers: 1
+ - Epochs: 5
+
+GPU: 41 minutes
+Accuracy: 0.9876
+              precision    recall  f1-score   support
+
+         deu       0.99      1.00      0.99      2046
+         eng       1.00      0.98      0.99      1966
+         fra       0.99      0.99      0.99      1996
+         ita       0.97      0.99      0.98      2009
+         spa       0.99      0.98      0.98      1983
+
+
+def test_train_model_multi_embed100_hidden100_lstm2
+Stacking too many LSTM layers without increasing other parameters caused a big dip in accuracy.  Here I just increase the LSTM layers by 1 and increase the embedding hidden layers to 100.
+
+ - Embedding Layers: 100
+ - Hidden Layers 100
+ - LSTM Layers: 2
+ - Epochs: 1
+
+Accuracy: 0.9563
+Training Time: 14 minutes GPU
+
+              precision    recall  f1-score   support
+
+         deu       0.96      0.99      0.97      1970
+         eng       0.98      0.96      0.97      2037
+         fra       0.96      0.95      0.96      1988
+         ita       0.90      0.98      0.94      2024
+         spa       0.98      0.91      0.94      1981
+
+
+I tried about 20 different hyperparameters. The biggest bang for the buck was epoch and embeddings.  Stacking is an interesting concept that I would like to investigate further at another time.
+
+
+
