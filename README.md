@@ -13,5 +13,5 @@ Github repository for homework assignments and final project.
 
 Final Project: Rules-based machine translation for English <> Serbian using the Grammatical Framework
 * https://github.com/steve3p0/gf-contrib
-* [Research Paper: Leveraging Morphological Resources in RBMT - The Case for Serbian](https://github.com/steve3p0/cs562/blob/master/Leveraging%20Morphological%20Resources%20in%20RBMT%20-%20The%20Case%20for%20Serbian.pdf)
+* Research Paper: [Leveraging Morphological Resources in RBMT - The Case for Serbian](https://github.com/steve3p0/cs562/blob/master/Leveraging%20Morphological%20Resources%20in%20RBMT%20-%20The%20Case%20for%20Serbian.pdf)
 
