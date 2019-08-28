@@ -88,6 +88,93 @@ class TestPcfg(unittest.TestCase):
 
         print(dict(pcfg))
 
+    #counts['NP'][('DT','NN')] / sum(counts['NP'].values())
+    def test_convert_to_pcfg_inline1_revised(self):
+        s = inspect.cleandoc("""
+            (TOP
+                (NP
+                  (DT the)
+                  (NN teacher)
+                )
+                (VP
+                  (MD will)
+                  (VP
+                    (VB lecture)
+                    (NP
+                      (NN today)
+                      (PP
+                          (IN in)
+                          (NP
+                            (DT the)
+                            (NN lecture)
+                            (NN hall)
+                          )
+                      )
+                    )
+                  )
+                )
+                (. .)
+            )""")
+
+        t_before = Tree.from_string(s)
+
+        print('BEFORE: *************************')
+        before = t_before.pretty()
+        print(before)
+
+        # counts['NP'][('DT','NN')] / sum(counts['NP'].values())
+        print('EXPECTED: *************************')
+
+        blah = {'TOP': {('NP', 'VP', '.'): 1}, 'NP': {('DT', 'NN'): 1, ('NN', 'PP'): 1, ('DT', 'NN', 'NN'): 1}, 'DT': {('the',): 1}, 'NN': {('teacher',): 1, ('today',): 1, ('lecture',): 1, ('hall',): 1}, 'VP': {('MD', 'VP'): 1, ('VB', 'NP'): 1}, 'MD': {('will',): 1}, 'VB': {('lecture',): 1}, 'PP': {('IN', 'NP'): 1}, 'IN': {('in',): 1}, '.': {('.',): 1}}
+        pcfg_expect = {
+            'TOP': {
+                ('NP', 'VP', '.'): 1
+            },
+            'NP': {
+                ('DT', 'NN'): 0.3333333333333333,
+                ('NN', 'PP'): 0.3333333333333333,
+                ('DT', 'NN', 'NN'): 0.3333333333333333,
+            },
+            'DT': {
+                ('the'): 1.0
+            },
+            'NN': {
+                ('teacher'): 0.25,
+                ('today'): 0.25,
+                ('lecture'): 0.25,
+                ('hall'): 0.25,
+            },
+            'VP': {
+                ('MD', 'VP'): 0.5,
+                ('VB', 'NP'): 0.5,
+            },
+            'MD': {
+                ('will'): 1
+            },
+            'VB': {
+                ('lecture'): 1
+            },
+            'PP': {
+                ('IN', 'NP'): 1
+            },
+            'IN': {
+                ('in'): 1
+            },
+            '.': {
+                ('.'): 1
+            }
+        }
+        #expect = format(pcgf_expect)
+        expect = "defaultdict(<class 'dict'>, " + format(pcfg_expect) + ")"
+        print(expect)
+
+        print('ACTUAL *************************')
+        pcfg_actual =  t_before.convert_to_pcfg()
+        actual = format(pcfg_actual)
+        print(actual)
+
+        eq_(actual, expect)
+
     def test_convert_to_pcfg_inline1(self):
         s = inspect.cleandoc("""
             (TOP
@@ -314,6 +401,129 @@ class TestPcfg(unittest.TestCase):
         print(actual)
 
         eq_(actual, expect)
+
+    def test_convert_to_pcfg_JMpg5(self):
+        s = inspect.cleandoc("""
+            (TOP
+                (S 
+                    (VP
+                        (VB book)
+                        (NP
+                            (DT	the)
+                            (NN
+                                (N	dinner)
+                                (N	flight)
+                            )
+                        )
+                    )
+                
+                    (VP
+                        (VB book)
+                        (NP
+                            (DT	the)
+                            (NN
+                                (N	dinner)
+                            )
+                        )
+                        (NP
+                            (NN
+                                (N	flight)
+                            )
+                        )			
+                    )
+                )
+            )""")
+
+        t_before = Tree.from_string(s)
+
+        print('BEFORE: *************************')
+        before = t_before.pretty()
+        print(before)
+
+        print('EXPECTED: *************************')
+        pcfg_expect = {
+            'TOP': {
+                'rhs': {
+                    ('S'), 1
+                },
+
+            },
+            'S': {
+                'rhs': {
+                    ('VP')
+                },
+                'probability': 1
+            },
+            'VP': {
+                'rhs': {
+                    ('V'),
+                },
+
+            },
+            'DT': {
+                'rhs': {
+                    ('the',)
+                },
+                'probability': 1.0
+            },
+            'NN': {
+                'rhs': {
+                    ('teacher',),
+                    ('today',),
+                    ('lecture',),
+                    ('hall',)
+                },
+                'probability': 0.25
+            },
+            'VP': {
+                'rhs': {
+                    ('MD', 'VP'),
+                    ('VB', 'NP')
+                },
+                'probability': 0.5
+            },
+            'MD': {
+                'rhs': {
+                    ('will',)
+                },
+                'probability': 1
+            },
+            'VB': {
+                'rhs': {
+                    ('lecture',)
+                },
+                'probability': 1
+            },
+            'PP': {
+                'rhs': {
+                    ('IN', 'NP')
+                },
+                'probability': 1
+            },
+            'IN': {
+                'rhs': {
+                    ('in',)
+                },
+                'probability': 1
+            },
+            '.': {
+                'rhs': {
+                    ('.',)
+                },
+                'probability': 1
+            }
+        }
+        #expect = format(pcgf_expect)
+        expect = "defaultdict(<class 'dict'>, " + format(pcfg_expect) + ")"
+        print(expect)
+
+        print('ACTUAL *************************')
+        pcfg_actual =  t_before.convert_to_pcfg()
+        actual = format(pcfg_actual)
+        print(actual)
+
+        eq_(actual, expect)
+
 
     def test_INTEGRATION_pretty_pcfg_inline1(self):
         s = inspect.cleandoc("""

@@ -11,6 +11,8 @@ import os
 from re import escape, finditer
 import collections
 from collections import defaultdict
+import itertools
+import operator
 
 
 #logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
@@ -686,16 +688,73 @@ class Tree(object):
     def convert_to_pcfg(self):
         rules = self.productions()
 
-        pcfg = defaultdict(dict)
-        for nonterminal, rhs in rules:
-            try:
-                pcfg[nonterminal]['rhs'].add(tuple(rhs))
-                pcfg[nonterminal]['probability'] = 1 / len(pcfg[nonterminal]['rhs'])
-            except:
-                pcfg[nonterminal].setdefault('rhs', set()).add(tuple(rhs))
-                pcfg[nonterminal].setdefault('probability', 1)
+        #from itertools import groupby
+        list_rules = list(rules)
+        #sorted_rules = sorted(list_rules, key=lambda x: x[0])
 
-        return pcfg
+        nt_list = defaultdict(dict)
+        for nt in list_rules:
+            #nt_list[nt[0]].append(nt[1])
+            #nt_list[nt[0]].add(nt[1])
+
+            #probability = len(nt[1])
+            nt_list[nt[0]][tuple(nt[1])] = 1 / len(nt[1])
+
+            # try:
+            #     #pcfg[nonterminal]['rhs'].add(tuple(rhs))
+            #     #pcfg[nonterminal]['probability'] = 1 / len(pcfg[nonterminal]['rhs'])
+            #     #yield key, sum(item[1] for item in subiter)
+            #     #print(item[1] for item in rhs)
+            #
+            #     #for item[1] in rhs:
+            #     nt_list[nt[0]][tuple(nt[1])] = 1
+            #
+            #     #pcfg[nonterminal][tuple(rhs)] = 1 / len(pcfg[nonterminal][tuple(rhs)])
+            # except:
+            #     # pcfg[nonterminal].setdefault('rhs', set()).add(tuple(rhs))
+            #     # pcfg[nonterminal].setdefault('probability', 1)
+            #
+            #     nt_list[nt[0]][tuple(nt[1])] = 1
+            #
+            #     pcfg[nonterminal].setdefault(tuple(rhs), 1)
+
+
+
+        for key in nt_list:
+            print
+            key
+            for thing in nt_list[key]:
+                print
+                thing
+            print
+
+
+        for (mother, daughters) in rules:
+            print(format('{: <20} -> {}\n'.format(mother, ' '.join(daughters))))
+
+
+
+
+        # gby_rules = itertools.groupby(self.productions(), operator.itemgetter(0))
+        #
+        # pcfg = defaultdict(dict)
+        # for nonterminal, rhs in gby_rules:
+        #     try:
+        #         #pcfg[nonterminal]['rhs'].add(tuple(rhs))
+        #         #pcfg[nonterminal]['probability'] = 1 / len(pcfg[nonterminal]['rhs'])
+        #         #yield key, sum(item[1] for item in subiter)
+        #         print(item[1] for item in rhs)
+        #
+        #         #for item[1] in rhs:
+        #
+        #         pcfg[nonterminal][tuple(rhs)] = 1 / len(pcfg[nonterminal][tuple(rhs)])
+        #     except:
+        #         # pcfg[nonterminal].setdefault('rhs', set()).add(tuple(rhs))
+        #         # pcfg[nonterminal].setdefault('probability', 1)
+        #
+        #         pcfg[nonterminal].setdefault(tuple(rhs), 1)
+        #
+        # return pcfg
 
     @staticmethod
     def pretty_productions(t_prod):
