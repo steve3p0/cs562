@@ -685,14 +685,75 @@ class Tree(object):
 
         return p
 
+    def nt_count(self, nt, rules):
+        return len([item[0] for item in rules if item[0] == nt])
+
     def convert_to_pcfg(self):
         rules = self.productions()
-        list_rules = list(rules)
 
         pcfg = defaultdict(dict)
+        for lhs, rhs in rules:
+            try:
+                pcfg[lhs][tuple(rhs)] = 1
+            except:
+                pcfg[lhs].setdefault(tuple(rhs), 1)
+
+        for lhs in pcfg:
+            rhs_list = pcfg[lhs]
+            denom = len(rhs_list)
+            for rhs in rhs_list:
+                pcfg[lhs][rhs] = 1 / denom
+
+        return pcfg
+
+    def convert_to_pcfg2(self):
+        rules = self.productions()
+        list_rules = list(rules)
+        #set_rules = set(rules)
+        #list_rules = list(set_rules)
+
+        pcfg = defaultdict(dict)
+        # for rule in list_rules:
+        #     #nt = rule[0]
+        #     #denom = self.nt_count(nt, list_rules)
+        #     #pcfg[rule[0]][tuple(rule[1])] = 1 / denom
+        #     pcfg[rule[0]][tuple(rule[1])] = 1
+
+        # for rule in list_rules:
+        #     lhs = rule[0]
+        #     rhs_list = rule[1]
+        #     denom = len(rhs_list)
+        #     pcfg[lhs][rhs] = 1 / denom
+
         for rule in list_rules:
-            nt = rule[0]
-            pcfg[rule[0]][tuple(rule[1])] = 1 / len(rule[1])
+            lhs = rule[0]
+            rhs = rule[1]
+            #denom = len(lhs)
+            #denom
+            pcfg[lhs][rhs] = 1 / 1
+
+            # denom = len(rule[1])
+            # for rhs in lhs:
+            #     pcfg[lhs[0]][rhs] = 1 / denom
+
+        # for lhs in pcfg:
+        #     for rhs in lhs:
+        #         pcfg[lhs[0]][rhs] = 1 / lhs
+
+
+        return pcfg
+
+    def convert_to_pcfg1(self):
+        rules = self.productions()
+
+        pcfg = defaultdict(dict)
+        for nonterminal, rhs in rules:
+            try:
+                pcfg[nonterminal]['rhs'].add(tuple(rhs))
+                pcfg[nonterminal]['probability'] = 1 / len(pcfg[nonterminal]['rhs'])
+            except:
+                pcfg[nonterminal].setdefault('rhs', set()).add(tuple(rhs))
+                pcfg[nonterminal].setdefault('probability', 1)
 
         return pcfg
 

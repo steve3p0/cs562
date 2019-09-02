@@ -129,7 +129,7 @@ class TestPcfg(unittest.TestCase):
         blah = {'TOP': {('NP', 'VP', '.'): 1}, 'NP': {('DT', 'NN'): 1, ('NN', 'PP'): 1, ('DT', 'NN', 'NN'): 1}, 'DT': {('the',): 1}, 'NN': {('teacher',): 1, ('today',): 1, ('lecture',): 1, ('hall',): 1}, 'VP': {('MD', 'VP'): 1, ('VB', 'NP'): 1}, 'MD': {('will',): 1}, 'VB': {('lecture',): 1}, 'PP': {('IN', 'NP'): 1}, 'IN': {('in',): 1}, '.': {('.',): 1}}
         pcfg_expect = {
             'TOP': {
-                ('NP', 'VP', '.'): 1
+                ('NP', 'VP', '.'): 1.0
             },
             'NP': {
                 ('DT', 'NN'): 0.3333333333333333,
@@ -137,32 +137,32 @@ class TestPcfg(unittest.TestCase):
                 ('DT', 'NN', 'NN'): 0.3333333333333333,
             },
             'DT': {
-                ('the'): 1.0
+                ('the',): 1.0
             },
             'NN': {
-                ('teacher'): 0.25,
-                ('today'): 0.25,
-                ('lecture'): 0.25,
-                ('hall'): 0.25,
+                ('teacher',): 0.25,
+                ('today',): 0.25,
+                ('lecture',): 0.25,
+                ('hall',): 0.25,
             },
             'VP': {
                 ('MD', 'VP'): 0.5,
                 ('VB', 'NP'): 0.5,
             },
             'MD': {
-                ('will'): 1
+                ('will',): 1.0
             },
             'VB': {
-                ('lecture'): 1
+                ('lecture',): 1.0
             },
             'PP': {
-                ('IN', 'NP'): 1
+                ('IN', 'NP'): 1.0
             },
             'IN': {
-                ('in'): 1
+                ('in',): 1.0
             },
             '.': {
-                ('.'): 1
+                ('.',): 1.0
             }
         }
         #expect = format(pcgf_expect)
