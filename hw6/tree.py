@@ -706,57 +706,6 @@ class Tree(object):
 
         return pcfg
 
-    def convert_to_pcfg2(self):
-        rules = self.productions()
-        list_rules = list(rules)
-        #set_rules = set(rules)
-        #list_rules = list(set_rules)
-
-        pcfg = defaultdict(dict)
-        # for rule in list_rules:
-        #     #nt = rule[0]
-        #     #denom = self.nt_count(nt, list_rules)
-        #     #pcfg[rule[0]][tuple(rule[1])] = 1 / denom
-        #     pcfg[rule[0]][tuple(rule[1])] = 1
-
-        # for rule in list_rules:
-        #     lhs = rule[0]
-        #     rhs_list = rule[1]
-        #     denom = len(rhs_list)
-        #     pcfg[lhs][rhs] = 1 / denom
-
-        for rule in list_rules:
-            lhs = rule[0]
-            rhs = rule[1]
-            #denom = len(lhs)
-            #denom
-            pcfg[lhs][rhs] = 1 / 1
-
-            # denom = len(rule[1])
-            # for rhs in lhs:
-            #     pcfg[lhs[0]][rhs] = 1 / denom
-
-        # for lhs in pcfg:
-        #     for rhs in lhs:
-        #         pcfg[lhs[0]][rhs] = 1 / lhs
-
-
-        return pcfg
-
-    def convert_to_pcfg1(self):
-        rules = self.productions()
-
-        pcfg = defaultdict(dict)
-        for nonterminal, rhs in rules:
-            try:
-                pcfg[nonterminal]['rhs'].add(tuple(rhs))
-                pcfg[nonterminal]['probability'] = 1 / len(pcfg[nonterminal]['rhs'])
-            except:
-                pcfg[nonterminal].setdefault('rhs', set()).add(tuple(rhs))
-                pcfg[nonterminal].setdefault('probability', 1)
-
-        return pcfg
-
     @staticmethod
     def pretty_productions(t_prod):
         rules = ''
