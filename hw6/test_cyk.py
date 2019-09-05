@@ -195,3 +195,14 @@ class TestCyk(unittest.TestCase):
                 #print(f"x,y: {x},{y}")
 
                 print(table)
+
+
+        # step = 0
+        # for x in range(n):
+        #     for y in range(x, -1, -1):
+        #         step += 1
+        #         #table.iloc[x - 1, y] = str(step) + ": " + str(x - 1) + ', ' + str(y)
+        #         table.iloc[x, y] = str(step)
+        #         #print(f"x,y: {x},{y}")
+        #
+        #         print(table)
