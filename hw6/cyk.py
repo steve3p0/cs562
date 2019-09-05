@@ -38,28 +38,33 @@ class Cyk(object):
         prev_left = ''
 
         for i in range(n):
+
             # initialize terminal cell
+            nt = [key[0] for key, value in self.pcfg.items() if words[i] in key[1]]
+            table.iloc[i, i] = nt[0]
 
-            if i == 0:
-                nt = [key[0] for key, value in self.pcfg.items() if words[i] in key[1]]
-                table.iloc[0,0] = nt[0]
-            else:
-                nt = [key[0] for key, value in self.pcfg.items() if words[i] in key[1]]
-                table.iloc[i, i] = nt[0]
+            nt_prev = table.iloc[i - 1, i - 1]
+            rhs = [ nt_prev, nt[0] ]
+            rhs = tuple([ nt_prev, nt[0] ])
 
-            #[key[0] for key, value in self.pcfg.items() if words[i] in key[1]]
+            key1 = [key[1] for key, value in self.pcfg.items()]
+            lhs = [key[0] for key, value in self.pcfg.items() if rhs == key[1]]
 
-            if i > 0:
-                nt_prev = table.iloc[i - 1, i - 1]
-                rhs = [ nt_prev, nt[0] ]
-                rhs = tuple([ nt_prev, nt[0] ])
+            if len(lhs) > 0:
+                table.iloc[i - 1, i] = lhs[0]
 
-                key1 = [key[1] for key, value in self.pcfg.items()]
-                lhs = [key[0] for key, value in self.pcfg.items() if rhs == key[1]]
-
-                if len(lhs) > 0:
-                    table.iloc[i - 1, i] = lhs[0]
-
+                # for j in range(i):
+                #
+                #     nt_prev = table.iloc[i - j, i - j]
+                #     rhs = [nt_prev, nt[0]]
+                #     rhs = [nt_prev, nt[0]]
+                #     rhs = tuple([nt_prev, nt[0]])
+                #
+                #     key1 = [key[1] for key, value in self.pcfg.items()]
+                #     lhs = [key[0] for key, value in self.pcfg.items() if rhs == key[1]]
+                #
+                #     if len(lhs) > 0:
+                #         table.iloc[j - 1, j] = lhs[0]
 
 
         print(table)
