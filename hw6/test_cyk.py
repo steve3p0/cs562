@@ -4,6 +4,7 @@
 import unittest
 from nose.tools import eq_, assert_almost_equals, assert_greater_equal
 import inspect
+import pandas
 import os
 from io import StringIO
 import logging
@@ -173,3 +174,24 @@ class TestCyk(unittest.TestCase):
         cyk.parse(sentence)
 
         #eq_(actual, expect)
+
+    def test_python_ranges(self):
+
+        s = "the teacher gave the lecture"
+        words = s.split(' ')
+        n = len(words)
+
+        table = pandas.DataFrame(index = range(n), columns = words)
+        table.fillna('', inplace=True)
+
+        print(table)
+
+        step = 0
+        for x in range(n):
+            for y in range(x, -1, -1):
+                step += 1
+                #table.iloc[x - 1, y] = str(step) + ": " + str(x - 1) + ', ' + str(y)
+                table.iloc[x, y] = str(step)
+                #print(f"x,y: {x},{y}")
+
+                print(table)
