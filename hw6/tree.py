@@ -632,6 +632,26 @@ class Tree(object):
 
         return grandma
 
+    @staticmethod
+    def load_rules(filename):
+        f = open(filename, "r", encoding="utf-8")
+        trees = Tree.from_stream(f)
+        f.close
+
+        rules = []
+
+        for t in trees:
+            # Get a copy of the tree before unary collapse
+            t_before = Tree.pretty(t)
+
+            # Get actual tree after collapse from tree.py
+            t_col = Tree.collapse_unary(t)
+            t_cnf = Tree.chomsky_normal_form(t_col)
+            rules += Tree.productions(t_cnf)
+
+        return rules
+
+
     def productions(self):
         """
         Generate all productions in this tree
@@ -688,8 +708,51 @@ class Tree(object):
     def nt_count(self, nt, rules):
         return len([item[0] for item in rules if item[0] == nt])
 
-    def convert_to_pcfg(self):
-        rules = self.productions()
+    @staticmethod
+    def convert_to_pcfg(rules):
+
+        cfg = defaultdict(dict)
+        for lhs, rhs in rules:
+            try:
+                cfg[lhs][tuple(rhs)] = 1
+            except:
+                cfg[lhs].setdefault(tuple(rhs), 1)
+
+        pcfg = defaultdict(dict)
+        for lhs in cfg:
+            rhs_list = cfg[lhs]
+            denom = len(rhs_list)
+            for rhs in rhs_list:
+                key = tuple((lhs, tuple(rhs)))
+                try:
+                    pcfg[key] = 1 / denom
+                except:
+                    pcfg[key].setdefault(1/denom)
+
+        return pcfg
+
+    @staticmethod
+    def convert_to_pcfg3(rules):
+        #rules = self.productions()
+
+        pcfg = defaultdict(dict)
+        for lhs, rhs in rules:
+            try:
+                pcfg[lhs][tuple(rhs)] = 1
+            except:
+                pcfg[lhs].setdefault(tuple(rhs), 1)
+
+        for lhs in pcfg:
+            rhs_list = pcfg[lhs]
+            denom = len(rhs_list)
+            for rhs in rhs_list:
+                pcfg[lhs][rhs] = 1 / denom
+
+        return pcfg
+
+    @staticmethod
+    def convert_to_pcfg2(rules):
+        #rules = self.productions()
 
         pcfg = defaultdict(dict)
         for lhs, rhs in rules:
@@ -734,11 +797,9 @@ class Tree(object):
     @staticmethod
     def pretty_pcgf(pcfg):
         rules = ''
-        for nonterminal, productions in pcfg.items():
-            probability = productions['probability']
-            list_rhs = productions['rhs']
-            for rhs in list_rhs:
-                rules += format('{: <20} -> {} {}\n'.format(nonterminal, ' '.join(rhs), probability))
+
+        for rule, probability in pcfg.items():
+            rules += format('{: <20} -> {} {}\n'.format(rule[0], ' '.join(rule[1]), probability))
 
         rules = os.linesep.join([st for st in rules.splitlines() if st])
         return rules

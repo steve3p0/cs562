@@ -74,7 +74,7 @@ class TestCollapseUnary(unittest.TestCase):
         eq_(actual, expected)
 
     # Collapse Unary - Inline test #1
-    def test_kkidnap_daughter_double(self):
+    def test_kidnap_daughter_double(self):
         # Double merge, with both types of distractors:
         s = '(TOP (S (SBAR (VP (TO to) (VP (VB play))))))'
         t = Tree.from_string(s)
