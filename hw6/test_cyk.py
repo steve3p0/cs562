@@ -156,7 +156,6 @@ class TestCyk(unittest.TestCase):
             ('DT', ['the']),
             ('NN', ['teacher']),
             ('NN', ['lecture']),
-            ('NN', ['lecture']),
             ('VB', ['gave']),
         ]
 
