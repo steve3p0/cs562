@@ -277,58 +277,64 @@ class TestCyk(unittest.TestCase):
                         #             lhs_y = z
 
                         #if x > 0:
-                        for z in range(1, n):
+                        for x_offset in range(n):
+                            for y_offset in range(n):
 
-                            # we need a x offset
-                            # we need a y offset
-                            #offset_x = z
-                            #offset_y = z
-                            offset = z
-                            if x  - offset > -1:
-                                #offset = 1
+                                # # we need a x offset
+                                # # we need a y offset
+                                # offset_x = z
+                                # offset_y = z
+                                #
+                                # #if len()
 
-                                # RHS - RIGHT
-                                rhs_right = lhs_word
-                                rhs_right_debug = format(f"R-R:{str(step)}")
-                                # table.iloc[x, y] = rhs_right_debug
-                                #table.iloc[x - offset, y] = rhs_right
-                                #table.iloc[x - offset, y] = rhs_right
-                                rhs_right_ptr = table.iloc[x - offset, y]
-                                rhs_right_x = x - offset
-                                rhs_right_y = y
+                                #offset = z
+                                if x  - x_offset > -1:
+                                    #offset = 1
 
-                                #offset += 1
-
-                                # RHS - LEFT
-                                #rhs_left = [key[0] for key, value in pcfg.items() if words[y] in key[1]][0]
-                                rhs_left_debug = format(f"R-L:{str(step)}")
-                                # table.iloc[x, y] = rhs_left_debug
-                                if table.iloc[x - offset, y - offset] != '':
-                                    rhs_left = table.iloc[x - offset, y - offset]
-                                    rhs_left_ptr = table.iloc[x - offset, y - offset]
-                                    rhs_left_x = y - offset
-                                    rhs_left_y = y - offset
-
-                                # LHS
-                                if x > -1:
-                                    step += 1
-
-                                    rhs = tuple([rhs_left, rhs_right])
-                                    lhs = [key[0] for key, value in pcfg.items() if rhs == key[1]]
+                                    # RHS - RIGHT
+                                    rhs_right = lhs_word
+                                    rhs_right_debug = format(f"R-R:{str(step)}")
+                                    # table.iloc[x, y] = rhs_right_debug
+                                    #table.iloc[x - offset, y] = rhs_right
+                                    #table.iloc[x - offset, y] = rhs_right
+                                    rhs_right_ptr = table.iloc[x - x_offset, y - y_offset]
+                                    rhs_right_x = x - x_offset
+                                    rhs_right_y = y - y_offset
 
                                     #offset += 1
 
-                                    if len(lhs) > 0 and table.iloc[x - offset, y] == '':
-                                        lhs_word = lhs[0]
-                                        # lhs_debug = format(f"G:{str(step)}")
-                                        # table.iloc[x-1, y] = lhs_debug
-                                        table.iloc[x - offset, y] = lhs[0]
-                                        lhs_ptr = table.iloc[x - offset, y]
-                                        lhs_x = x - offset
-                                        lhs_y = y
-                                    #else:
-                                        #offset -= 1
-                                    #    x -= 1
+                                    # RHS - LEFT
+                                    #rhs_left = [key[0] for key, value in pcfg.items() if words[y] in key[1]][0]
+                                    rhs_left_debug = format(f"R-L:{str(step)}")
+                                    # table.iloc[x, y] = rhs_left_debug
+                                    if table.iloc[x - x_offset, y - y_offset] != '':
+                                        rhs_left = table.iloc[x - x_offset, y - y_offset]
+                                        rhs_left_ptr = table.iloc[x - x_offset, y - y_offset]
+                                        rhs_left_x = y - x_offset
+                                        rhs_left_y = y - y_offset
+
+                                    # LHS
+                                    if x > -1:
+                                        step += 1
+
+                                        rhs = tuple([rhs_left, rhs_right])
+                                        lhs = [key[0] for key, value in pcfg.items() if rhs == key[1]]
+
+                                        #offset += 1
+
+                                        if len(lhs) > 0 and table.iloc[x - x_offset, y] == '':
+                                            lhs_word = lhs[0]
+                                            # lhs_debug = format(f"G:{str(step)}")
+                                            # table.iloc[x-1, y] = lhs_debug
+                                            table.iloc[x - x_offset, y] = lhs[0]
+                                            lhs_ptr = table.iloc[x - x_offset, y]
+                                            lhs_x = x - x_offset
+                                            lhs_y = y
+                                        # else:
+                                        #     #offset -= 1
+                                        #     #offset -= 1
+                                        #     y += 1
+                                        # #    x -= 1
 
 
 
