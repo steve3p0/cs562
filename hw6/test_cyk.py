@@ -241,7 +241,7 @@ class TestCyk(unittest.TestCase):
                 rhs_right_x = y
                 rhs_right_y = y
 
-                # RHS
+                # LHS
                 if x > 0:
                     step += 1
 
@@ -286,7 +286,7 @@ class TestCyk(unittest.TestCase):
                                 rhs_right_debug = format(f"R-R:{str(step)}")
                                 # table.iloc[x, y] = rhs_right_debug
                                 #table.iloc[x - offset, y] = rhs_right
-                                table.iloc[x - offset, y] = rhs_right
+                                #table.iloc[x - offset, y] = rhs_right
                                 rhs_right_ptr = table.iloc[x - offset, y]
                                 rhs_right_x = x - offset
                                 rhs_right_y = y
