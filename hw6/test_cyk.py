@@ -277,8 +277,14 @@ class TestCyk(unittest.TestCase):
                         #             lhs_y = z
 
                         #if x > 0:
-                        for offset in range(1, n):
-                            if x  - offset > 0:
+                        for z in range(1, n):
+
+                            # we need a x offset
+                            # we need a y offset
+                            #offset_x = z
+                            #offset_y = z
+                            offset = z
+                            if x  - offset > -1:
                                 #offset = 1
 
                                 # RHS - RIGHT
@@ -291,7 +297,7 @@ class TestCyk(unittest.TestCase):
                                 rhs_right_x = x - offset
                                 rhs_right_y = y
 
-                                offset += 1
+                                #offset += 1
 
                                 # RHS - LEFT
                                 #rhs_left = [key[0] for key, value in pcfg.items() if words[y] in key[1]][0]
@@ -304,7 +310,7 @@ class TestCyk(unittest.TestCase):
                                     rhs_left_y = y - offset
 
                                 # LHS
-                                if x > 0:
+                                if x > -1:
                                     step += 1
 
                                     rhs = tuple([rhs_left, rhs_right])
@@ -320,7 +326,9 @@ class TestCyk(unittest.TestCase):
                                         lhs_ptr = table.iloc[x - offset, y]
                                         lhs_x = x - offset
                                         lhs_y = y
-
+                                    #else:
+                                        #offset -= 1
+                                    #    x -= 1
 
 
 
