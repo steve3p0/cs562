@@ -26,7 +26,85 @@ class Cyk(object):
 
         return rules
 
-    def parse2(self, s):
+    def parse(self, s):
+
+        words = s.split(' ')
+        n = len(words)
+        table = pandas.DataFrame(index = range(n), columns = words)
+        table.fillna('', inplace=True)
+
+        print(table)
+
+        term1 = ''
+        term2 = ''
+
+        step = 0
+        for i in range(n):
+
+            step += 1
+            # initialize Uninary terminal cell
+            nt = [key[0] for key, value in self.pcfg.items() if words[i] in key[1]]
+            table.iloc[i, i] = str(step) + ": " + nt[0]
+
+            # Find rule with previous terminal
+            nt_prev = self.strip_formating(table.iloc[i - 1, i - 1])
+            rhs = tuple([ nt_prev, nt[0] ])
+            lhs = [key[0] for key, value in self.pcfg.items() if rhs == key[1]]
+
+            if len(lhs) > 0:
+                table.iloc[i - 1, i] = str(step) + ": " + lhs[0]
+                nt = lhs
+
+            # Find rule
+
+            # J IS ROW
+            for j in range(i, -1, -1):
+                # K IS COLUMN
+                for k in range(i, -1, -1):
+                    if table.iloc[j-1, k] == '':
+
+                        #step += 1
+
+                        # LOOKING TO PUT LHS
+                        table.iloc[j-1, k] = str(step) + ": " + str(j-1) + ', ' + str(k)
+
+                        # RHS: TERM 1
+                        #nt_prev = table.iloc[j, j]
+                        nt_prev = self.strip_formating(table.iloc[j, j])
+                        term1 = nt_prev
+                        term2 = nt[0]
+
+                        # RHS: TERM 1 + TERM 2
+                        #rhs = tuple([nt_prev, nt[0]])
+                        rhs = tuple([term1, term2])
+
+                        # LHS: lookup using rhs
+                        lhs = [key[0] for key, value in self.pcfg.items() if rhs == key[1]]
+                        if len(lhs) > 0:
+                            table.iloc[j, k] = str(step) + ": " + lhs[0]
+                            nt = lhs
+
+                        print("######################################")
+                        print(f"term 1: {term1}")
+                        print(f"term 2: {term2}")
+                        print(f"rhs: {rhs}")
+                        print(f"i: {i}")
+                        print(f"j: {j}")
+                        print(f"k: {k}")
+                        print(table)
+
+
+
+
+        print()
+        print()
+        print("#### FINAL TABLE #####################################")
+        print(table)
+
+        print("Hello!")
+
+
+    def parse1(self, s):
 
         words = s.split(' ')
         n = len(words)
@@ -70,7 +148,7 @@ class Cyk(object):
 
         print(table)
 
-    def parse0(self, s):
+    def parse02(self, s):
 
         words = s.split(' ')
         n = len(words)
@@ -124,7 +202,7 @@ class Cyk(object):
 
         return s
 
-    def parse(self, s):
+    def parse3(self, s):
 
         words = s.split(' ')
         n = len(words)
