@@ -282,36 +282,6 @@ class TestCyk(unittest.TestCase):
         expect_parse_tree = expect_tree.pretty()
         print(expect_parse_tree)
 
-
-        #(S
-        parse_tree = f"({table.iloc[0, n-1]}\n"
-        #   (NP
-        parse_tree += f"\t({table.iloc[0, 1]}\n"
-        #       (DT the)
-        parse_tree += f"\t\t({table.iloc[0, 0]} {table.columns[0]})\n"
-        #       (NN teacher)
-        parse_tree += f"\t\t({table.iloc[1, 1]} {table.columns[1]})\n"
-        #   )
-        parse_tree += f"\t)\n"
-        #   (VP
-        parse_tree += f"\t({table.iloc[2, n-1]}\n"
-        #       (VB gave)
-        parse_tree += f"\t\t({table.iloc[2, 2]} {table.columns[2]})\n"
-        #       (NP
-        parse_tree += f"\t\t({table.iloc[3, n-1]}\n"
-        #           (DT the)
-        parse_tree += f"\t\t\t({table.iloc[3, 3]} {table.columns[3]})\n"
-        #           (NN lecture)
-        parse_tree += f"\t\t\t({table.iloc[4, 4]} {table.columns[4]})\n"
-        #       )
-        parse_tree += f"\t\t)\n"
-        #   )
-        parse_tree += f"\t)\n"
-        #}
-        parse_tree += f")"
-
-        #print(parse_tree)
-
         root = Node(table.iloc[0, n-1])
         root.x = 0
         root.y = n - 1
@@ -961,3 +931,157 @@ class TestCyk(unittest.TestCase):
         expect = start_symbol
         actual = table.iloc[0, n - 1]
         eq_(actual, expect)
+
+    def test_cyk_parse6(self):
+
+        cyk = Cyk()
+
+        rules = [
+            ('S', ['NP', 'VP']),
+            ('NP', ['DT', 'NN']),
+            ('VP', ['VB', 'NP']),
+            ('DT', ['the']),
+            ('NN', ['teacher']),
+            ('NN', ['lecture']),
+            ('VB', ['gave']),
+        ]
+        start_symbol = next(iter(rules))[0]
+
+        pcfg = cyk.tree.convert_to_pcfg(rules)
+        cyk.rules = rules
+        cyk.pcfg = pcfg
+        pcfg_pretty = cyk.tree.pretty_pcgf(pcfg)
+        #actual = format(pcfg)
+        print(pcfg_pretty)
+
+        s = "the teacher gave the lecture"
+        #s = "the the teacher gave the lecture"
+        #s = "teacher the gave the lecture"
+
+        words = s.split(' ')
+        n = len(words)
+
+        table = pandas.DataFrame(index = range(n), columns = words)
+        table.fillna('', inplace=True)
+
+        rhs_left = ''
+        rhs_right = ''
+
+        for y in range(n):
+            for x in range(y, -1, -1):
+                # RHS - Right
+                rhs_right = [key[0] for key, value in pcfg.items() if words[y] in key[1]][0]
+                table.iloc[y, y] = rhs_right
+
+                # LHS
+                if x > 0:
+                    rhs = tuple([rhs_left, rhs_right])
+                    lhs = [key[0] for key, value in pcfg.items() if rhs == key[1]]
+
+                    if len(lhs) > 0 and table.iloc[x-1, y] == '':
+                        lhs_word = lhs[0]
+                        table.iloc[x-1, y] = lhs[0]
+
+                        for x_offset in range(n):
+                            for y_offset in range(n):
+
+                                if x  - x_offset > -1:
+
+                                    # RHS - RIGHT
+                                    rhs_right = lhs_word
+
+                                    # RHS - LEFT
+                                    if table.iloc[x - x_offset, y - y_offset] != '':
+                                        rhs_left = table.iloc[x - x_offset, y - y_offset]
+
+                                    # LHS
+                                    if x > -1:
+                                        rhs = tuple([rhs_left, rhs_right])
+                                        lhs = [key[0] for key, value in pcfg.items() if rhs == key[1]]
+
+                                        if len(lhs) > 0 and table.iloc[x - x_offset, y] == '':
+                                            lhs_word = lhs[0]
+                                            table.iloc[x - x_offset, y] = lhs[0]
+
+                            #print(table)
+
+                rhs_left = rhs_right
+
+                #print(table)
+
+        print(table)
+        #expect = 'S'
+        expect_start_symbol = start_symbol
+        actual_start_symbol = table.iloc[0, n - 1]
+        eq_(actual_start_symbol, expect_start_symbol)
+
+        # Generate Parse Tree
+        #parse_tree = table.iloc[0, n - 1] + '\n'
+
+        print("Expected Parse Tree: ")
+        expect_parse_tree = inspect.cleandoc("""
+            (S
+                (NP
+                    (DT the)
+                    (NN teacher)
+                )
+                (VP
+                    (VB gave)
+                    (NP
+                        (DT the)
+                        (NN lecture)
+                    )
+                )
+            )""")
+        expect_parse_tree = os.linesep.join([st for st in expect_parse_tree.splitlines() if st])
+        expect_tree = Tree.from_string(expect_parse_tree)
+        expect_parse_tree = expect_tree.pretty()
+        print(expect_parse_tree)
+
+
+        #(S
+        parse_tree = f"({table.iloc[0, n-1]}\n"
+        #   (NP
+        parse_tree += f"\t({table.iloc[0, 1]}\n"
+        #       (DT the)
+        parse_tree += f"\t\t({table.iloc[0, 0]} {table.columns[0]})\n"
+        #       (NN teacher)
+        parse_tree += f"\t\t({table.iloc[1, 1]} {table.columns[1]})\n"
+        #   )
+        parse_tree += f"\t)\n"
+        #   (VP
+        parse_tree += f"\t({table.iloc[2, n-1]}\n"
+        #       (VB gave)
+        parse_tree += f"\t\t({table.iloc[2, 2]} {table.columns[2]})\n"
+        #       (NP
+        parse_tree += f"\t\t({table.iloc[3, n-1]}\n"
+        #           (DT the)
+        parse_tree += f"\t\t\t({table.iloc[3, 3]} {table.columns[3]})\n"
+        #           (NN lecture)
+        parse_tree += f"\t\t\t({table.iloc[4, 4]} {table.columns[4]})\n"
+        #       )
+        parse_tree += f"\t\t)\n"
+        #   )
+        parse_tree += f"\t)\n"
+        #}
+        parse_tree += f")"
+
+        #print(parse_tree)
+
+        root = Node(table.iloc[0, n-1])
+        root.x = 0
+        root.y = n - 1
+        parse_tree = cyk.get_parse_tree(table, root)
+
+        s_parse_tree = ''
+        s_parse_tree = cyk.print_parse_tree(root, s_parse_tree)
+
+        parse_tree = os.linesep.join([st for st in s_parse_tree.splitlines() if st])
+
+        actual_tree = Tree.from_string(parse_tree)
+        actual_parse_tree = actual_tree.pretty()
+
+        print("Actual Parse Tree: ")
+        print(actual_parse_tree)
+
+        eq_(actual_parse_tree, expect_parse_tree)
