@@ -317,7 +317,11 @@ class TestCyk(unittest.TestCase):
         root.y = n - 1
         parse_tree = cyk.get_parse_tree(table, root)
 
-        parse_tree = os.linesep.join([st for st in parse_tree.splitlines() if st])
+        s_parse_tree = ''
+        s_parse_tree = cyk.print_parse_tree(root, s_parse_tree)
+
+        parse_tree = os.linesep.join([st for st in s_parse_tree.splitlines() if st])
+
         actual_tree = Tree.from_string(parse_tree)
         actual_parse_tree = actual_tree.pretty()
 

@@ -150,6 +150,8 @@ class Cyk(object):
                 node = Node(table.iloc[n.x, i])
                 node.x = n.x
                 node.y = i
+                if i == n.x:
+                    node.terminal = table.columns[i]
                 break
 
         return node
@@ -165,16 +167,57 @@ class Cyk(object):
                 node = Node(table.iloc[i, n.y])
                 node.x = i
                 node.y = n.y
+                if i == n.y:
+                    node.terminal = table.columns[i]
                 break
 
         return node
 
-    def print_parse_tree(self, node):
+    def print_parse_tree(self, node, s):
         if (node != None):
+
+            nonterminal = node.nonterminal
+            if node.terminal != '':
+                terminal = node.terminal
+
+                s = f"({nonterminal} {terminal})"
+            else:
+                left = self.print_parse_tree(node.left, s)
+                right = self.print_parse_tree(node.right, s)
+
+                s = f"({nonterminal} {left} {right})"
+
+            #print(s)
+
+        return s
+
+    def print_parse_tree1(self, node):
+        if (node != None):
+            print(str(node.nonterminal) + ' ')
+            if node.terminal != '':
+                print(str(node.terminal) + ' ')
             self.print_parse_tree(node.left)
-            print(str(node.term) + ' ')
             self.print_parse_tree(node.right)
 
+    def print_parse_tree2(self, node, s):
+        if (node != None):
+
+            s += f"({node.nonterminal} "
+
+            if node.terminal != '':
+                s += f"{node.terminal}) "
+
+            # print(str(node.nonterminal) + ' ')
+            # if node.terminal != '':
+            #     print(str(node.terminal) + ' ')
+            s += self.print_parse_tree(node.left, s)
+            s += self.print_parse_tree(node.right, s)
+
+            s += f")"
+
+            print(s)
+
+        return s
 
     def parse1(self, s):
 
