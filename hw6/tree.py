@@ -651,7 +651,6 @@ class Tree(object):
 
         return rules
 
-
     def productions(self):
         """
         Generate all productions in this tree
@@ -728,44 +727,6 @@ class Tree(object):
                     pcfg[key] = 1 / denom
                 except:
                     pcfg[key].setdefault(1/denom)
-
-        return pcfg
-
-    @staticmethod
-    def convert_to_pcfg3(rules):
-        #rules = self.productions()
-
-        pcfg = defaultdict(dict)
-        for lhs, rhs in rules:
-            try:
-                pcfg[lhs][tuple(rhs)] = 1
-            except:
-                pcfg[lhs].setdefault(tuple(rhs), 1)
-
-        for lhs in pcfg:
-            rhs_list = pcfg[lhs]
-            denom = len(rhs_list)
-            for rhs in rhs_list:
-                pcfg[lhs][rhs] = 1 / denom
-
-        return pcfg
-
-    @staticmethod
-    def convert_to_pcfg2(rules):
-        #rules = self.productions()
-
-        pcfg = defaultdict(dict)
-        for lhs, rhs in rules:
-            try:
-                pcfg[lhs][tuple(rhs)] = 1
-            except:
-                pcfg[lhs].setdefault(tuple(rhs), 1)
-
-        for lhs in pcfg:
-            rhs_list = pcfg[lhs]
-            denom = len(rhs_list)
-            for rhs in rhs_list:
-                pcfg[lhs][rhs] = 1 / denom
 
         return pcfg
 

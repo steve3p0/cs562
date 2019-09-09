@@ -339,3 +339,50 @@ class TestCyk(unittest.TestCase):
 
         eq_(cyk.valid, False)
         eq_(cyk.parse_tree, '')
+
+    # CYK - with Probabilities
+    def test_cyk_parse_small_valid1(self):
+
+        s = "the teacher gave the lecture"
+        #s = "the the teacher gave the lecture"
+        #s = "teacher the gave the lecture"
+
+        rules = [
+            ('S', ['NP', 'VP']),
+            ('NP', ['DT', 'NN']),
+            ('VP', ['VB', 'NP']),
+            ('DT', ['the']),
+            ('NN', ['teacher']),
+            ('NN', ['lecture']),
+            ('VB', ['gave']),
+        ]
+
+        print("Expected Parse Tree: ")
+        expect_parse_tree = inspect.cleandoc("""
+            (S
+                (NP
+                    (DT the)
+                    (NN teacher)
+                )
+                (VP
+                    (VB gave)
+                    (NP
+                        (DT the)
+                        (NN lecture)
+                    )
+                )
+            )""")
+        expect_parse_tree = os.linesep.join([st for st in expect_parse_tree.splitlines() if st])
+        expect_tree = Tree.from_string(expect_parse_tree)
+        expect_parse_tree = expect_tree.pretty()
+        print(expect_parse_tree)
+
+        cyk = Cyk()
+        cyk.rules = rules
+        cyk.parse(s)
+
+        print("Actual Parse Tree: ")
+        print(cyk.parse_tree)
+
+        eq_(cyk.valid, True)
+        eq_(cyk.parse_tree, expect_parse_tree)
