@@ -9,7 +9,7 @@ import os
 from io import StringIO
 import logging
 from collections import defaultdict
-from cyk import Cyk
+from cyk import Cyk, Node
 from tree import Tree
 
 # Chomsky Normal Form Unit Tests
@@ -262,6 +262,27 @@ class TestCyk(unittest.TestCase):
         # Generate Parse Tree
         #parse_tree = table.iloc[0, n - 1] + '\n'
 
+        print("Expected Parse Tree: ")
+        expect_parse_tree = inspect.cleandoc("""
+            (S
+                (NP
+                    (DT the)
+                    (NN teacher)
+                )
+                (VP
+                    (VB gave)
+                    (NP
+                        (DT the)
+                        (NN lecture)
+                    )
+                )
+            )""")
+        expect_parse_tree = os.linesep.join([st for st in expect_parse_tree.splitlines() if st])
+        expect_tree = Tree.from_string(expect_parse_tree)
+        expect_parse_tree = expect_tree.pretty()
+        print(expect_parse_tree)
+
+
         #(S
         parse_tree = f"({table.iloc[0, n-1]}\n"
         #   (NP
@@ -289,34 +310,16 @@ class TestCyk(unittest.TestCase):
         #}
         parse_tree += f")"
 
+        #print(parse_tree)
+
+        root = Node(table.iloc[0, n-1])
+        root.x = 0
+        root.y = n - 1
+        parse_tree = cyk.get_parse_tree(table, root)
+
         parse_tree = os.linesep.join([st for st in parse_tree.splitlines() if st])
-
-
-        expect_parse_tree = inspect.cleandoc("""
-            (S
-                (NP
-                    (DT the)
-                    (NN teacher)
-                )
-                (VP
-                    (VB gave)
-                    (NP
-                        (DT the)
-                        (NN lecture)
-                    )
-                )
-            )""")
-
-        expect_parse_tree = os.linesep.join([st for st in expect_parse_tree.splitlines() if st])
-
-        expect_tree = Tree.from_string(expect_parse_tree)
-        expect_parse_tree = expect_tree.pretty()
-
         actual_tree = Tree.from_string(parse_tree)
         actual_parse_tree = actual_tree.pretty()
-
-        print("Expected Parse Tree: ")
-        print(expect_parse_tree)
 
         print("Actual Parse Tree: ")
         print(actual_parse_tree)

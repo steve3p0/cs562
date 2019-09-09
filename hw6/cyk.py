@@ -1,7 +1,21 @@
 from tree import Tree
 import pandas
 
+
+class Node:
+    def __init__(self, val):
+        self.nonterminal = val
+        self.terminal = ''
+        self.x = None
+        self.y = None
+
+        self.left = None
+        self.right = None
+
 class Cyk(object):
+
+    def __init__(self):
+        self.root = None
 
     def __init__(self):
         self.tree = Tree
@@ -102,6 +116,64 @@ class Cyk(object):
         print(table)
 
         print("Hello!")
+
+    def get_parse_tree(self, table, root):
+
+        if root != None:
+            root.left = self.search_left(table, root)
+            root.right = self.search_right(table, root)
+            self.get_parse_tree(table, root.left)
+            self.get_parse_tree(table, root.right)
+            #root.terminal = table.columns[root.y] #table.iloc[root.x, root.y]
+            #self.get_parse_tree(table, root.right)
+            #root.terminal = table.columns[root.y]
+
+
+        # if root != None:
+        #     root.left = self.search_left(table, root)
+        #     self.get_parse_tree(table, root.left)
+        #     root.terminal = table.columns[root.y] #table.iloc[root.x, root.y]
+        #     root.right = self.search_right(table, root)
+        #     self.get_parse_tree(table, root.right)
+        #     root.terminal = table.columns[root.y]
+
+        return root
+
+    def search_left(self, table, n):
+
+        node = None
+
+        for i in range(n.y - 1, -1, -1):
+            if table.iloc[n.x, i] == '':
+                next
+            else:
+                node = Node(table.iloc[n.x, i])
+                node.x = n.x
+                node.y = i
+                break
+
+        return node
+
+    def search_right(self, table, n):
+
+        node = None
+
+        for i in range(n.x + 1, n.y + 1):
+            if table.iloc[i, n.y] == '':
+                next
+            else:
+                node = Node(table.iloc[i, n.y])
+                node.x = i
+                node.y = n.y
+                break
+
+        return node
+
+    def print_parse_tree(self, node):
+        if (node != None):
+            self.print_parse_tree(node.left)
+            print(str(node.term) + ' ')
+            self.print_parse_tree(node.right)
 
 
     def parse1(self, s):
