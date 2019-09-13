@@ -10,6 +10,7 @@ Github repository for homework assignments and final project.
 * Homework 3: Problem-solving with RNNs
 * Homework 4: Sentence Boundary Detection
 * Howework 5: MP5: Tree transforms
+* Howework 6: Bottom-up parsing with the CYK algorithm
 
 Final Project: Rules-based machine translation for English <> Serbian using the Grammatical Framework
 * Serbian GF Mini-Resource: https://github.com/steve3p0/gf-contrib
