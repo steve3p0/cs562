@@ -124,7 +124,6 @@ class TestCyk(unittest.TestCase):
         print(actual)
         #eq_(actual, expect)
 
-    # CYK Small Grammar #1
     def test_cyk_parse_small(self):
 
         # rules = [
@@ -223,125 +222,6 @@ class TestCyk(unittest.TestCase):
         eq_(cyk.valid, True)
         eq_(cyk.parse_tree, expect_parse_tree)
 
-    def test_cyk_parse_small_valid2(self):
-
-        s = "the lecture gave the teacher"
-        #s = "the the teacher gave the lecture"
-        #s = "teacher the gave the lecture"
-
-        rules = [
-            ('S', ['NP', 'VP']),
-            ('NP', ['DT', 'NN']),
-            ('VP', ['VB', 'NP']),
-            ('DT', ['the']),
-            ('NN', ['teacher']),
-            ('NN', ['lecture']),
-            ('VB', ['gave']),
-        ]
-
-        print("Expected Parse Tree: ")
-        expect_parse_tree = inspect.cleandoc("""
-            (S
-                (NP
-                    (DT the)
-                    (NN lecture)
-                )
-                (VP
-                    (VB gave)
-                    (NP
-                        (DT the)
-                        (NN teacher)
-                    )
-                )
-            )""")
-        expect_parse_tree = os.linesep.join([st for st in expect_parse_tree.splitlines() if st])
-        expect_tree = Tree.from_string(expect_parse_tree)
-        expect_parse_tree = expect_tree.pretty()
-        print(expect_parse_tree)
-
-        cyk = Cyk()
-        cyk.rules = rules
-        cyk.parse(s)
-
-        print("Actual Parse Tree: ")
-        print(cyk.parse_tree)
-
-        eq_(cyk.valid, True)
-        eq_(cyk.parse_tree, expect_parse_tree)
-
-    def test_cyk_parse_small_invalid1(self):
-
-        #s = "the teacher gave the lecture"
-        s = "gave lecture the teacher the"
-        #s = "the the teacher gave the lecture"
-        #s = "teacher the gave the lecture"
-
-        rules = [
-            ('S', ['NP', 'VP']),
-            ('NP', ['DT', 'NN']),
-            ('VP', ['VB', 'NP']),
-            ('DT', ['the']),
-            ('NN', ['teacher']),
-            ('NN', ['lecture']),
-            ('VB', ['gave']),
-        ]
-
-        cyk = Cyk(rules)
-        #cyk.rules = rules
-        cyk.parse(s)
-
-        eq_(cyk.valid, False)
-        eq_(cyk.parse_tree, '')
-
-    def test_cyk_parse_small_invalid2(self):
-
-        #s = "the teacher gave the lecture"
-        #s = "gave lecture the teacher the"
-        s = "the the teacher gave the lecture"
-        #s = "teacher the gave the lecture"
-
-        rules = [
-            ('S', ['NP', 'VP']),
-            ('NP', ['DT', 'NN']),
-            ('VP', ['VB', 'NP']),
-            ('DT', ['the']),
-            ('NN', ['teacher']),
-            ('NN', ['lecture']),
-            ('VB', ['gave']),
-        ]
-
-        cyk = Cyk(rules)
-        #cyk.rules = rules
-        cyk.parse(s)
-
-        eq_(cyk.valid, False)
-        eq_(cyk.parse_tree, '')
-
-    def test_cyk_parse_small_invalid3(self):
-
-        #s = "the teacher gave the lecture"
-        #s = "gave lecture the teacher the"
-        #s = "the the teacher gave the lecture"
-        s = "teacher the gave the lecture"
-
-        rules = [
-            ('S', ['NP', 'VP']),
-            ('NP', ['DT', 'NN']),
-            ('VP', ['VB', 'NP']),
-            ('DT', ['the']),
-            ('NN', ['teacher']),
-            ('NN', ['lecture']),
-            ('VB', ['gave']),
-        ]
-
-        cyk = Cyk(rules)
-        #cyk.rules = rules
-        cyk.parse(s)
-
-        eq_(cyk.valid, False)
-        eq_(cyk.parse_tree, '')
-
-    # CYK Small Grammar #2
     def test_cyk_parse_small_valid2(self):
 
         s = "the teacher will lecture today in the lecture hall"
@@ -450,8 +330,343 @@ class TestCyk(unittest.TestCase):
         # eq_(cyk.valid, True)
         # eq_(cyk.parse_tree, expect_parse_tree)
 
+    def test_cyk_parse_small_valid3(self):
+
+        s = "the lecture gave the teacher"
+        #s = "the the teacher gave the lecture"
+        #s = "teacher the gave the lecture"
+
+        rules = [
+            ('S', ['NP', 'VP']),
+            ('NP', ['DT', 'NN']),
+            ('VP', ['VB', 'NP']),
+            ('DT', ['the']),
+            ('NN', ['teacher']),
+            ('NN', ['lecture']),
+            ('VB', ['gave']),
+        ]
+
+        print("Expected Parse Tree: ")
+        expect_parse_tree = inspect.cleandoc("""
+            (S
+                (NP
+                    (DT the)
+                    (NN lecture)
+                )
+                (VP
+                    (VB gave)
+                    (NP
+                        (DT the)
+                        (NN teacher)
+                    )
+                )
+            )""")
+        expect_parse_tree = os.linesep.join([st for st in expect_parse_tree.splitlines() if st])
+        expect_tree = Tree.from_string(expect_parse_tree)
+        expect_parse_tree = expect_tree.pretty()
+        print(expect_parse_tree)
+
+        cyk = Cyk(rules)
+        #cyk.rules = rules
+        cyk.parse(s)
+
+        print("Actual Parse Tree: ")
+        print(cyk.parse_tree)
+
+        eq_(cyk.valid, True)
+        eq_(cyk.parse_tree, expect_parse_tree)
+
+    def test_cyk_parse_small_invalid1(self):
+
+        #s = "the teacher gave the lecture"
+        s = "gave lecture the teacher the"
+        #s = "the the teacher gave the lecture"
+        #s = "teacher the gave the lecture"
+
+        rules = [
+            ('S', ['NP', 'VP']),
+            ('NP', ['DT', 'NN']),
+            ('VP', ['VB', 'NP']),
+            ('DT', ['the']),
+            ('NN', ['teacher']),
+            ('NN', ['lecture']),
+            ('VB', ['gave']),
+        ]
+
+        cyk = Cyk(rules)
+        #cyk.rules = rules
+        cyk.parse(s)
+
+        eq_(cyk.valid, False)
+        eq_(cyk.parse_tree, '')
+
+    def test_cyk_parse_small_invalid2(self):
+
+        #s = "the teacher gave the lecture"
+        #s = "gave lecture the teacher the"
+        s = "the the teacher gave the lecture"
+        #s = "teacher the gave the lecture"
+
+        rules = [
+            ('S', ['NP', 'VP']),
+            ('NP', ['DT', 'NN']),
+            ('VP', ['VB', 'NP']),
+            ('DT', ['the']),
+            ('NN', ['teacher']),
+            ('NN', ['lecture']),
+            ('VB', ['gave']),
+        ]
+
+        cyk = Cyk(rules)
+        cyk.parse(s)
+
+        eq_(cyk.valid, False)
+        eq_(cyk.parse_tree, '')
+
+    def test_cyk_parse_small_invalid3(self):
+
+        #s = "the teacher gave the lecture"
+        #s = "gave lecture the teacher the"
+        #s = "the the teacher gave the lecture"
+        s = "teacher the gave the lecture"
+
+        rules = [
+            ('S', ['NP', 'VP']),
+            ('NP', ['DT', 'NN']),
+            ('VP', ['VB', 'NP']),
+            ('DT', ['the']),
+            ('NN', ['teacher']),
+            ('NN', ['lecture']),
+            ('VB', ['gave']),
+        ]
+
+        cyk = Cyk(rules)
+        cyk.parse(s)
+
+        eq_(cyk.valid, False)
+        eq_(cyk.parse_tree, '')
+
+    #######################################################
     # CYK - with Probabilities
+
+    # CYK Small Grammar #1
     def test_cyk_parse_pcfg_small_valid1(self):
+
+        s = "the teacher gave the lecture"
+        #s = "the the teacher gave the lecture"
+        #s = "teacher the gave the lecture"
+
+        str_tree1 = inspect.cleandoc("""
+            (S
+                (NP
+                  (DT the)
+                  (NN teacher)
+                )
+                (VP
+                  (VB gave)
+                  (NP
+                    (DT the)
+                    (NN lecture)
+                  )
+                )
+            )""")
+        tree1 = Tree.from_string(str_tree1)
+
+        trees = []
+        trees.append(tree1)
+
+        rules = Cyk.load_rules(trees)
+        cyk = Cyk(rules)
+        cyk.parse_pcfg(s)
+
+        expect_parse_tree = inspect.cleandoc("""
+            (S
+                (NP
+                    (DT the)
+                    (NN teacher)
+                )
+                (VP
+                    (VB gave)
+                    (NP
+                        (DT the)
+                        (NN lecture)
+                    )
+                )
+            )""")
+        expect_parse_tree = os.linesep.join([st for st in expect_parse_tree.splitlines() if st])
+        expect_tree = Tree.from_string(expect_parse_tree)
+        expect_parse_tree = expect_tree.pretty()
+
+        print("\nActual PCFG: ")
+        print(cyk.tree.pretty_pcgf(cyk.pcfg))
+
+        print("\nActual CYK Rule Table: ")
+        print(cyk.table_rules)
+        print("\nActual CYK Probability Table: ")
+        print(cyk.table_rules)
+
+        eq_(cyk.valid, True)
+        eq_(cyk.parse_tree, expect_parse_tree)
+
+        print("\nExpected Parse Tree: ")
+        print(expect_parse_tree)
+        print("\nActual Parse Tree: ")
+        print(cyk.parse_tree)
+
+        eq_(cyk.valid, True)
+        eq_(cyk.parse_tree, expect_parse_tree)
+
+    def test_cyk_parse_pcfg_small_valid1_1(self):
+
+        s = "the teacher gave the lecture"
+        #s = "the the teacher gave the lecture"
+        #s = "teacher the gave the lecture"
+
+        str_tree1 = inspect.cleandoc("""
+            (S
+                (NP
+                  (DT the)
+                  (NN teacher)
+                )
+                (VP
+                  (VB gave)
+                  (NP
+                    (DT the)
+                    (NN lecture)
+                  )
+                )
+            )""")
+        tree1 = Tree.from_string(str_tree1)
+
+        trees = []
+        trees.append(tree1)
+
+        rules = Cyk.load_rules(trees)
+        cyk = Cyk(rules)
+        #cyk.parse_pcfg(s)
+        cyk.parse_new(s)
+
+        expect_parse_tree = inspect.cleandoc("""
+            (S
+                (NP
+                    (DT the)
+                    (NN teacher)
+                )
+                (VP
+                    (VB gave)
+                    (NP
+                        (DT the)
+                        (NN lecture)
+                    )
+                )
+            )""")
+        expect_parse_tree = os.linesep.join([st for st in expect_parse_tree.splitlines() if st])
+        expect_tree = Tree.from_string(expect_parse_tree)
+        expect_parse_tree = expect_tree.pretty()
+
+        print("\nActual PCFG: ")
+        print(cyk.tree.pretty_pcgf(cyk.pcfg))
+
+        print("\nActual CYK Rule Table: ")
+        print(cyk.table_rules)
+        print("\nActual CYK Probability Table: ")
+        print(cyk.table_rules)
+
+        eq_(cyk.valid, True)
+        eq_(cyk.parse_tree, expect_parse_tree)
+
+        print("\nExpected Parse Tree: ")
+        print(expect_parse_tree)
+        print("\nActual Parse Tree: ")
+        print(cyk.parse_tree)
+
+        eq_(cyk.valid, True)
+        eq_(cyk.parse_tree, expect_parse_tree)
+
+
+    # CYK Small Grammar #2
+    def test_cyk_parse_pcfg_small_valid2(self):
+
+        #s = "the teacher will lecture today in the lecture hall"
+        s = "the teacher gave the lecture"
+        #s = "the teacher gave the lecture"
+        #s = "the the teacher gave the lecture"
+        #s = "teacher the gave the lecture"
+
+        str_tree1 = inspect.cleandoc("""
+            (TOP
+                (NP
+                  (DT the)
+                  (NN teacher)
+                )
+                (VP
+                  (VB gave)
+                  (NP
+                    (DT the)
+                    (NN lecture)
+                  )
+                )
+            )""")
+        tree1 = Tree.from_string(str_tree1)
+
+        str_tree2 = inspect.cleandoc("""
+            (TOP
+                (NP
+                  (DT the)
+                  (NN teacher)
+                )
+                (VP
+                  (MD will)
+                  (VP
+                    (VB lecture)
+                    (NP
+                      (NN today)
+                      (PP
+                          (IN in)
+                          (NP
+                            (DT the)
+                            (NN lecture)
+                            (NN hall)
+                          )
+                      )
+                    )
+                  )
+                )
+                (. .)
+            )""")
+        tree2 = Tree.from_string(str_tree2)
+
+        trees = []
+        trees.append(tree1)
+        trees.append(tree2)
+
+        rules = Cyk.load_rules(trees)
+        cyk = Cyk(rules)
+        #cyk.parse_pcfg(s)
+        cyk.parse(s)
+
+        print("Expected PCFG: ")
+        print("What is the expected PCFG")
+        #print(cyk.tree.pretty_pcgf(cyk.pcfg))
+
+        print("\nActual PCFG: ")
+        print(cyk.tree.pretty_pcgf(cyk.pcfg))
+
+        print("\nActual CYK Rule Table: ")
+        print(cyk.table_rules)
+        print("\nActual CYK Probability Table: ")
+        print(cyk.table_rules)
+
+        # eq_(cyk.valid, True)
+        # eq_(cyk.parse_tree, expect_parse_tree)
+
+        # print("\nExpected Parse Tree: ")
+        # print(expect_parse_tree)
+        print("\nActual Parse Tree: ")
+        print(cyk.parse_tree)
+
+    # CYK - PCFG Grammar #3
+    def test_cyk_parse_pcfg_small_valid3(self):
 
         s = "the teacher gave the lecture"
         #s = "the the teacher gave the lecture"
@@ -464,7 +679,9 @@ class TestCyk(unittest.TestCase):
             ('DT', ['the']),
             ('NN', ['teacher']),
             ('NN', ['lecture']),
+            ('NN', ['student']),
             ('VB', ['gave']),
+            ('VB', ['lecture']),
         ]
 
         expect_parse_tree = inspect.cleandoc("""
@@ -506,67 +723,6 @@ class TestCyk(unittest.TestCase):
 
         eq_(cyk.valid, True)
         eq_(cyk.parse_tree, expect_parse_tree)
-
-    # CYK Small Grammar #2
-    def test_cyk_parse_pcfg_small_valid2(self):
-
-        s = "the teacher will lecture today in the lecture hall"
-        #s = "the teacher gave the lecture"
-        #s = "the the teacher gave the lecture"
-        #s = "teacher the gave the lecture"
-
-        str_tree1 = inspect.cleandoc("""
-            (TOP
-                (NP
-                  (DT the)
-                  (NN teacher)
-                )
-                (VP
-                  (MD will)
-                  (VP
-                    (VB lecture)
-                    (NP
-                      (NN today)
-                      (PP
-                          (IN in)
-                          (NP
-                            (DT the)
-                            (NN lecture)
-                            (NN hall)
-                          )
-                      )
-                    )
-                  )
-                )
-                (. .)
-            )""")
-        tree1 = Tree.from_string(str_tree1)
-
-        rules = []
-        t1_col = Tree.collapse_unary(tree1)
-        t1_cnf = Tree.chomsky_normal_form(t1_col)
-        rules += Tree.productions(t1_cnf)
-
-        print("PCFG: ")
-        cyk = Cyk(rules)
-        print(cyk.tree.pretty_pcgf(cyk.pcfg))
-        cyk.parse(s)
-
-        print("\nActual PCFG: ")
-        print(cyk.tree.pretty_pcgf(cyk.pcfg))
-
-        print("\nActual CYK Rule Table: ")
-        print(cyk.table_rules)
-        print("\nActual CYK Probability Table: ")
-        print(cyk.table_rules)
-
-        # eq_(cyk.valid, True)
-        # eq_(cyk.parse_tree, expect_parse_tree)
-
-        # print("\nExpected Parse Tree: ")
-        # print(expect_parse_tree)
-        print("\nActual Parse Tree: ")
-        print(cyk.parse_tree)
 
     def test_cyk_parse_pcfg_small_valid1_old(self):
 
