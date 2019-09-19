@@ -534,6 +534,37 @@ class Cyk(object):
                                                 table_rules.iloc[x - x_offset, y] = lhs_term
                                                 table_probs.iloc[x - x_offset, y] = rule_prb
 
+                                if lhs_term == start_symbol:
+                                    #break;
+                                    self.table_rules = table_rules
+                                    self.table_probs = table_probs
+
+                                    # Validate Sentence
+                                    top_lhs = self.table_rules.iloc[0, n - 1]
+
+                                    if top_lhs == start_symbol:
+                                        self.valid = True
+
+                                        root = Node(self.table_rules.iloc[0, n - 1])
+                                        root.x = 0
+                                        root.y = n - 1
+                                        parse_tree = self.get_parse_tree(self.table_rules, root)
+
+                                        self.parse_tree = self.print_parse_tree(root)
+                                        self.parse_tree = os.linesep.join(
+                                            [st for st in self.parse_tree.splitlines() if st])
+
+                                        actual_tree = Tree.from_string(self.parse_tree)
+                                        self.parse_tree = actual_tree.pretty()
+
+                                        print(table_rules)
+                                        print(table_probs)
+
+                                        return True
+                                    # else:
+                                    #     return False
+
+
 
                             print(table_rules)
                             print(table_probs)
@@ -544,26 +575,28 @@ class Cyk(object):
         self.table_rules = table_rules
         self.table_probs = table_probs
 
-        # Validate Sentence
-        top_lhs = self.table_rules.iloc[0, n - 1]
+        return False
 
-        if top_lhs == start_symbol:
-            self.valid = True
-
-            root = Node(self.table_rules.iloc[0, n - 1])
-            root.x = 0
-            root.y = n - 1
-            parse_tree = self.get_parse_tree(self.table_rules, root)
-
-            self.parse_tree = self.print_parse_tree(root)
-            self.parse_tree = os.linesep.join([st for st in self.parse_tree.splitlines() if st])
-
-            actual_tree = Tree.from_string(self.parse_tree)
-            self.parse_tree = actual_tree.pretty()
-
-            return True
-        else:
-            return False
+        # # Validate Sentence
+        # top_lhs = self.table_rules.iloc[0, n - 1]
+        #
+        # if top_lhs == start_symbol:
+        #     self.valid = True
+        #
+        #     root = Node(self.table_rules.iloc[0, n - 1])
+        #     root.x = 0
+        #     root.y = n - 1
+        #     parse_tree = self.get_parse_tree(self.table_rules, root)
+        #
+        #     self.parse_tree = self.print_parse_tree(root)
+        #     self.parse_tree = os.linesep.join([st for st in self.parse_tree.splitlines() if st])
+        #
+        #     actual_tree = Tree.from_string(self.parse_tree)
+        #     self.parse_tree = actual_tree.pretty()
+        #
+        #     return True
+        # else:
+        #     return False
 
     def parse_pcfg1(self, s):
 
@@ -646,6 +679,125 @@ class Cyk(object):
                                             lhs_word = lhs[0]
                                             table_rules.iloc[x - x_offset, y] = lhs[0]
                                             table_probs.iloc[x - x_offset, y] = rule_prb
+
+                            print(table_rules)
+                            print(table_probs)
+
+                rhs_left_trm = rhs_right_trm
+                rhs_left_prb = rhs_right_prb
+
+        self.table_rules = table_rules
+        self.table_probs = table_probs
+
+        # Validate Sentence
+        top_lhs = self.table_rules.iloc[0, n - 1]
+
+        if top_lhs == start_symbol:
+            self.valid = True
+
+            root = Node(self.table_rules.iloc[0, n - 1])
+            root.x = 0
+            root.y = n - 1
+            parse_tree = self.get_parse_tree(self.table_rules, root)
+
+            self.parse_tree = self.print_parse_tree(root)
+            self.parse_tree = os.linesep.join([st for st in self.parse_tree.splitlines() if st])
+
+            actual_tree = Tree.from_string(self.parse_tree)
+            self.parse_tree = actual_tree.pretty()
+
+            return True
+        else:
+            return False
+
+    def parse_pcfg2(self, s):
+
+        start_symbol = next(iter(self.rules))[0]
+        words = s.split(' ')
+        n = len(words)
+
+        table_rules = pandas.DataFrame(index=range(n), columns=words)
+        table_rules.fillna('', inplace=True)
+
+        # temp probs
+        table_probs_tmp = pandas.DataFrame(index=range(n), columns=words)
+        table_probs_tmp.fillna(0.0, inplace=True)
+
+        # final probs
+        table_probs = pandas.DataFrame(index=range(n), columns=words)
+        table_probs.fillna(0.0, inplace=True)
+
+        # self.pcfg = Tree.convert_to_pcfg(self.rules)
+        self.root = Node(table_rules.iloc[0, n - 1])
+        self.root.x = 0
+        self.root.y = n - 1
+
+        # lhs
+        # lhs_word
+        # rhs
+        rhs_left_trm = ''
+        rhs_right_trm = ''
+
+        rule_prb = 0.0
+        lhs_prb = 0.0
+        rhs_left_prb = 0.0
+        rhs_right_prb = 0.0
+
+        for y in range(n):
+            for x in range(y, -1, -1):
+
+                # RHS - Right: Map right node of RHS of Rule to CYK Table
+                rhs_right_trm = [key[0] for key, value in self.pcfg.items() if words[y] in key[1]][0]
+                rhs_right_prb = [value for key, value in self.pcfg.items() if words[y] in key[1]][0]
+                # TABLE - RHS RIGHT
+                table_rules.iloc[y, y] = rhs_right_trm
+                table_probs.iloc[y, y] = rhs_right_prb
+
+                # FIND LHS
+                if x > 0:
+                    # FIND LHS: Given RHS-LEFT and RHS-RIGHT...
+                    rhs = tuple([rhs_left_trm, rhs_right_trm])
+                    lhs = [[key[0], value] for key, value in self.pcfg.items() if rhs == key[1]]
+
+                    # if len(lhs) > 0 and table_rules.iloc[x - 1, y] == '':
+                    for lhs_term, v in lhs:
+
+                        # for key, value
+                        lhs_prb = self.pcfg[lhs_term, rhs]
+                        rule_prb = rhs_left_prb * rhs_right_prb * lhs_prb
+
+                        # lHS: Map LHS of Rule to CYK Table
+                        # TABLE - LHS
+                        table_rules.iloc[x - 1, y] = lhs_term
+                        table_probs.iloc[x - 1, y] = rule_prb
+
+                        for x_offset in range(n):
+                            for y_offset in range(n):
+
+                                if x - x_offset > -1:
+
+                                    # RHS - RIGHT
+                                    rhs_right_trm = lhs_term
+                                    rhs_right_prb = rule_prb
+
+                                    # RHS - LEFT
+                                    if table_rules.iloc[x - x_offset, y - y_offset] != '':
+                                        rhs_left_trm = table_rules.iloc[x - x_offset, y - y_offset]
+                                        rhs_left_prb = table_probs.iloc[x - x_offset, y - y_offset]
+
+                                    # LHS
+                                    if x > -1:
+                                        rhs = tuple([rhs_left_trm, rhs_right_trm])
+                                        lhs = [key[0] for key, value in self.pcfg.items() if rhs == key[1]]
+
+                                        if len(lhs) > 0 and table_rules.iloc[x - x_offset, y] == '':
+                                            lhs_term = lhs[0]
+                                            lhs_prb = self.pcfg[lhs_term, rhs]
+                                            rule_prb = rhs_left_prb * rhs_right_prb * lhs_prb
+
+                                            if rule_prb > table_probs.iloc[x - x_offset, y]:
+                                                table_rules.iloc[x - x_offset, y] = lhs_term
+                                                table_probs.iloc[x - x_offset, y] = rule_prb
 
                             print(table_rules)
                             print(table_probs)

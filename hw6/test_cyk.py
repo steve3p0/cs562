@@ -642,8 +642,8 @@ class TestCyk(unittest.TestCase):
 
         rules = Cyk.load_rules(trees)
         cyk = Cyk(rules)
-        #cyk.parse_pcfg(s)
-        cyk.parse(s)
+        cyk.parse_pcfg(s)
+        #cyk.parse(s)
 
         print("Expected PCFG: ")
         print("What is the expected PCFG")
