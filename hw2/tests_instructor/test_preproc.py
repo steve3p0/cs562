@@ -6,8 +6,8 @@ import nose
 
 def setup_module():
     global x_train, y_train, x_dev, y_dev, counts_dev, counts_train
-    y_train, x_train = preproc.read_data('../data/lyrics-train.csv')
-    y_dev, x_dev = preproc.read_data('../data/lyrics-dev.csv')
+    y_train, x_train = preproc.read_data('lyrics-train.csv')
+    y_dev, x_dev = preproc.read_data('lyrics-dev.csv')
     
     counts_train = preproc.aggregate_counts(x_train)
     counts_dev = preproc.aggregate_counts(x_dev)
