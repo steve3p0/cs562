@@ -102,7 +102,7 @@ class TestClfBase(unittest.TestCase):
 
     def test_d3_3b_nb(self):
         global y_dv
-        y_hat_dv = evaluation.read_predictions('nb-dev.preds')
+        y_hat_dv = evaluation.read_predictions('../../nb-dev.preds')
         assert_greater_equal(evaluation.acc(y_hat_dv,y_dv),.46)
 
     def test_d3_4a_nb_best(self):
