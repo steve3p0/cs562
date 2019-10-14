@@ -39,7 +39,7 @@ class TestClfBase(unittest.TestCase):
         global x_tr_pruned, x_dv_pruned, y_dv
 
         print(x_tr_pruned[0])
-        y_hat,scores = clf_base.predict(x_tr_pruned[0],hand_weights.theta_hand,labels)
+        y_hat,scores = clf_base.predict(x_tr_pruned[0], hand_weights.theta_hand,labels)
         eq_(scores['pre-1980'],0.1)
         assert_almost_equals(scores['2000s'],1.3,places=5)
         eq_(y_hat,'2000s')
@@ -84,7 +84,7 @@ class TestClfBase(unittest.TestCase):
         assert_almost_equals(log_pxy['fly'],-8.6369,places=3)
 
         log_pxy_more_smooth = naive_bayes.estimate_pxy(x_tr_pruned,y_tr,"1980s",10,vocab)
-        assert_almost_equals(log_pxy_more_smooth['money'],-7.8013635125541789,places=3)
+        assert_almost_equals(log_pxy_more_smooth['money'], -7.8013635125541789,places=3)
         assert_almost_equals(log_pxy_more_smooth['tonight'], -6.4054072405225515,places=3)
 
     def test_d3_3a_nb(self):
@@ -93,7 +93,7 @@ class TestClfBase(unittest.TestCase):
         theta_nb = naive_bayes.estimate_nb(x_tr_pruned,y_tr,0.1)
 
         y_hat,scores = clf_base.predict(x_tr_pruned[55],theta_nb,labels)
-        assert_almost_equals(scores['2000s'],-1840.5064690929203,places=3)
+        assert_almost_equals(scores['2000s'], -1840.5064690929203,places=3)
         eq_(y_hat,'1980s')
 
         y_hat,scores = clf_base.predict(x_tr_pruned[155],theta_nb,labels)
@@ -102,7 +102,7 @@ class TestClfBase(unittest.TestCase):
 
     def test_d3_3b_nb(self):
         global y_dv
-        y_hat_dv = evaluation.read_predictions('../../nb-dev.preds')
+        y_hat_dv = evaluation.read_predictions('nb-dev.preds')
         assert_greater_equal(evaluation.acc(y_hat_dv,y_dv),.46)
 
     def test_d3_4a_nb_best(self):
