@@ -5,7 +5,7 @@ import numpy as np
 def setup_module():
     global vocab, label_set, x_tr_pruned
 
-    y_tr,x_tr = preproc.read_data('lyrics-train.csv',preprocessor=preproc.bag_of_words)
+    y_tr,x_tr = preproc.read_data('../data/lyrics-train.csv',preprocessor=preproc.bag_of_words)
     labels = set(y_tr)
 
     counts_tr = preproc.aggregate_counts(x_tr)

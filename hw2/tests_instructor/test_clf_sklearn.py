@@ -8,7 +8,7 @@ import pandas as pd
 def setup_module():
     global vocab, label_set, x_tr_pruned, df_train, df_dev, df_test, count_vec
 
-    y_tr,x_tr = preproc.read_data('lyrics-train.csv',preprocessor=preproc.bag_of_words)
+    y_tr,x_tr = preproc.read_data('../data/lyrics-train.csv',preprocessor=preproc.bag_of_words)
     labels = set(y_tr)
 
     counts_tr = preproc.aggregate_counts(x_tr)
@@ -17,9 +17,9 @@ def setup_module():
 
     label_set = sorted(list(set(y_tr)))
 
-    df_train = pd.read_csv('lyrics-train.csv')
-    df_dev = pd.read_csv('lyrics-dev.csv')
-    df_test = pd.read_csv('lyrics-test-hidden.csv')
+    df_train = pd.read_csv('../data/lyrics-train.csv')
+    df_dev = pd.read_csv('../data/lyrics-dev.csv')
+    df_test = pd.read_csv('../data/lyrics-test-hidden.csv')
     
     count_vec = CountVectorizer(vocabulary=vocab)
 

@@ -27,7 +27,7 @@ class TestPreproc(unittest.TestCase):
 
     @unittest.skip("does't use setup")
     def test_d1_1_bow_steve(self):
-        train_labels, train_lyrics = preproc.read_data('lyrics-train.csv')
+        train_labels, train_lyrics = preproc.read_data('../data/lyrics-train.csv')
 
         # x (data) and y (label) vectors should be the same length
         eq_(len(train_lyrics), len(train_labels))
@@ -88,8 +88,8 @@ class TestPreproc(unittest.TestCase):
 
     @unittest.skip("does't use setup")
     def test_d1_3_oov_steve(self):
-        _, lyrics_dev   = preproc.read_data('lyrics-dev.csv')
-        _, lyrics_train = preproc.read_data('lyrics-train.csv')
+        _, lyrics_dev   = preproc.read_data('../data/lyrics-dev.csv')
+        _, lyrics_train = preproc.read_data('../data/lyrics-train.csv')
 
         counts_dev   = preproc.aggregate_counts(lyrics_dev)
         counts_train = preproc.aggregate_counts(lyrics_train)
@@ -154,7 +154,7 @@ class TestPreproc(unittest.TestCase):
         eq_(len(x_dev[95].keys()) - len(x_dev_pruned[95].keys()), 8)
 
     def test_d1_4_prune_steve_train(self):
-        _, train_lyrics = preproc.read_data('lyrics-train.csv')
+        _, train_lyrics = preproc.read_data('../data/lyrics-train.csv')
         counts_train = preproc.aggregate_counts(train_lyrics)
         train_lyrics_pruned, vocab = preproc.prune_vocabulary(counts_train, train_lyrics, 3)
 
@@ -162,7 +162,7 @@ class TestPreproc(unittest.TestCase):
 
     #@unittest.skip("comment out setup")
     def test_d1_4_prune_steve_dev(self):
-        _, dev_lyrics = preproc.read_data('lyrics-dev.csv')
+        _, dev_lyrics = preproc.read_data('../data/lyrics-dev.csv')
         dev_counts = preproc.aggregate_counts(dev_lyrics)
         dev_lyrics_pruned, vocab = preproc.prune_vocabulary(dev_counts, dev_lyrics, 3)
 
