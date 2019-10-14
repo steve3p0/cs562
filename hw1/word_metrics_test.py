@@ -3,6 +3,9 @@ import logging
 #from mock import patch, MagicMock
 import word_metrics
 
+TEST_DATA_DIR_PATH = 'data/'
+GWENG_DATA_DIR_PATH = 'data/GW-cna_eng/'
+
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s %(levelname)-8s %(message)s',
                     datefmt='%a, %d %b %Y %H:%M:%S',
@@ -11,8 +14,8 @@ logging.basicConfig(level=logging.DEBUG,
 
 class TestWordMetrics(unittest.TestCase):
     def test__parse_args(self):
-        expected_read_file = "data\\GW-cna_eng_small\\*.xml.gz"
-        expected_write_file = "data\\GW-cna_eng_small\\APPEND_TO_FILE.txt"
+        expected_read_file = TEST_DATA_DIR_PATH + '*.xml.gz'
+        expected_write_file = TEST_DATA_DIR_PATH + 'APPEND_TO_FILE.txt'
         wm = word_metrics.WordMetric()
         aparser = wm._parse_args([expected_read_file, '-o', expected_write_file])
         actual_writefile = aparser.outfile
@@ -22,7 +25,7 @@ class TestWordMetrics(unittest.TestCase):
     def test_read_deserialized(self):
         expected_lc = 41261
         wm = word_metrics.WordMetric()
-        read_file = "data\\GW-cna_eng_small\\test_deserialize_small.txt"
+        read_file = TEST_DATA_DIR_PATH + 'test_deserialize_small.txt'
         text = wm._read_tokenized(read_file)
         lines = text.splitlines()
 
