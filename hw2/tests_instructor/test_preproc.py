@@ -4,6 +4,10 @@ from hw2_utils import preproc
 
 import nose
 
+# THERE IS AN ISSUE WITH THE SETUP MODULE AND GLOBAL VARIABLE
+# BE CARE OF THIS.  MAKE SURE YOU ARE WRITING SPEARATE UNIT AND INTEGRATION TESTS (DIFFERENT MODULES)
+# USE A MOCKED OBJECT IN YOUR UNIT TEST
+
 def setup_module():
     global x_train, y_train, x_dev, y_dev, counts_dev, counts_train
     y_train, x_train = preproc.read_data('lyrics-train.csv')

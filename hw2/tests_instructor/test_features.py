@@ -2,10 +2,13 @@ from nose.tools import eq_, assert_almost_equals, assert_greater_equal
 from hw2_utils import preproc, clf_base, constants, hand_weights, evaluation, naive_bayes, features
 import numpy as np
 
+
+LYRICS_TRAIN_CSV = 'lyrics-train.csv'
+
 def setup_module():
     global vocab, label_set, x_tr_pruned
 
-    y_tr,x_tr = preproc.read_data('../data/lyrics-train.csv',preprocessor=preproc.bag_of_words)
+    y_tr,x_tr = preproc.read_data(LYRICS_TRAIN_CSV, preprocessor=preproc.bag_of_words)
     labels = set(y_tr)
 
     counts_tr = preproc.aggregate_counts(x_tr)

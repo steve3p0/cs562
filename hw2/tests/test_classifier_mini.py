@@ -4,8 +4,9 @@ from hw2_utils import preproc, clf_base, constants, hand_weights, evaluation, na
 import numpy as np
 
 
-LYRICS_DEV_CSV = '../data/lyrics-mini.csv'
-LYRICS_TRAIN_CSV = '../data/lyrics-dev.csv'
+LYRICS_DEV_CSV = '../tests_instructor/lyrics-mini.csv'
+LYRICS_TRAIN_CSV = '../tests_instructor/lyrics-dev.csv'
+DEV_PREDICTIONS = '../tests_instructor/nb-dev.preds'
 
 class TestClfBase(unittest.TestCase):
 
@@ -14,12 +15,12 @@ class TestClfBase(unittest.TestCase):
         global labels
         global vocab
 
-        y_tr,x_tr = preproc.read_data(LYRICS_TRAIN_CSV,preprocessor=preproc.bag_of_words)
+        y_tr,x_tr = preproc.read_data(LYRICS_TRAIN_CSV, preprocessor=preproc.bag_of_words)
         labels = set(y_tr)
 
         counts_tr = preproc.aggregate_counts(x_tr)
 
-        y_dv,x_dv = preproc.read_data(LYRICS_DEV_CSV,preprocessor=preproc.bag_of_words)
+        y_dv,x_dv = preproc.read_data(LYRICS_DEV_CSV, preprocessor=preproc.bag_of_words)
 
         x_tr_pruned, vocab = preproc.prune_vocabulary(counts_tr, x_tr, 10)
         x_dv_pruned, _ = preproc.prune_vocabulary(counts_tr, x_dv, 10)
@@ -92,7 +93,7 @@ class TestClfBase(unittest.TestCase):
 
     def test_d3_3b_nb(self):
         global y_dv
-        y_hat_dv = evaluation.read_predictions('../data/nb-dev.preds')
+        y_hat_dv = evaluation.read_predictions(DEV_PREDICTIONS)
         assert_greater_equal(evaluation.acc(y_hat_dv,y_dv),.46)
 
     def test_d3_4a_nb_best(self):

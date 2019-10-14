@@ -2,18 +2,22 @@ from nose.tools import eq_, assert_almost_equals, assert_greater_equal
 from hw2_utils import preproc, clf_base, constants, hand_weights, evaluation, naive_bayes
 import numpy as np
 
+LYRICS_DEV_CSV = 'lyrics-mini.csv'
+LYRICS_TRAIN_CSV = 'lyrics-dev.csv'
+DEV_PREDICTIONS = '../tests_instructor/nb-dev.preds'
+
 
 def setup_module():
     global x_tr, y_tr, x_dv, y_dv, counts_tr, x_dv_pruned, x_tr_pruned, x_bl_pruned
     global labels
     global vocab
 
-    y_tr,x_tr = preproc.read_data('../data/lyrics-train.csv',preprocessor=preproc.bag_of_words)
+    y_tr,x_tr = preproc.read_data(LYRICS_TRAIN_CSV, preprocessor=preproc.bag_of_words)
     labels = set(y_tr)
 
     counts_tr = preproc.aggregate_counts(x_tr)
 
-    y_dv,x_dv = preproc.read_data('../data/lyrics-dev.csv',preprocessor=preproc.bag_of_words)
+    y_dv,x_dv = preproc.read_data(LYRICS_DEV_CSV, preprocessor=preproc.bag_of_words)
 
     x_tr_pruned, vocab = preproc.prune_vocabulary(counts_tr, x_tr, 10)
     x_dv_pruned, _ = preproc.prune_vocabulary(counts_tr, x_dv, 10)
@@ -77,7 +81,7 @@ def test_d3_3a_nb():
 
 def test_d3_3b_nb():
     global y_dv
-    y_hat_dv = evaluation.read_predictions('nb-dev.preds')
+    y_hat_dv = evaluation.read_predictions(DEV_PREDICTIONS)
     assert_greater_equal(evaluation.acc(y_hat_dv,y_dv),.46)
 
 def test_d3_4a_nb_best():
