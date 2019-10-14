@@ -3,6 +3,7 @@ import logging
 import re
 import sys
 import argparse
+import os
 from nltk.probability import FreqDist
 import matplotlib
 import matplotlib.pyplot as plot
@@ -28,7 +29,7 @@ class WordMetric:
 
     def _read_tokenized(self, filename):
         logging.debug("WordMetric._read_tokenized(self, filename): " + filename)
-        with open(filename, 'r') as f:
+        with open(os.path.realpath(filename), 'r') as f:
             text = f.read()
         return text
 

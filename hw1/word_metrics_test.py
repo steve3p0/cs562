@@ -1,6 +1,5 @@
 import unittest
 import logging
-import os
 #from mock import patch, MagicMock
 import word_metrics
 
@@ -24,7 +23,7 @@ class TestWordMetrics(unittest.TestCase):
         expected_lc = 41261
         wm = word_metrics.WordMetric()
         read_file = "data\\GW-cna_eng_small\\test_deserialize_small.txt"
-        text = wm.open(read_file)
+        text = wm._read_tokenized(read_file)
         lines = text.splitlines()
 
         actual_lc = 0
