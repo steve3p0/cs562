@@ -1,2 +1,11 @@
 # Default ignored files
 /workspace.xml
+
+!/git_toolbox_prj.xml
+!/misc.xml
+!/modules.xml
+!/vcs.xml
+
+!/inspectionProfiles/profiles_settings.xml
+!/inspectionProfiles/
+!/.ipynb_checkpoints/
